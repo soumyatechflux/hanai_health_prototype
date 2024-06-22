@@ -43,34 +43,58 @@ const Main = () => {
                     {/* Sidebar */}
                     <div id="sidebar-wrapper" style={{ height: selectedPath === '/home' ? '170.5vh' : '89vh' }}>
                         <ul className="sidebar-nav nav-pills nav-stacked" id="menu">
-                            <li className={selectedPath === '/home' ? 'Selectedddddd' : ''}>
-                                <a onClick={() => handleNavigation('/home')} className={selectedPath === '/home' ? 'Selectedddddd' : ''}>
-                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/home' ? 'selected' : ''}`}>
-                                        <i className={`fa fa-home fa-stack-1x icon ${selectedPath === '/home' ? 'selected' : ''}`} aria-hidden="true" />
-                                    </span>
-                                </a>
-                            </li>
-                            <li className={selectedPath === '/add_diseases' ? 'Selectedddddd' : ''}>
-                                <a onClick={() => handleNavigation('/add_diseases')} className={selectedPath === '/add_diseases' ? 'Selectedddddd' : ''}>
-                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/add_diseases' ? 'selected' : ''}`}>
-                                        <i className={`fa-solid fa-circle-plus fa-stack-1x icon ${selectedPath === '/add_diseases' ? 'selected' : ''}`} />
-                                    </span>
-                                </a>
-                            </li>
+
+
+
+
+                        <li className={selectedPath === '/home' ? 'Selectedddddd' : ''}>
+    <a onClick={() => handleNavigation('/home')} style={{ color: selectedPath === '/home' ? 'red' : '' }}>
+        <span className="fa-stack fa-lg pull-left side-icon" style={{ color: selectedPath === '/home' ? 'red' : '' }}>
+            <i className="fa fa-home fa-stack-1x icon" style={{ color: selectedPath === '/home' ? 'red' : '' }} aria-hidden="true" />
+        </span>
+    </a>
+</li>
+
+
+
+
+
+
+<li className={selectedPath === '/add_diseases' ? 'Selectedddddd' : ''}>
+    <a onClick={() => handleNavigation('/add_diseases')} style={{ color: selectedPath === '/add_diseases' ? 'red' : '' }}>
+        <span className="fa-stack fa-lg pull-left side-icon" style={{ color: selectedPath === '/add_diseases' ? 'red' : '' }}>
+            <i className="fa-solid fa-circle-plus fa-stack-1x icon" style={{ color: selectedPath === '/add_diseases' ? 'red' : '' }} />
+        </span>
+    </a>
+</li>
+
+
+
+
+
+
                             <li className={selectedPath === '/labreports' ? 'Selectedddddd' : ''}>
-                                <a onClick={() => handleNavigation('/labreports')} className={selectedPath === '/labreports' ? 'Selectedddddd' : ''}>
-                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/labreports' ? 'selected' : ''}`}>
-                                        <i className={`fa-solid fa-clipboard-list fa-stack-1x icon ${selectedPath === '/labreports' ? 'selected' : ''}`} />
+                                <a onClick={() => handleNavigation('/labreports')}  style={{ color: selectedPath === '/labreports' ? 'red' : '' }}>
+                                    <span className={`fa-stack fa-lg pull-left side-icon`}  style={{ color: selectedPath === '/labreports' ? 'red' : '' }}>
+                                        <i className={`fa-solid fa-clipboard-list fa-stack-1x icon`}  style={{ color: selectedPath === '/labreports' ? 'red' : '' }} />
                                     </span>
                                 </a>
                             </li>
+
+
+
+
                             <li className={selectedPath === '/cart' ? 'Selectedddddd' : ''}>
-                                <a onClick={() => handleNavigation('/cart')} className={selectedPath === '/cart' ? 'Selectedddddd' : ''}>
-                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/cart' ? 'selected' : ''}`}>
-                                        <i className={`fa fa-cart-plus fa-stack-1x icon ${selectedPath === '/cart' ? 'selected' : ''}`} />
+                                <a onClick={() => handleNavigation('/cart')}  style={{ color: selectedPath === '/cart' ? 'red' : '' }}>
+                                    <span className={`fa-stack fa-lg pull-left side-icon`}  style={{ color: selectedPath === '/cart' ? 'red' : '' }}>
+                                        <i className={`fa fa-cart-plus fa-stack-1x icon`}   style={{ color: selectedPath === '/cart' ? 'red' : '' }}/>
                                     </span>
                                 </a>
                             </li>
+
+
+
+
                         </ul>
                     </div>
                 </div>
