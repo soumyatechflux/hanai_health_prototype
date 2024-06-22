@@ -69,6 +69,7 @@ const Add = () => {
               className="col-11 grid-margin"
               style={{
                 margin: "0 auto",
+                height:"73vh"
               }}
             >
               <div className="">

@@ -24,7 +24,7 @@ function Cart() {
 
 
         <Main />
-        <section className="content-section py-3 pe-5" style={{height:"100vh"}}>
+        <section className="content-section py-3 pe-5" style={{height:"89vh"}}>
             <div className="cart mt-3">
                 <h3>Cart</h3>
                 <div className="row m-row">

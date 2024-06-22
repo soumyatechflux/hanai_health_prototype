@@ -68,7 +68,7 @@ function Labreports() {
 
       {showLabReports && (
 
-      <section className="content-section py-3 pe-5">
+      <section className="content-section py-3 pe-5"  style={{height:"89vh"}}>
         <div className="labreports mt-2">
           <h3>Lab Reports</h3>
           <div className={`row m-row mt-3 ${highlightFirstTest ? 'highlight' : ''}`}>
@@ -162,7 +162,7 @@ function Labreports() {
 
 
 {showBookTest && (
-      <section className="content-section py-3 pe-5">
+      <section className="content-section py-3 pe-5"  style={{height:"89vh"}}>
         <div className="labreports mt-3">
           <h3>Book Test</h3>
           <div className="row">
