@@ -40,13 +40,13 @@ const Graph = () => {
   }, []);
 
   return (
-    <div className="row">
-      <div className="col-md-7 graph">
+    <div className="row row-graph">
+      <div className="col-md-6 graph">
         <div className="cell">
           <canvas id="chart1"></canvas>
         </div>
       </div>
-      <div className="col-md-5 form-container">
+      <div className="col-md-4 form-container">
         <AddDataGraph />
       </div>
     </div>

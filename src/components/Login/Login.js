@@ -41,14 +41,14 @@ const Login = () => {
             {/*-----------      image     -----------*/}
             <img src={longlogo} alt="Henai Health" className="logo-img" />
           </div>
-          <div className="col-md-6 col-12 right">
+          <div className="col-md-6 col-12 right-login">
             <div className="input-box">
               <header>Login</header>
               <form onSubmit={handleLogin}>
                 <div className="input-field">
                   <input
                     type="text"
-                    className="input"
+                    className="input-login"
                     id="email"
                     placeholder="Email"
                     value={email}

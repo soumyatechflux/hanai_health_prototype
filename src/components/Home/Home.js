@@ -5,9 +5,11 @@ import liver from './liver1.PNG';
 import lung from './lung.PNG';
 import kidney from './idne.PNG';
 import pancreas from './anreas.PNG';
+import product from './product.PNG';
 import Main from '../main/Main';
 import Graph from './Graph'; // Import Graph component
 import Chart from 'chart.js/auto';
+import { matchPath } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -62,7 +64,7 @@ const Home = () => {
           <div className="col-12">
             <h2>Sugar Level</h2>
             <div className="row">
-              <div className="col-md-6 table-responsive-sm graph">
+              <div className="col-md-6 table-responsive-sm graphhhh">
                 <div className="cell">
                   <Graph id="chart1" type="bar" />
                 </div>
@@ -70,7 +72,7 @@ const Home = () => {
                
 
               </div>
-              <div className="col-md-6 table-responsive-sm graph">
+              <div className="col-md-6 table-responsive-sm graphhhh">
                 <div className="cell">
                   <Graph id="chart2" type="line" />
                 </div>
@@ -80,13 +82,13 @@ const Home = () => {
             <div className="col-12 chart">
               <div className="row-head">
                 <div className="col-md-4 row-data">
-                  <p className="para-report"> Diabetes-induced Complications</p>
+                  <p className="para-report p-r"> Diabetes-induced Complications</p>
                 </div>
                 <div className="col-md-4 row-data">
-                  <p className="para-report">Medication</p>
+                  <p className="para-report p-r">Medication</p>
                 </div>
                 <div className="col-md-4 row-data">
-                  <p className="para-report">AI Recommendations</p>
+                  <p className="para-report p-r">AI Recommendations</p>
                 </div>
               </div>
               <hr className="head-hr" />
@@ -103,7 +105,7 @@ const Home = () => {
                     { name: 'Hypertension', match: '81%' }
                   ].map((complication, index) => (
                     <React.Fragment key={index}>
-                      <p className="para-report">{complication.name}</p>
+                      <p className="para-report info_p">{complication.name}</p>
                       <div className="progress">
                         <div className="progress-bar" role="progressbar" style={{ width: complication.match }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100} />
                       </div>
@@ -117,38 +119,52 @@ const Home = () => {
                     <hr />
                   </div>
                   {[
-                    'metformin-alogliptin (Kazano)',
-                    'insulin detemir (Levemir)',
-                    'insulin glargine',
-                    'liraglutide (Saxenda)',
-                    'pramlintide (Symlin)',
-                    'thiazolidinedione'
+
+                    {name:'metformin-alogliptin (Kazano)'},
+                    {name:'insulin detemir (Levemir)',match:'96%'},
+                    {name:'insulin glargine'},
+                    {name:'sitagliptin (Januvia)',match:'84%'},
+                    {name:'ACE inhibitor'},
+                    {name:'Hydrochlorothiazide',match:'82%'},
+                    {name:'sildenafil'},
+                    {name:'Revatio',match:'81%'}
                   ].map((medication, index) => (
-                    <div className="d-flex" key={index}>
-                      <p className="para-report">{medication}</p>
-                      <input type="button" value="Buy" className="buy-btn-sm" />
+                    <div  key={index}>
+                      <div className="d-flex">
+                        <p className="para-report info_p">{medication.name}</p>
+                        <input type="button" value="Buy" className="buy-btn-sm" />
+                      </div>
+                     
+                      <div className="progress">
+                        <div className="progress-bar" role="progressbar" style={{ width: medication.match }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100} />
+                      </div>
+                      {/* <p className="info_">{medication.match} Match</p> */}
+                      <p className="info_"></p>
+
                     </div>
+
+                    
                   ))}
+                  
+          
                 </div>
+
+
                 <div className="col-md-4 row-data">
                   <div className="row-heading">
                     <p className="para-report">AI Recommendations</p>
                     <hr />
                   </div>
-                  {[
-                    { name: 'Metformin', match: '96%' },
-                    { name: 'Glipizide', match: '84%' },
-                    { name: 'Sitagliptin', match: '82%' },
-                    { name: 'Canagliflozin', match: '81%' }
-                  ].map((recommendation, index) => (
-                    <React.Fragment key={index}>
-                      <p className="para-report">{recommendation.name}</p>
-                      <div className="progress">
-                        <div className="progress-bar" role="progressbar" style={{ width: recommendation.match }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100} />
-                      </div>
-                      <p className="info_">{recommendation.match} Match</p>
-                    </React.Fragment>
-                  ))}
+
+                  <div className="medicine">
+                    <p className="info_">Arazo Nutrition Blood Sugar 365 Supplement–<br />
+                      Supports Healthy Energy Levels -<br />
+                      120 Herbal Pills - 60 Day Supply
+                    </p>
+                    <img className="prdt-img" src={product} alt="product" />
+                    <input type="button" defaultValue="Buy" className="buy-btn" />
+                </div>
+
                 </div>
               </div>
             </div>

@@ -53,8 +53,8 @@ const Interest = () => {
 
   return (
     <div>
-      <section className="content py-3 pe-5">
-        <header style={{ marginTop: "20px", marginBottom: "20px" }}>
+      <section className="content py-3 pe-5" style={{  backgroundColor:"#eaeaea" , height:"100vh" }}>
+        <header className="header-interest" style={{ marginTop: "20px", marginBottom: "20px" }}>
           Choose your Interest
         </header>
         <div
@@ -86,7 +86,7 @@ const Interest = () => {
                   </div>
                 </div>
                 <div className="margin-btn">
-                  <button type="submit" className="btn-start nxt">
+                  <button type="submit" className="btn-start-interest nxt">
                     Let's Start
                   </button>
                 </div>

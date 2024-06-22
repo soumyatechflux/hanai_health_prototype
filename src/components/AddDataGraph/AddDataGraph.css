@@ -18,7 +18,7 @@
   width: 100%;
 }
 
-.input-field {
+.input{
   display: flex;
   flex-direction: column;
   padding: 0px 20px 0 20px;
@@ -27,6 +27,15 @@
   background-color: rgb(234, 234, 234);
   width: 100%;
 }
+/* .date,.time{
+  display: flex;
+  flex-direction: column;
+  padding: 25px 25px 0 20px;
+  margin-bottom: 5px;
+  border: transparent;
+  background-color: rgb(234, 234, 234);
+  width: 100%;
+} */
 
 .data label {
   font-size: 12px;
@@ -35,3 +44,10 @@
   margin-bottom: 5px;
   align-self: flex-start; /* Align labels to the start (left) */
 }
+
+
+/* @media(max-width:768px){
+  .date,.time{
+    display: none;
+  }
+} */

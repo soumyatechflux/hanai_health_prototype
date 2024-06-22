@@ -47,8 +47,10 @@ const About = () => {
 
   return (
     <div>
-      <section className="content py-3 pe-5">
-        <header style={{ marginTop: '20px', marginBottom: '20px' }}>
+      <section className="content-about py-3 pe-5">
+        <header 
+        // style={{ marginTop: '20px', marginBottom: '20px' }}
+        >
           Let us know more about you
         </header>
         <div

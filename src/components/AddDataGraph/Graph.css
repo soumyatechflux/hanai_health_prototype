@@ -1,7 +1,7 @@
-.row {
+.row-graph {
   display: flex;
   /* justify-content: space-between; */
-  margin-left: 10%;
+  background-color: #eaeaea;
 }
 
 .graph, .form-container {
@@ -10,10 +10,13 @@
   justify-content: center;
   align-items: center;
   height: 50vh;
+  background-color: #eaeaea;
+  margin-left:5%;
+
 }
 
 .cell {
-  padding: 20px;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 15px;
   background-color: white;

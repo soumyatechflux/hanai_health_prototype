@@ -35,7 +35,7 @@ const AddDataGraph = () => {
           name="date"
           value={formData.date}
           onChange={handleDateChange}
-          className="input-field"
+          className="input-field date input"
         />
         <label htmlFor="time">Time</label>
         <input
@@ -43,7 +43,7 @@ const AddDataGraph = () => {
           name="time"
           value={formData.time}
           onChange={handleChange}
-          className="input-field"
+          className="input-field time input"
         />
         <label htmlFor="bloodGlucose">Blood Glucose</label>
         <input
@@ -51,7 +51,7 @@ const AddDataGraph = () => {
           name="bloodGlucose"
           value={formData.bloodGlucose}
           onChange={handleChange}
-          className="input-field"
+          className="input-field input"
         />
         <label htmlFor="mealTime">Meal Time</label>
         <input
@@ -59,7 +59,7 @@ const AddDataGraph = () => {
           name="mealTime"
           value={formData.mealTime}
           onChange={handleChange}
-          className="input-field"
+          className="input-field input"
         />
         <label htmlFor="medication">Medication</label>
         <input
@@ -67,7 +67,7 @@ const AddDataGraph = () => {
           name="medication"
           value={formData.medication}
           onChange={handleChange}
-          className="input-field"
+          className="input-field input"
         />
       </form>
     </div>

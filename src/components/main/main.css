@@ -20,7 +20,12 @@
     color: #ff0000 !important; 
 }
 .sidebar-nav li a .Selectedddddd{
-  color: #ff0000 
+  color: #ff0000 !important; 
+}
+
+
+.Selectedddddd{
+color:  #ff0000 !important; 
 }
 
 

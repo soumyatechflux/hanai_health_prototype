@@ -57,9 +57,9 @@ const Add = () => {
   return (
     <>
       <Main />
-      <div>
-        <section className="content py-3 pe-5">
-          <header className="Head">Add Data</header>
+      <div  style={{  backgroundColor:"#eaeaea"}}>
+      <section className="content py-3 pe-5">
+          <header className="header-add">Add Data</header>
           <div
             className="col-11 grid-margin"
             style={{

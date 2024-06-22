@@ -43,7 +43,7 @@ const Verification = () => {
                 <label htmlFor="code">Verification code *</label> 
                 <input
                   type="text"
-                  className="input"
+                  className="input-verif"
                   id="code"
                   placeholder=""
                   value={code}
