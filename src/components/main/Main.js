@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './main.css';
 import Capture from './Capture.PNG';
@@ -6,9 +6,16 @@ import Capture from './Capture.PNG';
 const Main = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [selectedPath, setSelectedPath] = useState('');
 
-    // Function to determine if a link is selected
-    const isSelected = (path) => location.pathname === path;
+    useEffect(() => {
+        setSelectedPath(location.pathname);
+    }, [location.pathname]);
+
+    const handleNavigation = (path) => {
+        navigate(path);
+        setSelectedPath(path);
+    };
 
     return (
         <div>
@@ -36,31 +43,31 @@ const Main = () => {
                     {/* Sidebar */}
                     <div id="sidebar-wrapper">
                         <ul className="sidebar-nav nav-pills nav-stacked" id="menu">
-                            <li className={isSelected('/home') ? 'Selectedddddd' : ''}>
-                                <a onClick={() => navigate('/home')} className={isSelected('/home') ? 'Selectedddddd' : ''}>
-                                    <span className="fa-stack fa-lg pull-left side-icon">
-                                        <i className="fa fa-home fa-stack-1x icon" aria-hidden="true" />
+                            <li className={selectedPath === '/home' ? 'Selectedddddd' : ''}>
+                                <a onClick={() => handleNavigation('/home')} className={selectedPath === '/home' ? 'Selectedddddd' : ''}>
+                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/home' ? 'selected' : ''}`}>
+                                        <i className={`fa fa-home fa-stack-1x icon ${selectedPath === '/home' ? 'selected' : ''}`} aria-hidden="true" />
                                     </span>
                                 </a>
                             </li>
-                            <li className={isSelected('/add_diseases') ? 'Selectedddddd' : ''}>
-                                <a onClick={() => navigate('/add_diseases')} className={isSelected('/add_diseases') ? 'Selectedddddd' : ''}>
-                                    <span className="fa-stack fa-lg pull-left side-icon">
-                                        <i className="fa-solid fa-circle-plus fa-stack-1x icon" />
+                            <li className={selectedPath === '/add_diseases' ? 'Selectedddddd' : ''}>
+                                <a onClick={() => handleNavigation('/add_diseases')} className={selectedPath === '/add_diseases' ? 'Selectedddddd' : ''}>
+                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/add_diseases' ? 'selected' : ''}`}>
+                                        <i className={`fa-solid fa-circle-plus fa-stack-1x icon ${selectedPath === '/add_diseases' ? 'selected' : ''}`} />
                                     </span>
                                 </a>
                             </li>
-                            <li className={isSelected('/labreports') ? 'Selectedddddd' : ''}>
-                                <a onClick={() => navigate('/labreports')} className={isSelected('/labreports') ? 'Selectedddddd' : ''}>
-                                    <span className="fa-stack fa-lg pull-left side-icon">
-                                        <i className="fa-solid fa-clipboard-list fa-stack-1x icon" />
+                            <li className={selectedPath === '/labreports' ? 'Selectedddddd' : ''}>
+                                <a onClick={() => handleNavigation('/labreports')} className={selectedPath === '/labreports' ? 'Selectedddddd' : ''}>
+                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/labreports' ? 'selected' : ''}`}>
+                                        <i className={`fa-solid fa-clipboard-list fa-stack-1x icon ${selectedPath === '/labreports' ? 'selected' : ''}`} />
                                     </span>
                                 </a>
                             </li>
-                            <li className={isSelected('/cart') ? 'Selectedddddd' : ''}>
-                                <a onClick={() => navigate('/cart')} className={isSelected('/cart') ? 'Selectedddddd' : ''}>
-                                    <span className="fa-stack fa-lg pull-left side-icon">
-                                        <i className="fa fa-cart-plus fa-stack-1x icon" />
+                            <li className={selectedPath === '/cart' ? 'Selectedddddd' : ''}>
+                                <a onClick={() => handleNavigation('/cart')} className={selectedPath === '/cart' ? 'Selectedddddd' : ''}>
+                                    <span className={`fa-stack fa-lg pull-left side-icon ${selectedPath === '/cart' ? 'selected' : ''}`}>
+                                        <i className={`fa fa-cart-plus fa-stack-1x icon ${selectedPath === '/cart' ? 'selected' : ''}`} />
                                     </span>
                                 </a>
                             </li>
@@ -68,18 +75,8 @@ const Main = () => {
                     </div>
                 </div>
             </section>
-            {/* <section className="content-section py-3 pe-5">
-                <div className="search">
-                    <form action="" className="search-bar">
-                        <input type="text" placeholder="Search" />
-                        <button type="submit">
-                            <i className="fas fa-search" />
-                        </button>
-                    </form>
-                </div>
-            </section> */}
         </div>
     );
-}
+};
 
 export default Main;

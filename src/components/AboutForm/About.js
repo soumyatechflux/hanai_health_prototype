@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './About.css';
+import DatePicker from 'react-datepicker'; // Import the date picker component
+import 'react-datepicker/dist/react-datepicker.css'; // Import the date picker styles
 
 const About = () => {
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const About = () => {
     firstName: 'Hanai',
     lastName: 'Health',
     gender: 'Female',
-    dob: '01/01/2024',
+    dob: new Date('2024-01-01'),
     email: 'hanaihealth@123.com',
     phone: '+91  9870654321',
     address: 'Nashik, Maharashtra, India',
@@ -25,6 +27,10 @@ const About = () => {
       ...prevForm,
       [name]: value,
     }));
+  };
+
+  const handleDateChange = (date) => {
+    setForm({ ...form, dob: date });
   };
 
   const validateForm = () => {
@@ -48,17 +54,10 @@ const About = () => {
   return (
     <div>
       <section className="content-about py-3 pe-5">
-        <header 
-        // style={{ marginTop: '20px', marginBottom: '20px' }}
-        >
+        <header>
           Let us know more about you
         </header>
-        <div
-          className="col-12 grid-margin"
-          style={{
-            margin: '0 auto',
-          }}
-        >
+        <div className="col-12 grid-margin" style={{ margin: '0 auto' }}>
           <div className="card">
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit}>
@@ -99,13 +98,16 @@ const About = () => {
                     <div className="form-group row">
                       <label className="col-sm-6 col-form-label">Gender</label>
                       <div className="col-sm-9">
-                        <input
-                          type="text"
+                        <select
                           className="form-control"
                           name="gender"
                           value={form.gender}
                           onChange={handleChange}
-                        />
+                        >
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Other">Other</option>
+                        </select>
                         {errors.gender && <span className="error">{errors.gender}</span>}
                       </div>
                     </div>
@@ -114,17 +116,18 @@ const About = () => {
                     <div className="form-group row">
                       <label className="col-sm-6 col-form-label">Date of Birth</label>
                       <div className="col-sm-9">
-                        <input
+                        <DatePicker
                           className="form-control"
-                          name="dob"
-                          placeholder="dd/mm/yyyy"
-                          value={form.dob}
-                          onChange={handleChange}
+                          selected={form.dob}
+                          onChange={handleDateChange}
+                          dateFormat="dd/MM/yyyy"
                         />
                         {errors.dob && <span className="error">{errors.dob}</span>}
                       </div>
                     </div>
                   </div>
+                </div>
+                <div className="row">
                   <div className="col-md-6">
                     <div className="form-group row">
                       <label className="col-sm-6 col-form-label">Email</label>

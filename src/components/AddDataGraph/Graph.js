@@ -3,7 +3,7 @@ import Chart from 'chart.js/auto';
 import './Graph.css';
 import AddDataGraph from './AddDataGraph';
 
-const Graph = () => {
+const Graph = ({ setShowGraph }) => {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -40,14 +40,14 @@ const Graph = () => {
   }, []);
 
   return (
-    <div className="row row-graph" >
+    <div className="row row-graph">
       <div className="col-md-5 graph">
         <div className="cell">
           <canvas id="chart1"></canvas>
         </div>
       </div>
       <div className="col-md-4 form-container">
-        <AddDataGraph />
+        <AddDataGraph setShowGraph={setShowGraph} />
       </div>
     </div>
   );
