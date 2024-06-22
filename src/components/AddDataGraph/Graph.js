@@ -40,8 +40,8 @@ const Graph = () => {
   }, []);
 
   return (
-    <div className="row row-graph">
-      <div className="col-md-6 graph">
+    <div className="row row-graph" >
+      <div className="col-md-5 graph">
         <div className="cell">
           <canvas id="chart1"></canvas>
         </div>

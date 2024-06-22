@@ -1,7 +1,8 @@
 .row-graph {
   display: flex;
-  /* justify-content: space-between; */
+  /* justify-content: space-between;  */
   background-color: #eaeaea;
+  padding: 0 1%; /* Add padding to the row to control spacing */
 }
 
 .graph, .form-container {
@@ -11,7 +12,9 @@
   align-items: center;
   height: 50vh;
   background-color: #eaeaea;
-  margin-left:5%;
+  margin: 0; /* Remove margin to reduce distance */
+  padding: 1%; /* Add padding to control spacing */
+  margin-left: 8%;
 
 }
 
