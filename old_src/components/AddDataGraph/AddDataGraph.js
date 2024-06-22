@@ -1,13 +1,27 @@
 import React, { useState } from 'react';
 import './AddDataGraph.css';
 
-const AddDataGraph = () => {
+const AddDataGraph = ({ setShowGraph }) => {
   const [formData, setFormData] = useState({
     date: '2024-01-01',
     time: '16:38',
     bloodGlucose: 'O+',
     mealTime: '1 PM',
     medication: 'Supplement Supports',
+  });
+
+  const [buttonStyle, setButtonStyle] = useState({
+    width: "20%",
+    backgroundColor: "red",
+    color: "white",
+    border: "none",
+    padding: "10px 20px",
+    borderRadius: "5px",
+    textAlign: "center",
+    display: "block",
+    margin: "0 auto",
+    cursor: "pointer",
+    transition: "background-color 0.3s, color 0.3s",
   });
 
   const handleChange = (e) => {
@@ -26,9 +40,32 @@ const AddDataGraph = () => {
     }));
   };
 
+  const handleHover = () => {
+    setButtonStyle({
+      ...buttonStyle,
+      backgroundColor: "gray", 
+      color: "white",
+    });
+  };
+
+  const handleLeave = () => {
+    setButtonStyle({
+      ...buttonStyle,
+      backgroundColor: "red",
+      color: "white",
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log("Form data submitted:", formData);
+    setShowGraph(false); // Close the graph after form submission
+  };
+
   return (
     <div className="data-form">
-      <form className="data">
+      <form className="data" onSubmit={handleSubmit}>
         <label htmlFor="date">Date</label>
         <input
           type="date"
@@ -69,6 +106,14 @@ const AddDataGraph = () => {
           onChange={handleChange}
           className="input-field input"
         />
+        <button
+          style={buttonStyle}
+          onMouseEnter={handleHover}
+          onMouseLeave={handleLeave}
+          onClick={handleSubmit}
+        >
+          Save
+        </button>
       </form>
     </div>
   );

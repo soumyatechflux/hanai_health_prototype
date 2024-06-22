@@ -62,10 +62,9 @@ const Home = () => {
             ))}
           </div>
           <div className="col-12">
-           
-            <div className="row graph-row">
+            <h2>Sugar Level</h2>
+            <div className="row">
               <div className="col-md-6 table-responsive-sm graphhhh">
-              <h4>Sugar Level</h4>
                 <div className="cell">
                   <Graph id="chart1" type="bar" />
                 </div>
@@ -74,7 +73,6 @@ const Home = () => {
 
               </div>
               <div className="col-md-6 table-responsive-sm graphhhh">
-              <h4>Activity Level</h4>
                 <div className="cell">
                   <Graph id="chart2" type="line" />
                 </div>

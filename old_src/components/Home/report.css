@@ -44,9 +44,7 @@
 }
 .diseases{
     display: flex;
-    
-    justify-content: space-between;
-    margin: 15px 0;
+    justify-content: space-around;
 }
 .disease{
     display: flex;
@@ -167,13 +165,10 @@
     background-color: white;
     border-radius: 20px;
     width: 45%;
-    margin: 25px 12px;
+    margin-right: 25px;
     margin-bottom: 10px;
     height: 100%;
     padding: 30px;
-}
-.graph-row{
-    justify-content: space-between;
 }
 /* chart */
 /* header{

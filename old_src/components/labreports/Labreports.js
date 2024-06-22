@@ -19,9 +19,9 @@ function Labreports() {
     expiryMonth: '01',
     expiryYear: '2023'
   });
-
   const [highlightFirstTest, setHighlightFirstTest] = useState(false);
-  const navigate = useNavigate();
+  const [showLabReports, setShowLabReports] = useState(true); // Initially show Lab Reports
+  const [showBookTest, setShowBookTest] = useState(false);
 
   const handleInputChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -44,12 +44,30 @@ function Labreports() {
       expiryMonth: '01',
       expiryYear: '2023'
     });
+    setShowBookTest(false); // Close booking section after submission
+    setShowLabReports(true); // Show Lab Reports again
   };
+
+  const showBookTestSection = () => {
+    setShowLabReports(false);
+    setShowBookTest(true);
+  };
+
+  const showLabReportsSection = () => {
+    setShowLabReports(true);
+    setShowBookTest(false);
+  };
+
+  const navigate = useNavigate();
 
   return (
     <>
       <Main />
       <ToastContainer />
+
+
+      {showLabReports && (
+
       <section className="content-section py-3 pe-5">
         <div className="labreports mt-2">
           <h3>Lab Reports</h3>
@@ -134,11 +152,16 @@ function Labreports() {
             </div>
           </div>
           <div className="mt-3 d-flex justify-content-center">
-            <button className="lab-btn">Take a Lab Test</button>
+            <button className="lab-btn"  onClick={showBookTestSection} >Take a Lab Test</button>
           </div>
         </div>
       </section>
+      )}
 
+
+
+
+{showBookTest && (
       <section className="content-section py-3 pe-5">
         <div className="labreports mt-3">
           <h3>Book Test</h3>
@@ -221,6 +244,8 @@ function Labreports() {
           </div>
         </div>
       </section>
+)}
+
     </>
   );
 }

@@ -38,9 +38,9 @@ const Ruler = () => {
   return (
     <>
     <div>
-      <section className="content-rular py-3 px-5">
+      <section className="content-rular py-3 pe-5">
         <header>BMI Calculator</header>
-        <div className="mainnnnnnnnnnn container main-container">
+        <div className="mainnnnnnnnnnn">
           <div className="row row-rular">
             <div className="col-3 column-3">
               <img src={Height} alt="height" className="image" />
