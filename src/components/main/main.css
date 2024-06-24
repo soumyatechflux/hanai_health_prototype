@@ -78,6 +78,7 @@ color:  #ff0000 !important;
     position: absolute;
     left: 250px;
     width: 0;
+    height: 100%;
     margin-left: -250px;
     /* overflow-y: auto;*/
     background: #ffffff; 
