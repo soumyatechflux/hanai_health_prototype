@@ -5,7 +5,7 @@ import MainPage from "./components/MainPage/MainPage";
 import Cart from "./components/cart/Cart";
 import Orders from './components/Orders/Orders'
 import Labreports from "./components/labreports/Labreports";
-import Login from "./components/login/Login";
+import Login from "./components/login/LoginComponant";
 import Verification from "./components/verification/Verification";
 import Interest from "./components/interest/Interest";
 import Loading from "./components/Loading/Loading";
