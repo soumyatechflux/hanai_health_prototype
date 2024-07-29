@@ -4,7 +4,7 @@ import "./App.css";
 import Cart from "./components/cart/Cart";
 import Orders from './components/Orders/Orders'
 import Labreports from "./components/labreports/Labreports";
-import LoginComponant from "./components/login/LoginComponant";
+import LoginComponant from "./components/LoginComponant/LoginComponant";
 import Verification from "./components/verification/Verification";
 import Interest from "./components/interest/Interest";
 import Loading from "./components/Loading/Loading";
@@ -14,7 +14,7 @@ import Home from "./components/Home/Home";
 import Ruler from "./components/Ruler/Ruler";
 import Profile from "./components/Profile/Profile";
 import SignUp from './components/SignUp/SignUp'
-import ForgotPassword from "./components/login/ForgotPassword/ForgotPassword";
+import ForgotPassword from "./components/LoginComponant/ForgotPassword/ForgotPassword";
 function App() {
   return (
     <Router>

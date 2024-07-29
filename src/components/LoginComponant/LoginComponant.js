@@ -1,17 +1,16 @@
 
 import React, { useState } from "react";
 import longlogo from "./longlogo.PNG";
-import "./login.css";
+import "./LoginComponant.css";
 import { useNavigate } from 'react-router-dom';
-// import ForgotPasswordFlow from './ForgotPasswordFlow';
 import ForgotPasswordFlow from "./ForgotPassword/ForgotPassword";
 
-const Login = () => {
+const LoginComponant = () => {
   const [email, setEmail] = useState('hanaihealth@123.com');
   const [password, setPassword] = useState('hanaihealth@123.com');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [showForgotPassword, setShowForgotPassword] = useState(false); // State for controlling modal visibility
+  const [showForgotPassword, setShowForgotPassword] = useState(false); 
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
@@ -101,4 +100,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginComponant;
