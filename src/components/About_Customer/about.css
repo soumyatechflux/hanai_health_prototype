@@ -1,0 +1,92 @@
+.about-container {
+    padding: 20px;
+    background-color: #ebebeb;
+    height: 100vh;
+}
+  
+  .content-about {
+    max-width: 95%;
+    margin: 0 auto;
+  }
+ .about-header{
+  font-size: 25px;
+  text-align: center;
+ }
+  .card{
+    margin: 20px 0;
+    padding: 10px;
+    background-color: white;
+    border-radius: 20px;
+  }
+  .form-sample{
+    padding: 10px;
+  }
+
+  .form-sample .row {
+    margin-bottom: 10px;
+  }
+  .form-control{
+    background-color: #eeeeee;
+    border-radius: 0;
+    border: none;
+  }
+  .error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  .margin-btn {
+    text-align: right;
+  }
+  
+  .btn-start-nxt {
+    background-color: #ffffff;
+    color: rgb(255, 0, 0);
+    border: none;
+    padding: 10px 25px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .btn-start-nxt:hover{
+    background-color: red;
+    color: white;
+  }
+
+  .profile-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid gray;
+    margin-top: 9px;
+}
+  
+  @media (max-width: 768px) {
+    .col-md-6, .col-md-12 {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+    
+    .col-sm-12 {
+      padding: 0;
+    }
+    
+    .form-group.row {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .col-form-label {
+      margin-bottom: 5px;
+    }
+    
+    .margin-btn {
+      text-align: center;
+    }
+    
+    .btn-start-nxt {
+      width: 100%;
+    }
+  }
+  

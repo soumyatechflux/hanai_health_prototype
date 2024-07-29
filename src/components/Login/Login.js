@@ -1,9 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import longlogo from "./longlogo.PNG";
+import "./login.css";
 import { useNavigate } from 'react-router-dom';
-import './login.css';
-import longlogo from './longlogo.PNG';
 
 const Login = () => {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [emailError, setEmailError] = useState('');
+  // const [passwordError, setPasswordError] = useState('');
+ 
+  // Function to handle form submission
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   if (!email) {
+  //     setEmailError('Email is required');
+  //   } else {
+  //     setEmailError('');
+  //   }
+    
+  //   if (!password) {
+  //     setPasswordError('Password is required');
+  //   } else {
+  //     setPasswordError('');
+  //   }
+
+  //   {
+  //     console.log(email, password, emailError, passwordError);
+  //   }
+  //   setEmail("");
+  //   setPassword("");
+  // };
+
   const [email, setEmail] = useState('hanaihealth@123.com');
   const [password, setPassword] = useState('hanaihealth@123.com');
   const [emailError, setEmailError] = useState('');
@@ -19,6 +47,7 @@ const Login = () => {
       valid = false;
     } else {
       setEmailError('');
+      console.log(email);
     }
 
     if (!password) {
@@ -26,64 +55,70 @@ const Login = () => {
       valid = false;
     } else {
       setPasswordError('');
+      console.log(password);
     }
 
     if (valid) {
       navigate('/verification');
     }
   };
-
+  
   return (
     <div>
-      <section>
-        <div className="row login">
-          <div className="col-md-6 col-12 side-image">
-            {/*-----------      image     -----------*/}
-            <img src={longlogo} alt="Henai Health" className="logo-img" />
-          </div>
-          <div className="col-md-6 col-12 right-login">
-            <div className="input-box">
-              <header>Login</header>
-              <form onSubmit={handleLogin}>
-                <div className="input-field">
-                  <input
-                    type="text"
-                    className="input-login"
-                    id="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    autoComplete="off"
-                  />
-                  {emailError && <div className="error">{emailError}</div>}
-                </div>
-                <div className="input-field">
-                  <input
-                    type="password"
-                    className="input-pass"
-                    id="pass"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                  {passwordError && <div className="error">{passwordError}</div>}
-                </div>
-                <div className="p">
-                  <span><a href="#">Forgot Password</a></span>
-                </div>
-                <div className="input-field-submit">
-                  <input type="submit" className="submit" value="Login" />
-                </div>
-              </form>
-              <div className="signin">
-                <span>Don't have an account? <a href="#">Sign Up</a></span>
+      <div className="container-fluid">
+        
+      <div className="row " style={{height:'100vh'}}>
+        <div className=" col-12 col-md-6 left-side">
+          <img src={longlogo} alt="Henai Health" className="logo-img" />
+        </div>
+        <div className=" col-12 col-md-6 right-side">
+          <div className="form-field">
+            <header className="login-header">Login</header>
+            <form onSubmit={handleLogin}>
+              <div className="input-field">
+                <input
+                  type="email"
+                  className="input-mail"
+                  id="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  autoComplete="off"
+                />
+                
+                 {emailError && <div className="error">{emailError}</div>}
+                <input
+                  type="password"
+                  className="input-pass"
+                  id="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  autoComplete="off"
+                />
+                 {passwordError && <div className="error">{passwordError}</div>}
               </div>
-            </div>
+           
+              <div className="para">
+                <span>
+                  <a href="/forgot_password">Forgot Password</a>
+                </span>
+              </div>
+              <div className="input-submit">
+                <button type="submit" className="submit" value="Login">Login</button>
+              </div>
+              <div className="login-sing">
+                <span>
+                  Don't have an account? <a href="/signup">Sign Up</a>
+                </span>
+              </div>
+            </form>
           </div>
         </div>
-      </section>
+      </div>
+      </div>
     </div>
   );
 };

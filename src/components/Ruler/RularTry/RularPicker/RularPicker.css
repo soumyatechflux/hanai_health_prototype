@@ -1,0 +1,62 @@
+/* src/RulerPicker.css */
+.ruler-picker {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.ruler-section {
+  margin-bottom: 30px;
+}
+
+.ruler-section h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.ruler-scale {
+  position: relative;
+  width: 100%;
+}
+
+.ruler-scale .rc-slider {
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ruler-scale .rc-slider-rail {
+  background: repeating-linear-gradient(
+    to right,
+    #ccc,
+    #ccc 1px,
+    #fff 1px,
+    #fff 8px
+  );
+}
+
+.ruler-section .value {
+  margin-top: 12px;
+  font-size: 10px;
+  color: #fa4748;
+  text-align: center;
+  position: relative;
+  border-bottom: groove;
+  bottom: 25px;
+}
+
+@media(max-width:768px){
+  .main-container{
+    width: 100%;
+  }
+
+  .ruler-scale .rc-slider-rail {
+    background: repeating-linear-gradient(
+      to right,
+      #ccc,
+      #ccc 2px,
+      #fff 1px,
+      #fff 8px
+    );
+  }
+}

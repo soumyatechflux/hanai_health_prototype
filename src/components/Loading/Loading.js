@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './loading.css';
 import loadingimg from './Loading.svg';
-import Main from '../main/Main';
+import MainPage from './../MainPage/MainPage';
 
 const Loading = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Loading = () => {
 
   return (
     <>
-      <Main />
+      <MainPage />
       <div className="loading">
         <div> 
           <img src={loadingimg} alt="loading" />

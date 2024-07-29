@@ -1,0 +1,90 @@
+.label-profile{
+    float: inline-start;
+  }
+  .profile-container{
+    margin: 0;
+  }
+  .profile-icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid gray;
+  }
+  .profile-target{
+    background-color: white;
+    border-radius: 10px;
+    padding: 2%;
+    margin-top: 8%;
+    margin-bottom: 2%;
+  }
+  .text-BackTo{
+    float: left;
+    color: red;
+    cursor: pointer;
+  }
+  .proflie-butn{
+    background-color: red;
+    border: none;
+  }
+  .proflie-butn:hover{
+    background-color:rgb(199, 11, 11) ;
+  }
+
+  .pencil-profile{
+    margin-top: 85px;
+  }
+
+  .profile-lable{
+    text-align: start;
+  }
+
+  .custom-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  
+  .custom-select select {
+    /* width: 100%;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none; */
+    /* padding: 10px; */
+    /*  */
+    /* background: white; */
+    /* border: 1px solid #ced4da; */
+    /* border-radius: 4px; */
+  }
+  
+  /* Add padding to leave space for the icon */
+  .custom-select select {
+    padding-right: 30px;
+  }
+  
+  /* Dropdown icon styling */
+  .custom-select::after {
+    content: '\f107'; /* Font Awesome Unicode for down arrow */
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  @media screen and (max-width: 768px){
+    .profile-container{
+      width: 90%;
+      margin: auto;
+    }
+    .profilepage-container {
+        margin-top: 20% !important;
+      }
+
+      .profile-target {
+        
+        margin-top: 25%;
+      }
+  }

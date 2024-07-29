@@ -1,154 +1,77 @@
-.main-add{
-  /* padding: 15px; */
-  border: 2px solid rgb(206, 205, 205);
-  box-sizing: border-box;
-  border-radius: 20px;
-  background-color: white;
-}
-.header-interest{
-  font-size: 30px;
-  text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 15px;
-}
-.Head{
-  font-size: 25px;
-  text-align: left;
-  font-family: Arial, Helvetica, sans-serif;
-  padding: 0px 25px;
-}
-.form{
-  border: 1.5px solid rgb(206, 206, 206);
-  border-radius: 25px;
-  margin: 5px;
-  padding: 25px 50px;
-  min-width: 50px;
-  background-color: white;
-}
-.btn-select-mul{
-  padding: 12px 5px;
-  cursor: pointer;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  border: transparent;
-  background: #eaeaea;
-  transition: background 0.1s;
-  font-size: 16px;
-  margin-top: 20px;
-  width:100%;
-}
-.btn-select:focus{
-background-color: red;
-color: white;
-}
-.btn-select-mul.selected {
-  background-color: red;
-  color: white;
-}
-.btn-start-interest {
-  background-color: white;
-  color: red;
-  float: right;
-  box-sizing: border-box;
-  border: none;
-  font-size: 20px;
-  padding: 11px 22px;
-  margin: 10px;
-  width: 18%;
-}
-
-@media(max-width:768px){
-  .img{
-    width: 40%;
+* {
+    font-family: 'Poppins', sans-serif;
   }
-  #sidebar-wrapper {
-    width: 68px;
+  
+  .content {
+    padding: 20px;
+    background-color: #eaeaea;
+    height: 100vh;
   }
-  .search{
-    width: 100%;
-  }
-  .btn-select{
-    font-size:9px !important;
-  }
-  .content-section{
-    padding-right: 1rem !important;
-    padding-left: 5rem;
-  }
-  .load-content{
-    padding-right: 1rem !important;
-    padding-left: 5rem;
-  }
-  .content{
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
-  }
-  .select {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 100%;
-    gap: 20px;
-    padding: 10px;
-  }
-  .form {
-    border: 1.5px solid rgb(206, 206, 206);
+  .interest-card-body{
+    border: transparent;
     border-radius: 25px;
-    margin: 5px;
-    padding: 15px 35px;
-    min-width: 50px;
     background-color: white;
-}
-.btn-start-interest {
- 
-    width: 55%;
+    padding: 25px;
+    margin: 35px;
   }
-}
-
-@media (min-width: 768px) {
-  #wrapper {
-     padding-left: 250px;
+  .header-interest {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
   
-  #wrapper.toggled {
-     padding-left: 0;
+  .main-add {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  /* #sidebar-wrapper {
-     width: 250px;
-  } */
-  #wrapper.toggled #sidebar-wrapper {
-     width: 250px;
-  }
-  #wrapper.toggled-2 #sidebar-wrapper {
-     width: 50px;
-  }
-  #wrapper.toggled-2 #sidebar-wrapper:hover {
-     width: 250px;
-  }
-  #page-content-wrapper {
-     padding: 20px;
-     position: relative;
-     -webkit-transition: all 0.5s ease;
-     -moz-transition: all 0.5s ease;
-     -o-transition: all 0.5s ease;
-     transition: all 0.5s ease;
-  }
-  #wrapper.toggled #page-content-wrapper {
-     position: relative;
-     margin-right: 0;
-     padding-left: 250px;
-  }
-  #wrapper.toggled-2 #page-content-wrapper {
-     position: relative;
-     margin-right: 0;
-     margin-left: -200px;
-     -webkit-transition: all 0.5s ease;
-     -moz-transition: all 0.5s ease;
-     -o-transition: all 0.5s ease;
-     transition: all 0.5s ease;
-     width: auto;
-  }
-
-  /* @media(max-width:600px){
   
+  .btn-select-mul {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border: none;
+    background-color: rgb(227, 227, 227);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
   }
-  */
-}
+  
+  .btn-select-mul.selected {
+    background-color: #ff0000;
+    color: white;
+  }
+  .interest-submit-btn{
+    text-align: right;
+    margin-right: 20px;
+  }
+  .btn-start-interest {
+    padding: 10px 20px;
+    border: none;
+    background-color: #ffffff;
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .btn-start-interest:hover {
+    background-color: #ff0000;
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .btn-select-mul {
+      font-size: 7px;
+    }
+    .interest-card-body{
+      padding: 15px;
+      margin: 15px 0px;
+    }
+    .interest-form-sample{
+      padding: 10px;
+    }
+  }
+  

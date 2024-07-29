@@ -12,7 +12,7 @@
 
 .main-container{
   background-color: white;
-  width: 70%;
+  width: 75%;
   padding: 2%;
   border-radius: 15px;
 
@@ -39,7 +39,7 @@
 }
 
 .image {
-  width: 100px;
+  width: 135px;
   height: 100px;
   object-fit: contain;
 }
@@ -126,15 +126,13 @@ input[type="range"]::-moz-range-thumb {
 
 @media (max-width: 768px) {
   .content-rular {
-    padding-right: 0rem !important;
-    padding-left: 0rem;
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
   }
 
-  .mainnnnnnnnnnn {
-    margin-left: 0;
-    /* width: 100%; */
+  .image {
+    width: 80px;
   }
-
   .scale {
     width: 100%;
   }

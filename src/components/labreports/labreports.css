@@ -70,4 +70,12 @@
     #sidebar-wrapper{
         height: 100vh;
     }
+    .book-content-section{
+        padding-left: 5rem;
+        padding-right: 1rem !important;
+    }
+    .lab-content-section{
+        padding-left: 6rem;
+        padding-right: 2rem !important;
+    }
 }
