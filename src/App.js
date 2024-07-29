@@ -6,7 +6,7 @@ import Orders from './components/Orders/Orders'
 import Labreports from "./components/labreports/Labreports";
 import LoginComponant from "./components/LoginComponant/LoginComponant";
 import Verification from "./components/VerificationComponent/Verification";
-import Interest from "./components/interest/Interest";
+import Interest from "./components/Interest/Interest";
 import Loading from "./components/Loading/Loading";
 import AddData from "./components/Add Data/Add_Data";
 import AboutCustomer from "./components/About_Customer/AboutCustomer";
