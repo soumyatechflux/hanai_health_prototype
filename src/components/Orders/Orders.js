@@ -39,7 +39,7 @@ const Orders = () => {
                         </div>
                         <div className="col-md-4 col-12 column" id="quantity">
                             <div><h6>Quantity</h6></div>
-                            <br /><br />
+                            <br />
                             <div className="d-flex plus-minus">
                                 {/* <button
                                     className="btn"

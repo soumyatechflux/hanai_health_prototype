@@ -44,8 +44,8 @@ const Cart = () => {
                             <p>{PRODUCT_NAME}</p>
                         </div>
                         <div className="col-md-4 col-12 column" id="quantity">
-                            <div><h6>Quantity</h6></div>
-                            <br /><br />
+                            <h6>Quantity</h6>
+                            <br />
                             <div className="d-flex plus-minus">
                                 <button
                                     className="btn"

@@ -169,7 +169,7 @@ const labReports = [
                 </select>
               </div>
             </div>
-            <h3>Payment</h3>
+            {/* <h3>Payment</h3>
             <div className="row mt-3">
               <div className="col-md-4 col-12 column">
                 <input className="lab" placeholder="Card Holder Name*" name="cardHolderName" value={formState.cardHolderName} onChange={handleInputChange} />
@@ -196,7 +196,8 @@ const labReports = [
                   ))}
                 </select>
               </div>
-            </div>
+            </div> */}
+            
             {/* <div className="mt-3 d-flex justify-content-center">
               <button className="lab-btn" onClick={handleFormSubmit}>Submit</button>
             </div> */}

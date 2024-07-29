@@ -84,18 +84,19 @@ span a{
 }
 span a:hover{
     text-decoration: underline;
-    color: #000;
+    color: #ff0000;
 }
 .para{
     text-decoration: none;
-    font-size: 10px;
+    font-size: 13px;
     color: red;
     transition: .5s;
-    padding-left: 70%;
+    padding-right: 10px;
+    text-align: right;
 }
 .login-sing{
     font-size: 15px;
-    padding: 15px;
+    text-align: center;
 }
 .error{
     color: red;
@@ -114,5 +115,9 @@ span a:hover{
   
     .submit {
       width: 100%;
+    }
+    .submit:hover{
+        background-color: red;
+        color: white;
     }
   }
