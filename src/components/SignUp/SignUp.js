@@ -1,40 +1,34 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./SignUp.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { SignupAPI } from "../../api.js";
 
 const SignUp = ({ onClose }) => {
   const navigate = useNavigate();
-  const [profileImage, setProfileImage] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [show, setShow] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClose = () => {
     setShow(false);
     onClose();
   };
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
     const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{6,})/;
 
-    if (!email || !password || !confirmPassword) {
+    if (!firstName || !lastName || !email || !password || !confirmPassword) {
       setError("All fields are required.");
       return;
     }
@@ -48,9 +42,47 @@ const SignUp = ({ onClose }) => {
       setError("Passwords do not match.");
       return;
     }
+
     setError("");
-    handleClose(); // Close the modal on successful sign-up
-    navigate("/verification");
+    handleClose();
+
+    navigate('/signup_verification', { state: { email: email } });
+
+
+    setIsLoading(true);
+
+    try {
+      const data = {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+      };
+
+      const response = await SignupAPI(data);
+
+      const responseData = response?.data?.response;
+
+      if (responseData && response?.status === 200) {
+        setError("");
+        handleClose();
+    navigate('/signup_verification', { state: { email: email } });
+
+      } else {
+        if (responseData?.error_msg) {
+          toast.error(responseData.error_msg);
+        } else {
+          toast.error("An error occurred during login. Please try again.");
+        }
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("An error occurred during login. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+
+
   };
 
   return (
@@ -61,6 +93,31 @@ const SignUp = ({ onClose }) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSignUp}>
+
+          <Form.Group className="mb-3" controlId="formFirstname">
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required
+              />
+            </Form.Group>
+
+
+
+            <Form.Group className="mb-3" controlId="formLastname">
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required
+              />
+            </Form.Group>
+
             <Form.Group className="mb-3" controlId="formEmail">
               <Form.Label>Email</Form.Label>
               <Form.Control
@@ -94,7 +151,7 @@ const SignUp = ({ onClose }) => {
             {error && <p className="text-danger">{error}</p>}
             <div className="profile-but d-flex justify-content-around mt-4">
               <button className="signup-btn" type="submit">
-                Sign Up
+                {isLoading ? "Signing up..." : "Sign Up"}
               </button>
             </div>
           </Form>

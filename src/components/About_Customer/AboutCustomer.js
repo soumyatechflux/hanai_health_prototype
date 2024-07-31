@@ -1,27 +1,64 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './about.css';
 import { useNavigate } from 'react-router-dom';
 import { CgProfile } from "react-icons/cg";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getCustomerDataAPI, postCustomerDataAPI } from "../../api.js";
 
 const AboutCustomer = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [form, setForm] = useState({
-    firstName: 'Hanai',
-    lastName: 'Health',
-    gender: 'Female',
-    dob: '2024-01-01',
-    email: 'hanaihealth@123.com',
-    phone: '+91 9870654321',
-    address: 'Nashik, Maharashtra, India',
-    cityCode: '422011',
-    zipCode: '123456',
-    uploadPhoto: '',
+    firstName: '',
+    lastName: '',
+    gender: '',
+    dob: '',
+    email: '',
+    phone: '',
+    address: '',
+    cityCode: '',
+    zipCode: '',
+    uploadPhoto: null,
     bloodGroup: ''
   });
 
   const [fieldErrors, setFieldErrors] = useState({});
   const [profileImage, setProfileImage] = useState(null);
+
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      setIsLoading(true);
+      try {
+        const response = await getCustomerDataAPI();
+        const data = response?.data;
+        setForm({
+          firstName: data.firstname || '',
+          lastName: data.lastname || '',
+          gender: data.gender || '',
+          dob: data.date_of_birth || '',
+          email: data.email || '',
+          phone: data.phone_no || '',
+          address: data.address || '',
+          cityCode: data.cityCode || '',
+          zipCode: data.zipcode || '',
+          uploadPhoto: data.image || null,
+          bloodGroup: data.bloodGroup || ''
+        });
+        if (data.uploadPhoto) {
+          setProfileImage(data.uploadPhoto);
+        }
+      } catch (error) {
+        console.error("Error fetching customer data:", error);
+        toast.error("Failed to fetch customer data.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCustomerData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,7 +75,7 @@ const AboutCustomer = () => {
   const validateForm = () => {
     const newErrors = {};
     Object.keys(form).forEach((key) => {
-      if (!form[key]) {
+      if (!form[key] && key !== 'uploadPhoto') { // Exclude file input from validation
         newErrors[key] = 'This field is required';
       }
     });
@@ -46,23 +83,68 @@ const AboutCustomer = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    navigate('/ruler');
+
+    
     if (validateForm()) {
-      console.log('Form is valid, navigating to /ruler');
-      navigate('/ruler');
+      setIsLoading(true);
+  
+      try {
+        // Create a new FormData object
+        const formData = new FormData();
+  
+        // Append data to FormData
+        formData.append('firstname', form.firstName);
+        formData.append('lastname', form.lastName);
+        formData.append('gender', form.gender);
+        formData.append('date_of_birth', form.dob);
+        formData.append('email', form.email);
+        formData.append('phone_no', form.phone);
+        formData.append('address', form.address);
+        formData.append('city', form.cityCode);
+        formData.append('zipcode', form.zipCode);
+        formData.append('bloodGroup', form.bloodGroup);
+  
+        // Append the file (if present)
+        if (form.uploadPhoto) {
+          formData.append('image', form.uploadPhoto);
+        }
+  
+        // Call the API with the FormData object
+        const response = await postCustomerDataAPI(formData);
+  
+        // Assuming the response has a success indicator
+        if (response.success) { // Change this based on your API response structure
+          toast.success("Customer data submitted successfully.");
+          navigate('/ruler');
+        } else {
+          toast.error(response.message || "Failed to submit customer data.");
+        }
+        
+      } catch (error) {
+        console.error("Error submitting customer data:", error);
+        toast.error("Failed to submit customer data.");
+      } finally {
+        setIsLoading(false);
+      }
     } else {
       console.log('Form is invalid, not navigating');
-      navigate('/ruler');
     }
   };
-
+  
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result);
+        setForm((prevForm) => ({
+          ...prevForm,
+          uploadPhoto: reader.result
+        }));
       };
       reader.readAsDataURL(file);
     }
@@ -120,7 +202,6 @@ const AboutCustomer = () => {
                           className="form-control"
                           value={form.gender}
                           onChange={handleChange}
-                          
                           required
                         >
                           <option value="">Select Gender</option>
@@ -173,20 +254,11 @@ const AboutCustomer = () => {
                     <div className="form-group row">
                       <label className="col-form-label">Blood Group</label>
                       <div className="col-sm-12 custom-select">
-                        {/* <input
-                          type="text"
-                          className="form-control"
-                          name="bloodGroup"
-                          value={form.bloodGroup}
-                          onChange={handleChange}
-                          required
-                        /> */}
                         <select
                           name="bloodGroup"
                           className="form-control"
                           value={form.bloodGroup}
                           onChange={handleChange}
-                          
                           required
                         >
                           <option value="">Select Blood Group</option>
@@ -216,6 +288,7 @@ const AboutCustomer = () => {
                           value={form.email}
                           onChange={handleChange}
                           required
+                          disabled
                         />
                       </div>
                     </div>
@@ -259,7 +332,7 @@ const AboutCustomer = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group row">
-                      <label className="col-form-label">City code</label>
+                      <label className="col-form-label">City</label>
                       <div className="col-sm-12">
                         <input
                           type="text"
@@ -291,7 +364,9 @@ const AboutCustomer = () => {
               </div>
             </div>
             <div className="margin-btn">
-              <button type="submit"  className="btn-start-nxt">Next</button>
+              <button type="submit" className="btn-start-nxt" disabled={isLoading}>
+                {isLoading ? "Submitting..." : "Next"}
+              </button>
             </div>
           </form>
         </div>

@@ -70,6 +70,22 @@ export async function LoginAPI(data) {
 
 
 
+export async function LoginOtpAPI(data) {
+  try {
+    const response = await axiosInstanceNoAuth.post(
+      `/auth/verify-otp`,
+      data
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+
 export async function ForgotPasswordEnterEmailAPI(data) {
   try {
     const response = await axiosInstanceNoAuth.post(
@@ -105,6 +121,94 @@ export async function ForgotPasswordEnterNewPasswordAPI(data) {
   try {
     const response = await axiosInstanceNoAuth.post(
       `/auth/changepassword`,
+      data
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+
+export async function SignupAPI(data) {
+  try {
+    const response = await axiosInstanceNoAuth.post(
+      `/auth/signup`,
+      data
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+export async function SignUpOtpAPI(data) {
+  try {
+    const response = await axiosInstanceNoAuth.post(
+      `/auth/verifysignupotp`,
+      data
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+
+export async function getCustomerDataAPI() {
+  try {
+    const response = await axiosInstance.get(
+      `/user/getformdata`,
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function postCustomerDataAPI(data) {
+  try {
+    const response = await axiosInstance.post(
+      `/user/formdata`,
+      data
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+
+export async function getBMI_RulerDataAPI() {
+  try {
+    const response = await axiosInstance.get(
+      `/health/bmi_info`,
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
+export async function postBMI_RulerDataAPI(data) {
+  try {
+    const response = await axiosInstance.post(
+      `/health/bmi_info`,
       data
     );
 

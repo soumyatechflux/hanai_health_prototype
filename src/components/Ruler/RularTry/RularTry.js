@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import RulerPicker from './RularPicker/RularPicker';
 
 const RularTry = () => {
+
+  
     const handleValueChange = (number) => {
         console.log('Current Value:', number);
       };

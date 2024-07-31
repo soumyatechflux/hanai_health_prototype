@@ -18,6 +18,7 @@ import Ruler from "./components/Ruler/Ruler";
 import Profile from "./components/Profile/Profile";
 import SignUp from './components/SignUp/SignUp'
 import ForgotPassword from "./components/login/ForgotPassword/ForgotPassword";
+import SignupOTPVerification from "./components/Signup otp verification/Verification";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -79,6 +80,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/labreports" element={<Labreports />} />
           <Route path="/verification" element={<Verification />} />
+          <Route path="/signup_verification" element={<SignupOTPVerification />} />
           <Route path="/interest" element={<Interest />} />
           <Route path="/ruler" element={<Ruler />} />
           <Route path="/about" element={<AboutCustomer />} />

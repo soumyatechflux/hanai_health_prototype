@@ -6,9 +6,9 @@ import "./verification.css";
 import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LoginOtpAPI } from "../../api";
+import { SignUpOtpAPI } from "../../api";
 
-const Verification = () => {
+const SignupOTPVerification = () => {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -23,6 +23,7 @@ const Verification = () => {
     if (!code) {
       setError("Please enter the verification code");
     } else {
+
       setError("");
       navigate("/about");
 
@@ -33,7 +34,7 @@ const Verification = () => {
     //       otp: code,
     //     };
 
-    //     const response = await LoginOtpAPI(data);
+    //     const response = await SignUpOtpAPI(data);
     //     if (response.data && response.data.success) {
     //       toast.success("OTP varified.");
     //       setError("");
@@ -119,4 +120,4 @@ const Verification = () => {
   );
 };
 
-export default Verification;
+export default SignupOTPVerification;

@@ -43,9 +43,7 @@ const Login = () => {
       return;
     }
 
-    navigate('/verification');
-
-
+    navigate('/verification', { state: { email: email } });
 
     // setIsLoading(true);
 
@@ -67,7 +65,7 @@ const Login = () => {
     //     localStorage.setItem("isLoggedIn", true);
     //     localStorage.setItem("encryptedToken", encryptedToken);
 
-    //     navigate('/verification');
+    // navigate('/verification', { state: { email: email } });
 
 
     //   } else {
