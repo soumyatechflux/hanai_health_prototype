@@ -17,7 +17,7 @@ const AboutCustomer = () => {
     cityCode: '422011',
     zipCode: '123456',
     uploadPhoto: '',
-    bloodGroup: 'B+'
+    bloodGroup: ''
   });
 
   const [fieldErrors, setFieldErrors] = useState({});
@@ -172,15 +172,33 @@ const AboutCustomer = () => {
                   <div className="col-md-6">
                     <div className="form-group row">
                       <label className="col-form-label">Blood Group</label>
-                      <div className="col-sm-12">
-                        <input
+                      <div className="col-sm-12 custom-select">
+                        {/* <input
                           type="text"
                           className="form-control"
                           name="bloodGroup"
                           value={form.bloodGroup}
                           onChange={handleChange}
                           required
-                        />
+                        /> */}
+                        <select
+                          name="bloodGroup"
+                          className="form-control"
+                          value={form.bloodGroup}
+                          onChange={handleChange}
+                          
+                          required
+                        >
+                          <option value="">Select Blood Group</option>
+                          <option value="A+">A+</option>
+                          <option value="A-">A-</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="AB+">AB+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="O+">O+</option>
+                          <option value="O-">O-</option>
+                        </select>
                       </div>
                     </div>
                     {fieldErrors.bloodGroup && <span className="error">{fieldErrors.bloodGroup}</span>}

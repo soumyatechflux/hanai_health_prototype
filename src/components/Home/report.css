@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 60px;
+    margin-top: 70px;
 }
 
 .search-bar-rep{
@@ -125,7 +125,7 @@
 .text_{
     
         margin-bottom: 0rem;
-        font-size: 7px;
+        font-size: 11px;
         font-weight: 600;
 }
 /* graphhhh */
@@ -142,9 +142,9 @@
     display: flex;
     justify-content: space-between;
   }
-  .cell {
-    /* padding: 0px 35px; */
-  }
+  /* .cell {
+    padding: 0px 35px;
+  } */
   /* .container {
     width: 80%;
     margin: 15px auto;
@@ -310,7 +310,7 @@
     .Activity-level-text{
         margin-top: 20px;
     }
-    .graphhhh{
+    /* .graphhhh{ */
     /* min-width: 110%;
     margin-right: 25px;
     height: 100%;
@@ -331,7 +331,7 @@
     height: 100%;
     padding: 30px;
     margin-bottom: 10px; */
-    }
+    /* } */
     .row-head{
         display: none;
     }
@@ -370,9 +370,7 @@
     font-size: 25px;
     cursor: pointer;
 }
-.take-lab-test-btn{
 
-}
 .take-lab-test-btn {
     padding: 10px 20px;
     border: none;

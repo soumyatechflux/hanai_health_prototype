@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import './Profile.css';
-
 import { FaPencilAlt } from 'react-icons/fa';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom';
 import Navbar from './../Navbar/Navbar'
+// import MainPage from '../MainPage/MainPage';
 // import { FaArrowLeft } from 'react-icons/fa';
 
-const Profile = () => {
+const Profile = ({ updateProfileImage }) => {
   const navigate = useNavigate();
   const [profileImage, setProfileImage] = useState(null);
 
@@ -19,6 +19,7 @@ const Profile = () => {
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result);
+        updateProfileImage(reader.result); // Update image in MainPage
       };
       reader.readAsDataURL(file);
     }
@@ -39,7 +40,7 @@ const Profile = () => {
     cityCode: '422011',
     zipCode: '123456',
     uploadPhoto: '',
-    bloodGroup: 'B+'
+    bloodGroup: ''
   });
 
   const [fieldErrors, setFieldErrors] = useState({});
@@ -145,6 +146,7 @@ const Profile = () => {
                           <option value="">Select Gender</option>
                           <option value="male">Male</option>
                           <option value="female">Female</option>
+                          <option value="other">Other</option>
                         </select>
                       </div>
                     </div>
@@ -169,36 +171,31 @@ const Profile = () => {
                 </div>
                 <div className="row">
                   <div className="col-md-6">
-                    {/* <div className="form-group row">
-                      <label className="col-form-label profile-lable">Upload Photo</label>
-                      <div className="col-sm-12">
-                        <input
-                          type="file"
-                          className="form-control"
-                          name="uploadPhoto"
-                          onChange={handleFileChange}
-                        />
-                        {profileImage ? (
-                          <img src={profileImage} alt="Profile" className="profile-photo" />
-                        ) : (
-                          <CgProfile size={50} style={{ color: 'gray' }} />
-                        )}
-                      </div>
-                    </div> */}
+                   
                     {/* {fieldErrors.uploadPhoto && <span className="error">{fieldErrors.uploadPhoto}</span>} */}
                   </div>
                   <div className="col-md-12">
                     <div className="form-group row">
                       <label className="col-form-label profile-lable">Blood Group</label>
                       <div className="col-sm-12">
-                        <input
-                          type="text"
-                          className="form-control"
+                      <select
                           name="bloodGroup"
+                          className="form-control"
                           value={form.bloodGroup}
                           onChange={handleChange}
+                          
                           required
-                        />
+                        >
+                          <option value="">Select Blood Group</option>
+                          <option value="A+">A+</option>
+                          <option value="A-">A-</option>
+                          <option value="B+">B+</option>
+                          <option value="B-">B-</option>
+                          <option value="AB+">AB+</option>
+                          <option value="AB-">AB-</option>
+                          <option value="O+">O+</option>
+                          <option value="O-">O-</option>
+                        </select>
                       </div>
                     </div>
                     {fieldErrors.bloodGroup && <span className="error">{fieldErrors.bloodGroup}</span>}

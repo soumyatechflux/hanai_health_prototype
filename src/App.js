@@ -1,11 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
+import ScrollToTop from "./ScrollToTop";
+
+import InternetChecker from "./components/Internet Checker/Internet Checker";
 import Cart from "./components/cart/Cart";
 import Orders from './components/Orders/Orders'
-import Labreports from "./components/labreports/Labreports";
-import LoginComponant from "./components/LoginComponant/LoginComponant";
-import Verification from "./components/VerificationComponent/Verification";
+import Labreports from "./components/Labreports/Labreports";
+import Login from "./components/login/Login";
+import Verification from "./components/verification/Verification";
 import Interest from "./components/Interest/Interest";
 import Loading from "./components/Loading/Loading";
 import AddData from "./components/Add Data/Add_Data";
@@ -14,14 +17,64 @@ import Home from "./components/Home/Home";
 import Ruler from "./components/Ruler/Ruler";
 import Profile from "./components/Profile/Profile";
 import SignUp from './components/SignUp/SignUp'
-import ForgotPassword from "./components/LoginComponant/ForgotPassword/ForgotPassword";
-function App() {
-  return (
-    <Router>
-      <div className="App">
+import ForgotPassword from "./components/login/ForgotPassword/ForgotPassword";
 
-        <Routes>
-          <Route path="/" element={<LoginComponant />} />
+function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const encryptedToken = localStorage.getItem("encryptedToken");
+
+    if (isLoggedIn === "true" && encryptedToken) {
+      setLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogin = () => {
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+  };
+
+
+
+
+
+  const [isOffline, setIsOffline] = useState(false);
+
+  useEffect(() => {
+    const handleOffline = () => setIsOffline(true);
+    const handleOnline = () => setIsOffline(false);
+
+    window.addEventListener('offline', handleOffline);
+    window.addEventListener('online', handleOnline);
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      window.removeEventListener('offline', handleOffline);
+      window.removeEventListener('online', handleOnline);
+    };
+  }, []);
+
+
+
+  return (
+    <>
+
+      <div className="App">
+        <BrowserRouter>
+        
+        <ScrollToTop />
+
+        {isOffline && <InternetChecker />}
+
+
+          <Routes>
+
+          <Route path="/" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/home" element={<Home />} />
           <Route path="/labreports" element={<Labreports />} />
@@ -35,9 +88,12 @@ function App() {
           <Route path="/signup" element={<SignUp/>}/>
           <Route path="/forgot_password" element={<ForgotPassword/>}/>
           <Route path="/orders" element={<Orders/>}/>
-        </Routes>
+
+
+          </Routes>
+        </BrowserRouter>
       </div>
-    </Router>
+    </>
   );
 }
 

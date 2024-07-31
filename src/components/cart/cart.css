@@ -29,6 +29,11 @@
     align-items: center;
     
 }
+.column p{
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
 .col-btn{
     margin-top: 20px;
 }
@@ -42,6 +47,7 @@
 #plus,#quant{
     border-right:  1px solid;
     border-radius: 0;
+    padding: 5px 12px;
 }
 .btn{
     font-size: 20px;

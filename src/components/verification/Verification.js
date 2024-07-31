@@ -6,7 +6,22 @@ import { useNavigate } from 'react-router-dom';
 import './verification.css';
 
 const Verification = () => {
+    // const [code, setCode] = useState('');
+    // const [error, setError]=useState('');
 
+    // const handleVerification = (e) => {
+    //     e.preventDefault();
+
+    //     if (!code) {
+    //         setError('Please enter the verification code');
+    //       } else {
+    //         setError('');
+    //       }
+    // {
+    //     console.log(code,error);
+    // }
+    //     setCode("");
+    // };
     const [code, setCode] = useState('123456');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -72,4 +87,4 @@ const Verification = () => {
   )
 }
 
-export default Verification;
+export default Verification

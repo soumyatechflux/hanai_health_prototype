@@ -47,7 +47,7 @@ const Orders = () => {
                                     onClick={(event) => changeQuantity(event, -1)}
                                    
                                 >-</button> */}
-                                <label className="btn" id={QUANTITY_LABEL_ID}>0</label>
+                                <label className="order-btn" id={QUANTITY_LABEL_ID}>0</label>
                                 {/* <button
                                     className="btn"
                                     id={MINUS_BUTTON_ID}

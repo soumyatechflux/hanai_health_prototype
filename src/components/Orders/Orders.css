@@ -43,7 +43,7 @@
     border-right:  1px solid;
     border-radius: 0;
 } */
-.btn{
+.order-btn{
     font-size: 20px;
     font-weight: 700;
 }
@@ -55,7 +55,7 @@ width: 60px;
 }
 
 .d-flex { display: flex; }
-.btn { padding: 5px 10px; cursor: pointer; }
+.order-btn { padding: 0px 10px; cursor: pointer; }
 /* #quantity{
     padding-top: 6px;
 } */

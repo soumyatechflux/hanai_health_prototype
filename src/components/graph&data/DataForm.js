@@ -82,7 +82,7 @@ const DataForm = ({ setShowGraph }) => {
               name="date"
               value={formData.date}
               onChange={handleDateChange}
-              className="input-field date input py-1"
+              className="input-field-data date input py-1"
             />
             <label htmlFor="time" className='py-2'>Time</label>
             <input
@@ -90,7 +90,7 @@ const DataForm = ({ setShowGraph }) => {
               name="time"
               value={formData.time}
               onChange={handleChange}
-              className="input-field time input py-1"
+              className="input-field-data time input py-1"
             />
             <label htmlFor="bloodGlucose" className='py-2'>Blood Glucose</label>
             <input
@@ -98,7 +98,7 @@ const DataForm = ({ setShowGraph }) => {
               name="bloodGlucose"
               value={formData.bloodGlucose}
               onChange={handleChange}
-              className="input-field input py-1"
+              className="input-field-data input py-1"
             />
             <label htmlFor="mealTime" className='py-2'>Meal Time</label>
             <input
@@ -106,7 +106,7 @@ const DataForm = ({ setShowGraph }) => {
               name="mealTime"
               value={formData.mealTime}
               onChange={handleChange}
-              className="input-field input py-1"
+              className="input-field-data input py-1"
             />
             <label htmlFor="medication" className='py-2'>Medication</label>
             <input
@@ -114,7 +114,7 @@ const DataForm = ({ setShowGraph }) => {
               name="medication"
               value={formData.medication}
               onChange={handleChange}
-              className="input-field input py-1"
+              className="input-field-data input py-1"
             />
             <button type="submit" className='data-submit-btn' onClick={handleSubmit}>Save</button>
           </form>

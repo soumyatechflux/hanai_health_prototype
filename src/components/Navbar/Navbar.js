@@ -10,6 +10,7 @@ const MainPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [selectedPath, setSelectedPath] = useState('');
+    const [profileImage, setProfileImage] = useState(""); // State for profile image
 
     useEffect(() => {
         setSelectedPath(location.pathname);
@@ -19,6 +20,10 @@ const MainPage = () => {
         navigate(path);
         setSelectedPath(path);
     };
+
+    const updateProfileImage = (newImage) => {
+        setProfileImage(newImage);
+      };
 
     const [sidebarHeight, setSidebarHeight] = useState('100vh');
     useEffect(() => {
@@ -38,7 +43,7 @@ const MainPage = () => {
       }, []);
 
     // const logo = './Capture.PNG';
-    const profileImage = "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
+    // const profileImage = "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
     const name = "Hanai Health";
     // const status = "Logout";
 
@@ -70,7 +75,7 @@ const MainPage = () => {
                                 aria-expanded="false"
                             >
                                 <img
-                                    src={profileImage}
+                                    src={updateProfileImage}
                                     width={40}
                                     height={40}
                                     className="rounded-circle"

@@ -45,17 +45,16 @@
     width: 100%;
   }
   
-  .custom-select select {
-    /* width: 100%;
+  /* .custom-select select {
+    width: 100%;
     appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none; */
-    /* padding: 10px; */
-    /*  */
-    /* background: white; */
-    /* border: 1px solid #ced4da; */
-    /* border-radius: 4px; */
-  }
+    -moz-appearance: none; 
+     padding: 10px; 
+     background: white; 
+     border: 1px solid #ced4da; 
+     border-radius: 4px;
+  } */
   
   /* Add padding to leave space for the icon */
   .custom-select select {
