@@ -6,7 +6,7 @@ import ScrollToTop from "./ScrollToTop";
 import InternetChecker from "./components/Internet Checker/Internet Checker";
 import Cart from "./components/cart/Cart";
 import Orders from './components/Orders/Orders'
-import Labreports from "./components/Labreports/Labreports";
+import LabreportsComponant from "./components/Labreports/Labreports";
 import Login from "./components/login/Login";
 import Verification from "./components/verification/Verification";
 import Interest from "./components/Interest/Interest";
@@ -78,7 +78,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/labreports" element={<Labreports />} />
+          <Route path="/labreports" element={<LabreportsComponant />} />
           <Route path="/verification" element={<Verification />} />
           <Route path="/signup_verification" element={<SignupOTPVerification />} />
           <Route path="/interest" element={<Interest />} />
