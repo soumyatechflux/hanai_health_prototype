@@ -6,7 +6,7 @@ import ScrollToTop from "./ScrollToTop";
 import InternetChecker from "./components/Internet Checker/Internet Checker";
 import Cart from "./components/cart/Cart";
 import Orders from './components/Orders/Orders'
-import LabreportsComponant from "./components/Labreports/Labreports";
+import LabreportsComponant from "./components/LabreportsComponant/LabreportsComponant";
 import Login from "./components/login/Login";
 import Verification from "./components/verification/Verification";
 import Interest from "./components/Interest/Interest";

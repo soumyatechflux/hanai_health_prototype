@@ -15,7 +15,7 @@ const labReports = [
   { test: 'Vitamin B12', date: '10/02/2024', time: '11:00 AM' },
 ];
 
-  const Labreports = () => {
+  const LabreportsComponant = () => {
 
     const labs = ['Lab 1', 'Lab 2', 'Lab 3'];
   const testTypes = ['Blood Test', 'Urine Test', 'X-ray'];
@@ -215,4 +215,4 @@ const labReports = [
   );
 }
 
-export default Labreports;
+export default LabreportsComponant;
