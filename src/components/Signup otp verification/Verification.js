@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SignUpOtpAPI } from "../../api";
+import { encryptData } from "../CRYPTO/crypto";
 
 const SignupOTPVerification = () => {
   const [code, setCode] = useState("");
@@ -23,36 +24,47 @@ const SignupOTPVerification = () => {
     if (!code) {
       setError("Please enter the verification code");
     } else {
+      // setError("");
+      // navigate("/about");
 
-      setError("");
-      navigate("/about");
+      setIsLoading(true);
+      try {
+        const data = {
+          email: email,
+          otp: code,
+        };
 
-    //   setIsLoading(true);
-    //   try {
-    //     const data = {
-    //       email: email,
-    //       otp: code,
-    //     };
+        const response = await SignUpOtpAPI(data);
+        if (response?.data && response?.data?.response === true) {
+          const token = response?.data?.data?.token;
+          const encryptedToken = encryptData(token);
 
-    //     const response = await SignUpOtpAPI(data);
-    //     if (response.data && response.data.success) {
-    //       toast.success("OTP varified.");
-    //       setError("");
-    //       navigate("/about");
-    //     } else {
-    //       toast.error(
-    //         response.data.message || "Failed to varify OTP. Please try again."
-    //       );
-    //     }
-    //   } catch (error) {
-    //     console.error("Error varifying OTP:", error);
-    //     toast.error("An error occurred while varifying OTP. Please try again.");
-    //   } finally {
-    //     setIsLoading(false);
-    //   }
+          localStorage.clear();
+          localStorage.setItem("isUserLoggedIn", true);
+          localStorage.setItem(
+            "encryptedTokenForUserOfHanaiHealth",
+            encryptedToken
+          );
 
+          toast.success("OTP verified successfully.");
+
+          setError("");
+          navigate("/about", { state: { email: email } });
 
 
+
+        } else {
+          toast.error(
+            response?.data?.error_msg ||
+              "Failed to varify OTP. Please try again."
+          );
+        }
+      } catch (error) {
+        console.error("Error varifying OTP:", error);
+        toast.error("An error occurred while varifying OTP. Please try again.");
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -76,7 +88,7 @@ const SignupOTPVerification = () => {
               <div className="verify_heading">
                 <h2>Verify that it's you</h2>
                 <p>
-                  We sent a verification code to the phone number attached to
+                  We sent a verification code to the email number attached to
                   your account
                 </p>
               </div>

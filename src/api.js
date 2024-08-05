@@ -35,10 +35,12 @@ axiosInstance.interceptors.response.use(
 );
 
 export function authorizeMe() {
-  const encryptedToken = localStorage.getItem("encryptedToken");
+  const encryptedToken = localStorage.getItem("encryptedTokenForUserOfHanaiHealth");
 
   const token = decryptData(encryptedToken);
 
+  // console.log(token,"tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn")
+  
   if (token && token !== null && token !== undefined) {
     axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {

@@ -12,26 +12,26 @@ const EnterEmail = ({ show, handleClose ,onEmailSubmit}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        onEmailSubmit(email);
+        // onEmailSubmit(email);
 
 
-        // setIsLoading(true);
+        setIsLoading(true);
 
-        // try {
-        //     const response = await ForgotPasswordEnterEmailAPI({ email });
-        //     if (response.data && response.data.success) {
-        //         toast.success("OTP sent to your email.");
-        //         // handleClose();
-        //         onEmailSubmit(email);
-        //     } else {
-        //         toast.error(response.data.message || "Failed to send OTP. Please try again.");
-        //     }
-        // } catch (error) {
-        //     console.error("Error sending OTP:", error);
-        //     toast.error("An error occurred while sending OTP. Please try again.");
-        // } finally {
-        //     setIsLoading(false);
-        // }
+        try {
+            const response = await ForgotPasswordEnterEmailAPI({ email });
+            if (response?.data && response?.data?.response === true) {
+                toast.success("OTP sent to your email.");
+                // handleClose();
+                onEmailSubmit(email);
+            } else {
+                toast.error(response?.data?.error_msg || "Failed to send OTP. Please try again.");
+            }
+        } catch (error) {
+            console.error("Error sending OTP:", error);
+            toast.error("An error occurred while sending OTP. Please try again.");
+        } finally {
+            setIsLoading(false);
+        }
 
 
     };

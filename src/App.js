@@ -24,8 +24,8 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const encryptedToken = localStorage.getItem("encryptedToken");
+    const isLoggedIn = localStorage.getItem("isUserLoggedIn");
+    const encryptedToken = localStorage.getItem("encryptedTokenForUserOfHanaiHealth");
 
     if (isLoggedIn === "true" && encryptedToken) {
       setLoggedIn(true);

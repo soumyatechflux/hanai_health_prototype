@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import longlogo from "./longlogo.PNG";
 import "./Login.css";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import ForgotPasswordFlow from "./ForgotPassword/ForgotPassword";
 import SignUp from "../SignUp/SignUp";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import {LoginAPI} from '../../api.js'
-import { encryptData } from "../CRYPTO/crypto";
+import { LoginAPI } from "../../api.js";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [showSignUpModal, setShowSignUpModal] = useState(false); 
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -26,63 +25,53 @@ const Login = () => {
     let valid = true;
 
     if (!email) {
-      setEmailError('Email is required');
+      setEmailError("Email is required");
       valid = false;
     } else {
-      setEmailError('');
+      setEmailError("");
     }
 
     if (!password) {
-      setPasswordError('Password is required');
+      setPasswordError("Password is required");
       valid = false;
     } else {
-      setPasswordError('');
+      setPasswordError("");
     }
 
     if (!valid) {
       return;
     }
 
-    navigate('/verification', { state: { email: email } });
-
-    // setIsLoading(true);
-
-    // try {
-    //   const data = {
-    //     email: email,
-    //     password: password
-    //   };
-
-    //   const loginResponse = await LoginAPI(data);
-
-    //   const responseData = loginResponse?.data?.response;
-
-    //   if (responseData && responseData?.response === true) {
-    //     const token = responseData.token;
-    //     const encryptedToken = encryptData(token);
-
-    //     localStorage.clear();
-    //     localStorage.setItem("isLoggedIn", true);
-    //     localStorage.setItem("encryptedToken", encryptedToken);
-
     // navigate('/verification', { state: { email: email } });
 
+    setIsLoading(true);
 
-    //   } else {
-    //     if (responseData?.error_msg) {
-    //       toast.error(responseData.error_msg);
-    //     } else {
-    //       toast.error("An error occurred during login. Please try again.");
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.error("Login failed:", error);
-    //   toast.error("An error occurred during login. Please try again.");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+    try {
+      const data = {
+        email: email,
+        password: password,
+      };
 
+      const response = await LoginAPI(data);
 
+      const responseData = response?.data;
+
+      if (responseData?.response === true) {
+        toast.success(responseData?.success_msg);
+        navigate("/verification", { state: { email: email } });
+      } else {
+        if (responseData?.error_msg) {
+          toast.error(responseData?.error_msg);
+        } else {
+          toast.error("An error occurred during login. Please try again.");
+        }
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("An error occurred during login. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleForgotPassword = () => {
@@ -90,14 +79,12 @@ const Login = () => {
   };
 
   const togglePasswordVisibility = () => {
-    setPasswordVisible(prevState => !prevState);
+    setPasswordVisible((prevState) => !prevState);
   };
 
   const openSignUpModal = () => {
     setShowSignUpModal(true);
   };
-
-
 
   return (
     <div>
@@ -142,21 +129,39 @@ const Login = () => {
                   </button>
                 </div>
                 {passwordError && <div className="error">{passwordError}</div>}
-                
+
                 <div className="para">
                   <span>
-                    <button type="button" onClick={handleForgotPassword} className="forgot-password-link" style={{border:"none", color:"red",backgroundColor:'#eaeaea'}}>
+                    <button
+                      type="button"
+                      onClick={handleForgotPassword}
+                      className="forgot-password-link"
+                      style={{
+                        border: "none",
+                        color: "red",
+                        backgroundColor: "#eaeaea",
+                      }}
+                    >
                       Forgot Password
                     </button>
                   </span>
                 </div>
                 <div className="input-submit">
-                  <button type="submit" className="submit"> {isLoading ? 'Logging in...' : 'Login'}</button>
+                  <button type="submit" className="submit" disabled={isLoading}>
+                    {" "}
+                    {isLoading ? "Logging in..." : "Login"}
+                  </button>
                 </div>
                 <div className="login-sing">
                   <span>
-                    Don't have an account? <button type="button" onClick={openSignUpModal} className="sign-btn">Sign Up</button>
-                    
+                    Don't have an account?{" "}
+                    <button
+                      type="button"
+                      onClick={openSignUpModal}
+                      className="sign-btn"
+                    >
+                      Sign Up
+                    </button>
                   </span>
                 </div>
               </form>
@@ -170,7 +175,7 @@ const Login = () => {
       {showSignUpModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <SignUp onClose={() => setShowSignUpModal(false)}/>
+            <SignUp onClose={() => setShowSignUpModal(false)} />
           </div>
         </div>
       )}

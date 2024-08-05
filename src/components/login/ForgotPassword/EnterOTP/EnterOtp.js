@@ -12,32 +12,32 @@ const EnterOtp = ({ show, handleClose, onOTPSubmit, email }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    onOTPSubmit(otp);
+    // onOTPSubmit(otp);
 
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    // try {
-    //     const data = {
-    //         email: email,
-    //         otp: otp
-    //     };
+    try {
+        const data = {
+            email: email,
+            otp: otp
+        };
 
-    //     const response = await ForgotPasswordEnterOtpAPI(data);
-    //   if (response.data && response.data.success) {
-    //     toast.success("OTP varified.");
-    //     // handleClose();
-    //     onOTPSubmit(otp);
-    //   } else {
-    //     toast.error(
-    //       response.data.message || "Failed to varify OTP. Please try again."
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.error("Error varifying OTP:", error);
-    //   toast.error("An error occurred while varifying OTP. Please try again.");
-    // } finally {
-    //   setIsLoading(false);
-    // }
+        const response = await ForgotPasswordEnterOtpAPI(data);
+        if (response?.data && response?.data?.response === true) {
+        toast.success(  response?.data?.success_msg);
+        // handleClose();
+        onOTPSubmit(otp);
+      } else {
+        toast.error(
+          response?.data?.error_msg || "Failed to varify OTP. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Error varifying OTP:", error);
+      toast.error("An error occurred while varifying OTP. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
 
 
   };

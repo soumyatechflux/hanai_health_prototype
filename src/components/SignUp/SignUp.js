@@ -46,27 +46,29 @@ const SignUp = ({ onClose }) => {
     setError("");
     handleClose();
 
-    navigate('/signup_verification', { state: { email: email } });
+    // navigate('/signup_verification', { state: { email: email } });
 
 
     setIsLoading(true);
 
     try {
       const data = {
-        firstName: firstName,
-        lastName: lastName,
+        // firstName: firstName,
+        // lastName: lastName,
+        name:firstName + lastName ,
         email: email,
         password: password,
       };
 
       const response = await SignupAPI(data);
 
-      const responseData = response?.data?.response;
+      const responseData = response?.data?.response === true;
 
-      if (responseData && response?.status === 200) {
+      if (responseData && response?.status === 200 && response?.data?.success_msg === "Account Created Successfully" ) {
         setError("");
-        handleClose();
-    navigate('/signup_verification', { state: { email: email } });
+        // handleClose();
+        toast.success("OTP sended to your mail.");
+        navigate('/signup_verification', { state: { email: email } });
 
       } else {
         if (responseData?.error_msg) {

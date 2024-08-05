@@ -13,40 +13,48 @@ const ResetPassword = ({ show, handleClose, onPasswordReset, email }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setError("");
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    onPasswordReset(password);
+    // onPasswordReset(password);
 
-    // setIsLoading(true);
+    setIsLoading(true);
 
-    // try {
-    //   const data = {
-    //     email: email,
-    //     password: password,
-    //     confirmpass: confirmPassword,
-    //   };
+    try {
+      const data = {
+        email: email,
+        password: password,
+        confirmpass: confirmPassword,
+      };
 
-    //   const response = await ForgotPasswordEnterNewPasswordAPI(data);
-    //   if (response.data && response.data.success) {
-    //     toast.success("Password updated successfully.");
-    //     // handleClose();
-    //     onPasswordReset(password);
-    //   } else {
-    //     toast.error(
-    //       response.data.message || "Failed to update password. Please try again."
-    //     );
-    //   }
-    // } catch (error) {
-    //   console.error("Error updating password:", error);
-    //   toast.error("An error occurred while updating password. Please try again.");
-    // } finally {
-    //   setIsLoading(false);
-    // }
-
-
+      const response = await ForgotPasswordEnterNewPasswordAPI(data);
+      if (response?.data && response?.data?.response === true) {
+        toast.success(response?.data?.success_msg);
+        setError(""); // Clear any previous errors
+        onPasswordReset(password);
+      } else {
+        setError(
+          response?.data?.error_msg ||
+            "Failed to update password. Please try again."
+        );
+        toast.error(
+          response?.data?.error_msg ||
+            "Failed to update password. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      setError("An error occurred while updating password. Please try again.");
+      toast.error(
+        "An error occurred while updating password. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

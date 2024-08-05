@@ -1,62 +1,64 @@
-import React, { useEffect, useState } from 'react';
-import './about.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./about.css";
+import { useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getCustomerDataAPI, postCustomerDataAPI } from "../../api.js";
+import { useLocation } from "react-router-dom";
 
 const AboutCustomer = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
+  const location = useLocation();
+  const email = location.state?.email;
+
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    gender: '',
-    dob: '',
-    email: '',
-    phone: '',
-    address: '',
-    cityCode: '',
-    zipCode: '',
+    firstName: "",
+    lastName: "",
+    gender: "",
+    dob: "",
+    phone: "",
+    address: "",
+    cityCode: "",
+    zipCode: "",
+    bloodGroup: "",
     uploadPhoto: null,
-    bloodGroup: ''
   });
 
   const [fieldErrors, setFieldErrors] = useState({});
   const [profileImage, setProfileImage] = useState(null);
 
-  useEffect(() => {
-    const fetchCustomerData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await getCustomerDataAPI();
-        const data = response?.data;
+  const fetchCustomerData = async () => {
+    setIsLoading(true);
+    try {
+      const response = await getCustomerDataAPI();
+      if(response?.data?.response === true){
+        const data = response?.data?.data;
         setForm({
-          firstName: data.firstname || '',
-          lastName: data.lastname || '',
-          gender: data.gender || '',
-          dob: data.date_of_birth || '',
-          email: data.email || '',
-          phone: data.phone_no || '',
-          address: data.address || '',
-          cityCode: data.cityCode || '',
-          zipCode: data.zipcode || '',
-          uploadPhoto: data.image || null,
-          bloodGroup: data.bloodGroup || ''
+          firstName: data?.firstname || "",
+          lastName: data?.lastname || "",
+          gender: data?.gender || "",
+          dob: data?.date_of_birth || "",
+          phone: data?.phone_no || "",
+          address: data?.address || "",
+          cityCode: data?.cityCode || "",
+          zipCode: data?.zipcode || "",
+          bloodGroup: data?.bloodGroup || "",
+          uploadPhoto: null,  // Initialize as null
         });
-        if (data.uploadPhoto) {
-          setProfileImage(data.uploadPhoto);
-        }
-      } catch (error) {
-        console.error("Error fetching customer data:", error);
-        toast.error("Failed to fetch customer data.");
-      } finally {
-        setIsLoading(false);
+        setProfileImage(data?.image || null);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+      toast.error("Failed to fetch customer data.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCustomerData();
   }, []);
 
@@ -68,15 +70,15 @@ const AboutCustomer = () => {
     }));
     setFieldErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: '', // Clear error when user starts typing
+      [name]: "", // Clear error when user starts typing
     }));
   };
 
   const validateForm = () => {
     const newErrors = {};
     Object.keys(form).forEach((key) => {
-      if (!form[key] && key !== 'uploadPhoto') { // Exclude file input from validation
-        newErrors[key] = 'This field is required';
+      if (!form[key] && key !== 'uploadPhoto') {
+        newErrors[key] = "This field is required";
       }
     });
     setFieldErrors(newErrors);
@@ -85,75 +87,67 @@ const AboutCustomer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    navigate('/ruler');
 
-    
     if (validateForm()) {
       setIsLoading(true);
-  
       try {
-        // Create a new FormData object
         const formData = new FormData();
-  
-        // Append data to FormData
-        formData.append('firstname', form.firstName);
-        formData.append('lastname', form.lastName);
-        formData.append('gender', form.gender);
-        formData.append('date_of_birth', form.dob);
-        formData.append('email', form.email);
-        formData.append('phone_no', form.phone);
-        formData.append('address', form.address);
-        formData.append('city', form.cityCode);
-        formData.append('zipcode', form.zipCode);
-        formData.append('bloodGroup', form.bloodGroup);
-  
-        // Append the file (if present)
+        formData.append("firstname", form?.firstName);
+        formData.append("lastname", form?.lastName);
+        formData.append("gender", form?.gender);
+        formData.append("date_of_birth", form?.dob);
+        formData.append("phone_no", form?.phone);
+        formData.append("address", form?.address);
+        formData.append("city", form?.cityCode);
+        formData.append("zipcode", form?.zipCode);
+        // formData.append("bloodGroup", form?.bloodGroup);
+        // formData.append("email", email);
+
         if (form.uploadPhoto) {
-          formData.append('image', form.uploadPhoto);
+          formData.append("image", form.uploadPhoto); 
         }
-  
-        // Call the API with the FormData object
+
         const response = await postCustomerDataAPI(formData);
-  
-        // Assuming the response has a success indicator
-        if (response.success) { // Change this based on your API response structure
-          toast.success("Customer data submitted successfully.");
-          navigate('/ruler');
+
+        if (response?.data?.response === true) {
+          toast.success("User data submitted successfully.");
+          navigate("/ruler");
+          fetchCustomerData();
         } else {
-          toast.error(response.message || "Failed to submit customer data.");
+          toast.error(response?.data?.error_msg || "Failed to submit user data.");
         }
-        
       } catch (error) {
-        console.error("Error submitting customer data:", error);
-        toast.error("Failed to submit customer data.");
+        console.error("Error submitting user data:", error);
+        toast.error("Failed to submit user data.");
       } finally {
         setIsLoading(false);
       }
     } else {
-      console.log('Form is invalid, not navigating');
+      console.log("Form is invalid, not navigating");
     }
   };
-  
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      setForm((prevForm) => ({
+        ...prevForm,
+        uploadPhoto: file,  // Store the file object
+      }));
       const reader = new FileReader();
       reader.onloadend = () => {
         setProfileImage(reader.result);
-        setForm((prevForm) => ({
-          ...prevForm,
-          uploadPhoto: reader.result
-        }));
       };
       reader.readAsDataURL(file);
     }
   };
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <div className="about-container">
       <section className="content-about">
-        <header className='about-header'>Let us know more about you</header>
+        <header className="about-header">Let us know more about you</header>
         <div className="grid-margin">
           <form className="form-sample" onSubmit={handleSubmit}>
             <div className="card">
@@ -173,7 +167,9 @@ const AboutCustomer = () => {
                         />
                       </div>
                     </div>
-                    {fieldErrors.firstName && <span className="error">{fieldErrors.firstName}</span>}
+                    {fieldErrors.firstName && (
+                      <span className="error">{fieldErrors.firstName}</span>
+                    )}
                   </div>
                   <div className="col-md-6">
                     <div className="form-group row">
@@ -189,14 +185,16 @@ const AboutCustomer = () => {
                         />
                       </div>
                     </div>
-                    {fieldErrors.lastName && <span className="error">{fieldErrors.lastName}</span>}
+                    {fieldErrors.lastName && (
+                      <span className="error">{fieldErrors.lastName}</span>
+                    )}
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group row">
-                      <label className="col-form-label" >Gender</label>
-                      <div className="col-sm-12 custom-select" >
+                      <label className="col-form-label">Gender</label>
+                      <div className="col-sm-12 custom-select">
                         <select
                           name="gender"
                           className="form-control"
@@ -211,7 +209,9 @@ const AboutCustomer = () => {
                         </select>
                       </div>
                     </div>
-                    {fieldErrors.gender && <span className="error">{fieldErrors.gender}</span>}
+                    {fieldErrors.gender && (
+                      <span className="error">{fieldErrors.gender}</span>
+                    )}
                   </div>
                   <div className="col-md-6">
                     <div className="form-group row">
@@ -221,13 +221,16 @@ const AboutCustomer = () => {
                           type="date"
                           className="form-control"
                           name="dob"
+                          max={today}
                           value={form.dob}
                           onChange={handleChange}
                           required
                         />
                       </div>
                     </div>
-                    {fieldErrors.dob && <span className="error">{fieldErrors.dob}</span>}
+                    {fieldErrors.dob && (
+                      <span className="error">{fieldErrors.dob}</span>
+                    )}
                   </div>
                 </div>
                 <div className="row">
@@ -242,9 +245,13 @@ const AboutCustomer = () => {
                           onChange={handleFileChange}
                         />
                         {profileImage ? (
-                          <img src={profileImage} alt="Profile" className="profile-photo" />
+                          <img
+                            src={profileImage}
+                            alt="Profile"
+                            className="profile-photo"
+                          />
                         ) : (
-                          <CgProfile size={50} style={{ color: 'gray' }} />
+                          <CgProfile size={50} style={{ color: "gray" }} />
                         )}
                       </div>
                     </div>
@@ -273,7 +280,9 @@ const AboutCustomer = () => {
                         </select>
                       </div>
                     </div>
-                    {fieldErrors.bloodGroup && <span className="error">{fieldErrors.bloodGroup}</span>}
+                    {fieldErrors.bloodGroup && (
+                      <span className="error">{fieldErrors.bloodGroup}</span>
+                    )}
                   </div>
                 </div>
                 <div className="row">
@@ -285,14 +294,15 @@ const AboutCustomer = () => {
                           type="email"
                           className="form-control"
                           name="email"
-                          value={form.email}
-                          onChange={handleChange}
+                          value={email}
                           required
                           disabled
                         />
                       </div>
                     </div>
-                    {fieldErrors.email && <span className="error">{fieldErrors.email}</span>}
+                    {fieldErrors.email && (
+                      <span className="error">{fieldErrors.email}</span>
+                    )}
                   </div>
                   <div className="col-md-6">
                     <div className="form-group row">
@@ -308,7 +318,9 @@ const AboutCustomer = () => {
                         />
                       </div>
                     </div>
-                    {fieldErrors.phone && <span className="error">{fieldErrors.phone}</span>}
+                    {fieldErrors.phone && (
+                      <span className="error">{fieldErrors.phone}</span>
+                    )}
                   </div>
                 </div>
                 <div className="row">
@@ -326,7 +338,9 @@ const AboutCustomer = () => {
                         />
                       </div>
                     </div>
-                    {fieldErrors.address && <span className="error">{fieldErrors.address}</span>}
+                    {fieldErrors.address && (
+                      <span className="error">{fieldErrors.address}</span>
+                    )}
                   </div>
                 </div>
                 <div className="row">
@@ -343,7 +357,9 @@ const AboutCustomer = () => {
                         />
                       </div>
                     </div>
-                    {fieldErrors.cityCode && <span className="error">{fieldErrors.cityCode}</span>}
+                    {fieldErrors.cityCode && (
+                      <span className="error">{fieldErrors.cityCode}</span>
+                    )}
                   </div>
                   <div className="col-md-6">
                     <div className="form-group row">
@@ -358,13 +374,19 @@ const AboutCustomer = () => {
                         />
                       </div>
                     </div>
-                    {fieldErrors.zipCode && <span className="error">{fieldErrors.zipCode}</span>}
+                    {fieldErrors.zipCode && (
+                      <span className="error">{fieldErrors.zipCode}</span>
+                    )}
                   </div>
                 </div>
               </div>
             </div>
             <div className="margin-btn">
-              <button type="submit" className="btn-start-nxt" disabled={isLoading}>
+              <button
+                type="submit"
+                className="btn-start-nxt"
+                disabled={isLoading}
+              >
                 {isLoading ? "Submitting..." : "Next"}
               </button>
             </div>
