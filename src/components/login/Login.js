@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import longlogo from "./longlogo.PNG";
+import longlogo from "../images/Etern logo.jpg";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import ForgotPasswordFlow from "./ForgotPassword/ForgotPassword";

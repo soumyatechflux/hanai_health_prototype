@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 // import './MainPage.css';
-import logo from "./Capture.PNG";
+import logo from "../images/Modern Initial Font Logo.png";
 import Dropdown from "react-bootstrap/Dropdown";
 // import Profile from '../Profile/Profile'
 

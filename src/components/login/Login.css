@@ -11,10 +11,10 @@
     padding: 10%;
 }
 .logo-img{
-    width: 90%;
+    width: 100%;
 }
 .left-side{
-    background-color: #f8f8f8;
+    background-color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,7 +119,7 @@ span button:hover{
 }
 @media only screen and (max-width: 768px) {
     .logo-img {
-      width: 70%;
+      width: 100%;
     }
   
     .col-md-6 {

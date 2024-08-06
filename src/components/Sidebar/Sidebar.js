@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Sidebar.css';
-import logo from './Capture.PNG';
+import logo from '../images/Modern Initial Font Logo.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 
