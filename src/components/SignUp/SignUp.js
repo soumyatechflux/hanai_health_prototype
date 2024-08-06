@@ -44,7 +44,7 @@ const SignUp = ({ onClose }) => {
     }
 
     setError("");
-    handleClose();
+    // handleClose();
 
     // navigate('/signup_verification', { state: { email: email } });
 
@@ -55,24 +55,22 @@ const SignUp = ({ onClose }) => {
       const data = {
         // firstName: firstName,
         // lastName: lastName,
-        name:firstName + lastName ,
+        name:firstName + " " + lastName,
         email: email,
         password: password,
       };
 
       const response = await SignupAPI(data);
 
-      const responseData = response?.data?.response === true;
-
-      if (responseData && response?.status === 200 && response?.data?.success_msg === "Account Created Successfully" ) {
+      if (response?.data?.response === true && response?.data?.success_msg === "OTP has been sent") {
         setError("");
         // handleClose();
         toast.success("OTP sended to your mail.");
         navigate('/signup_verification', { state: { email: email } });
 
       } else {
-        if (responseData?.error_msg) {
-          toast.error(responseData.error_msg);
+        if (response?.data?.error_msg) {
+          toast.error(response?.data?.error_msg);
         } else {
           toast.error("An error occurred during login. Please try again.");
         }

@@ -18,7 +18,7 @@ import Ruler from "./components/Ruler/Ruler";
 import Profile from "./components/Profile/Profile";
 import SignUp from './components/SignUp/SignUp'
 import ForgotPassword from "./components/login/ForgotPassword/ForgotPassword";
-import SignupOTPVerification from "./components/Signup otp verification/Verification";
+import SignupOTPVerification from "./components/Signup otp verification/SignupOTPVerification";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
