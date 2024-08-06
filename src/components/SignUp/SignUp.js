@@ -48,26 +48,27 @@ const SignUp = ({ onClose }) => {
 
     // navigate('/signup_verification', { state: { email: email } });
 
-
     setIsLoading(true);
 
     try {
       const data = {
         // firstName: firstName,
         // lastName: lastName,
-        name:firstName + " " + lastName,
+        name: firstName + " " + lastName,
         email: email,
         password: password,
       };
 
       const response = await SignupAPI(data);
 
-      if (response?.data?.response === true && response?.data?.success_msg === "OTP has been sent") {
+      if (
+        response?.data?.response === true &&
+        response?.data?.success_msg === "OTP has been sent"
+      ) {
         setError("");
         // handleClose();
         toast.success("OTP sended to your mail.");
-        navigate('/signup_verification', { state: { email: email } });
-
+        navigate("/signup_verification", { state: { email: email } });
       } else {
         if (response?.data?.error_msg) {
           toast.error(response?.data?.error_msg);
@@ -81,8 +82,6 @@ const SignUp = ({ onClose }) => {
     } finally {
       setIsLoading(false);
     }
-
-
   };
 
   return (
@@ -93,8 +92,7 @@ const SignUp = ({ onClose }) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleSignUp}>
-
-          <Form.Group className="mb-3" controlId="formFirstname">
+            <Form.Group className="mb-3" controlId="formFirstname">
               <Form.Label>First Name</Form.Label>
               <Form.Control
                 type="text"
@@ -104,8 +102,6 @@ const SignUp = ({ onClose }) => {
                 required
               />
             </Form.Group>
-
-
 
             <Form.Group className="mb-3" controlId="formLastname">
               <Form.Label>Last Name</Form.Label>

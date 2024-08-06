@@ -1,165 +1,96 @@
-// import React, { useState } from "react";
-// import "./interest.css";
-
-// const interests = [
-//   "Blood Pressure",
-//   "Cardio Fitness",
-//   "Diabetes",
-//   "Anxiety",
-//   "Back Pain",
-//   "Depression",
-//   "Cold",
-//   "Flu(Influenza)",
-//   "High Cholesterol",
-//   "Hepatitis",
-//   "Juvenile Diabetes",
-//   "Kidney Failure",
-//   "Asthma",
-//   "knee Pain",
-//   "Nicotine Withdrawal",
-//   "Obesity",
-//   "Sleep Disorder",
-//   "TB (Tuberculosis)",
-//   "Urinary Tract Information",
-//   "Vertigo",
-//   "Vitamin B12 Deficiency",
-//   "Lactose Intolerance",
-//   "Meningitis",
-//   "Other",
-// ];
-
-// const Interest = () => {
-// //   const navigate = useNavigate();
-//   const [selectedInterests, setSelectedInterests] = useState([
-//     "Kidney Failure",
-//     "Back Pain",
-//     "Cold",
-//     "Asthma",
-//   ]);
-
-//   const toggleInterest = (interest) => {
-//     setSelectedInterests((prevSelected) =>
-//       prevSelected.includes(interest)
-//         ? prevSelected.filter((item) => item !== interest)
-//         : [...prevSelected, interest]
-//     );
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-    
-//   };
-
-//   return (
-//     <div>
-//       <section className="content py-3 pe-5" style={{  backgroundColor:"#eaeaea" , height:"100vh" }}>
-//         <header className="header-interest" style={{ marginTop: "20px", marginBottom: "20px" }}>
-//           Choose your Interest
-//         </header>
-//         <div
-//           className="col-12 grid-margin"
-//           style={{
-//             margin: "0 auto",
-//           }}
-//         >
-//           <div className="">
-//             <div className="card-body">
-//               <form className="form-sample" onSubmit={handleSubmit}>
-//                 <div className="main-add">
-//                   <div className="row">
-//                     {interests.map((interest, index) => (
-//                       <div className="col-6 col-md-3" key={index}>
-//                         <button
-//                           type="button"
-//                           className={`btn-select-mul ${
-//                             selectedInterests.includes(interest)
-//                               ? "selected"
-//                               : ""
-//                           }`}
-//                           onClick={() => toggleInterest(interest)}
-//                         >
-//                           {interest}
-//                         </button>
-//                       </div>
-//                     ))}
-//                   </div>
-//                 </div>
-//                 <div className="margin-btn">
-//                   <button type="submit" className="btn-start-interest nxt">
-//                     Let's Start
-//                   </button>
-//                 </div>
-//               </form>
-//             </div>
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default Interest;
-
-
-
-
-
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./interest.css";
+import { getAllDiseasesAPI, updateSelectedInterestsAPI } from "../../api";
+import { Spinner } from "react-bootstrap";
 
-const interests = [
-  "Blood Pressure", "Cardio Fitness", "Diabetes", "Anxiety", "Back Pain",
-  "Depression", "Cold", "Flu (Influenza)", "High Cholesterol", "Hepatitis",
-  "Juvenile Diabetes", "Kidney Failure", "Asthma", "Knee Pain",
-  "Nicotine Withdrawal", "Obesity", "Sleep Disorder", "TB (Tuberculosis)",
-  "Urinary Tract Infection", "Vertigo", "Vitamin B12 Deficiency",
-  "Lactose Intolerance", "Meningitis", "Other"
-];
 
 const Interest = () => {
-
-
   const navigate = useNavigate();
-  const [selectedInterests, setSelectedInterests] = useState([
-    "Kidney Failure",
-    "Back Pain",
-    "Cold",
-    "Asthma",
-  ]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [diseases, setDiseases] = useState([]);
+  const [selectedInterests, setSelectedInterests] = useState([]);
+
+  const handleGetDiseases = async () => {
+    setLoading(true);
+    try {
+      const response = await getAllDiseasesAPI();
+      console.log(response.data.data.new_array); // Log the whole response to inspect its structure
+      const diseases = response.data.data.new_array;
+      setDiseases(diseases);
+
+      // Set the selected interests based on is_selected: true
+      const initialSelectedInterests = diseases.filter(
+        (disease) => disease.is_selected
+      );
+      setSelectedInterests(initialSelectedInterests);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleGetDiseases();
+  }, []);
 
   const toggleInterest = (interest) => {
     setSelectedInterests((prevSelected) =>
-      prevSelected.includes(interest)
-        ? prevSelected.filter((item) => item !== interest)
+      prevSelected.some((item) => item.id === interest.id)
+        ? prevSelected.filter((item) => item.id !== interest.id)
         : [...prevSelected, interest]
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/loading");
+    try {
+      // await updateSelectedInterestsAPI(selectedInterests);
+      navigate("/loading");
+    } catch (error) {
+      console.error(error);
+    }
   };
-
+console.log(selectedInterests)
   return (
     <div>
-      <section className="content ">
+      <section className="content">
         <header className="header-interest my-4 text-center">
           Choose your Interest
         </header>
+
+
+        {loading && (
+        <div className="d-flex justify-content-center mt-3">
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+        </div>
+      )}
+
+
+
         <div className="col-12 grid-margin mx-auto">
           <form className="interest-form-sample" onSubmit={handleSubmit}>
             <div className="interest-card-body">
               <div className="main-add">
                 <div className="row">
-                  {interests.map((interest, index) => (
+                  {diseases.map((interest, index) => (
                     <div className="col-6 col-md-3 mb-3" key={index}>
                       <button
                         type="button"
-                        className={`btn-select-mul ${selectedInterests.includes(interest) ? "selected" : ""}`}
+                        className={`btn-select-mul ${
+                          selectedInterests.some(
+                            (item) => item.id === interest.id
+                          )
+                            ? "selected"
+                            : ""
+                        }`}
                         onClick={() => toggleInterest(interest)}
                       >
-                        {interest}
+                        {interest.name}
                       </button>
                     </div>
                   ))}
@@ -167,7 +98,9 @@ const Interest = () => {
               </div>
             </div>
             <div className="interest-submit-btn">
-              <button type="submit" className="btn-start-interest nxt">Let's Start</button>
+              <button type="submit" className="btn-start-interest nxt">
+                Let's Start
+              </button>
             </div>
           </form>
         </div>

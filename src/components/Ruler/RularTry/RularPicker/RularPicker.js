@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getBMI_RulerDataAPI, postCustomerDataAPI } from "../../../../api";
+import { getBMI_RulerDataAPI, postBMI_RulerDataAPI, postCustomerDataAPI } from "../../../../api";
 
 const RulerPicker = () => {
   const navigate = useNavigate();
@@ -26,8 +26,8 @@ const RulerPicker = () => {
       setIsLoading(true);
       try {
         const response = await getBMI_RulerDataAPI();
-        if (response.status === 200) {
-          const data = response.data;
+        if (response?.data?.response === true && response?.data?.data?.data) {
+          const data = response.data.data.data[0]; // Access the first object in the array
           setAge(data.age || "50");
           setHeight(data.height || "125");
           setWeight(data.weight || "75");
@@ -62,7 +62,7 @@ const RulerPicker = () => {
       };
 
       // Call the API with the data object
-      const response = await postCustomerDataAPI(data);
+      const response = await postBMI_RulerDataAPI(data);
 
       // Check if the response indicates success
       if (response.status === 200) {

@@ -13,7 +13,7 @@ const AboutCustomer = () => {
 
   const location = useLocation();
   const email = location.state?.email;
-
+const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +21,8 @@ const AboutCustomer = () => {
     dob: "",
     phone: "",
     address: "",
-    cityCode: "",
+    city: "",
+    // cityCode: "",
     zipCode: "",
     bloodGroup: "",
     uploadPhoto: null,
@@ -34,19 +35,22 @@ const AboutCustomer = () => {
     setIsLoading(true);
     try {
       const response = await getCustomerDataAPI();
-      if(response?.data?.response === true){
-        const data = response?.data?.data;
+      if (response?.data?.response === true) {
+        const data = response?.data?.data?.results[0];
+        const dateOfBirth = data?.date_of_birth ? new Date(data.date_of_birth).toISOString().split("T")[0] : "";
+        // console.log(data)
         setForm({
           firstName: data?.firstname || "",
           lastName: data?.lastname || "",
           gender: data?.gender || "",
-          dob: data?.date_of_birth || "",
+          dob: dateOfBirth || "",
           phone: data?.phone_no || "",
           address: data?.address || "",
-          cityCode: data?.cityCode || "",
+          city :data?.city || "", 
+          // cityCode: data?.cityCode || "",
           zipCode: data?.zipcode || "",
-          bloodGroup: data?.bloodGroup || "",
-          uploadPhoto: null,  // Initialize as null
+          bloodGroup: data?.blood_group || "",
+          uploadPhoto: null, // Initialize as null
         });
         setProfileImage(data?.image || null);
       }
@@ -59,8 +63,19 @@ const AboutCustomer = () => {
   };
 
   useEffect(() => {
-    fetchCustomerData();
-  }, []);
+    const timer = setTimeout(() => {
+      fetchCustomerData();
+    }, 1000); // 1000 milliseconds = 1 second
+
+    // Cleanup the timer if the component unmounts before the timeout completes
+    return () => clearTimeout(timer);
+  }, [token]);
+
+  useEffect(() => {
+      fetchCustomerData();
+  }, [token]);
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -77,7 +92,7 @@ const AboutCustomer = () => {
   const validateForm = () => {
     const newErrors = {};
     Object.keys(form).forEach((key) => {
-      if (!form[key] && key !== 'uploadPhoto') {
+      if (!form[key] && key !== "uploadPhoto") {
         newErrors[key] = "This field is required";
       }
     });
@@ -97,14 +112,15 @@ const AboutCustomer = () => {
         formData.append("gender", form?.gender);
         formData.append("date_of_birth", form?.dob);
         formData.append("phone_no", form?.phone);
+        formData.append("blood_group", form?.bloodGroup);
         formData.append("address", form?.address);
-        formData.append("city", form?.cityCode);
+        formData.append("city", form?.city);
         formData.append("zipcode", form?.zipCode);
         // formData.append("bloodGroup", form?.bloodGroup);
         // formData.append("email", email);
 
         if (form.uploadPhoto) {
-          formData.append("image", form.uploadPhoto); 
+          formData.append("image", form?.uploadPhoto);
         }
 
         const response = await postCustomerDataAPI(formData);
@@ -114,7 +130,9 @@ const AboutCustomer = () => {
           navigate("/ruler");
           fetchCustomerData();
         } else {
-          toast.error(response?.data?.error_msg || "Failed to submit user data.");
+          toast.error(
+            response?.data?.error_msg || "Failed to submit user data."
+          );
         }
       } catch (error) {
         console.error("Error submitting user data:", error);
@@ -127,12 +145,14 @@ const AboutCustomer = () => {
     }
   };
 
+
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
       setForm((prevForm) => ({
         ...prevForm,
-        uploadPhoto: file,  // Store the file object
+        uploadPhoto: file, // Store the file object
       }));
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -142,7 +162,7 @@ const AboutCustomer = () => {
     }
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="about-container">
@@ -222,7 +242,7 @@ const AboutCustomer = () => {
                           className="form-control"
                           name="dob"
                           max={today}
-                          value={form.dob}
+                          value={form?.dob}
                           onChange={handleChange}
                           required
                         />
@@ -264,7 +284,7 @@ const AboutCustomer = () => {
                         <select
                           name="bloodGroup"
                           className="form-control"
-                          value={form.bloodGroup}
+                          value={form?.bloodGroup}
                           onChange={handleChange}
                           required
                         >
@@ -280,8 +300,8 @@ const AboutCustomer = () => {
                         </select>
                       </div>
                     </div>
-                    {fieldErrors.bloodGroup && (
-                      <span className="error">{fieldErrors.bloodGroup}</span>
+                    {fieldErrors?.bloodGroup && (
+                      <span className="error">{fieldErrors?.bloodGroup}</span>
                     )}
                   </div>
                 </div>
@@ -301,7 +321,7 @@ const AboutCustomer = () => {
                       </div>
                     </div>
                     {fieldErrors.email && (
-                      <span className="error">{fieldErrors.email}</span>
+                      <span className="error">{fieldErrors?.email}</span>
                     )}
                   </div>
                   <div className="col-md-6">
@@ -312,7 +332,7 @@ const AboutCustomer = () => {
                           type="text"
                           className="form-control"
                           name="phone"
-                          value={form.phone}
+                          value={form?.phone}
                           onChange={handleChange}
                           required
                         />
@@ -332,7 +352,7 @@ const AboutCustomer = () => {
                           type="text"
                           className="form-control"
                           name="address"
-                          value={form.address}
+                          value={form?.address}
                           onChange={handleChange}
                           required
                         />
@@ -351,8 +371,8 @@ const AboutCustomer = () => {
                         <input
                           type="text"
                           className="form-control"
-                          name="cityCode"
-                          value={form.cityCode}
+                          name="city"
+                          value={form?.city}
                           onChange={handleChange}
                         />
                       </div>
@@ -369,13 +389,13 @@ const AboutCustomer = () => {
                           type="text"
                           className="form-control"
                           name="zipCode"
-                          value={form.zipCode}
+                          value={form?.zipCode}
                           onChange={handleChange}
                         />
                       </div>
                     </div>
                     {fieldErrors.zipCode && (
-                      <span className="error">{fieldErrors.zipCode}</span>
+                      <span className="error">{fieldErrors?.zipCode}</span>
                     )}
                   </div>
                 </div>
@@ -385,6 +405,7 @@ const AboutCustomer = () => {
               <button
                 type="submit"
                 className="btn-start-nxt"
+                // onClick={navigate("/ruler")}
                 disabled={isLoading}
               >
                 {isLoading ? "Submitting..." : "Next"}

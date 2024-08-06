@@ -54,13 +54,14 @@ const Login = () => {
 
       const response = await LoginAPI(data);
 
+      const responseData = response?.data;
 
-      if (response?.data?.response === true && response?.data?.success_msg === "OTP sent to your email") {
-        toast.success(response?.data?.success_msg);
+      if (responseData?.response === true) {
+        toast.success(responseData?.success_msg);
         navigate("/verification", { state: { email: email } });
       } else {
-        if (response?.data?.error_msg) {
-          toast.error(response?.data?.error_msg);
+        if (responseData?.error_msg) {
+          toast.error(responseData?.error_msg);
         } else {
           toast.error("An error occurred during login. Please try again.");
         }
