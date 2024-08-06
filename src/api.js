@@ -195,6 +195,15 @@ export async function addBookTestAPI(data) {
   }
 }
 
+export async function getBookTestDataAPI() {
+  try {
+    const response = await axiosInstance.get(`/user/getbooktest`);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getDiseasePercentage({ diseaseIds }) {
   try {
     const response = await axiosInstance.post(`/disease/deseasecount`, {
@@ -247,6 +256,15 @@ export const updateSelectedInterestsAPI = (selectedInterests) => {
     const response = axiosInstance.post("/update-interests", {
       selectedInterests,
     });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllVendorsAPI = () => {
+  try {
+    const response = axiosInstance.get("/user/getallvendors");
     return response;
   } catch (error) {
     throw error;

@@ -2,80 +2,117 @@ import "./labreports.css";
 import pdf from "./PDF_file_icon.svg.png";
 import report_pdf from "./1.3_compressed.pdf";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MainPage from "../MainPage/MainPage";
-import { addBookTestAPI } from "../../api";
-
-const labReports = [
-
-];
+import {
+  addBookTestAPI,
+  getAllVendorsAPI,
+  getBookTestDataAPI,
+} from "../../api";
 
 const LabreportsComponant = () => {
-
-  
-  const labs = ["Lab 1", "Lab 2", "Lab 3"];
-  const testTypes = ["Blood Test", "Urine Test", "X-ray"];
-  const venues = ["Venue 1", "Venue 2", "Venue 3"];
   const timeSlots = ["Morning", "Afternoon", "Evening"];
 
+  const [labReports, setLabReports] = useState([]);
   const [formState, setFormState] = useState({
-    lab: "lab1",
-    testType: "bloodTest",
-    venue: "venue1",
+    lab: "",
+    test_type: "",
+    venue: "",
     date: "",
-    timeSlot: "morning",
+    timeSlot: "",
   });
   const [highlightFirstTest, setHighlightFirstTest] = useState(false);
   const [showLabReports, setShowLabReports] = useState(true); // Initially show Lab Reports
   const [showBookTest, setShowBookTest] = useState(false);
+  const [venues, setVenues] = useState([]);
+  const [testTypes, setTestType] = useState([]);
+  const [labs, setLab] = useState([]);
 
   const handleInputChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
-  const handleBookTest = async (e) => {
-    e.preventDefault()
+  const getBookTestDataFunction = async () => {
     try {
-      const response = await addBookTestAPI({
-        lab: formState.lab,
-        testType: formState.testType,
-        venue: formState.venue,
-        date: formState.date,
-        timeSlot: formState,
-      });
-      console.log(response);
-      toast.success("Successfully booked!");
-      setFormState({
-        lab: "lab1",
-        testType: "bloodTest",
-        venue: "venue1",
-        date: "",
-        timeSlot: "morning",
-      });
-      // setShowBookTest(false); // Close booking section after submission
-      // setShowLabReports(true);
-    } catch (error) {
-      console.error("Error booking test:", error);
-    }
+      const response = await getBookTestDataAPI();
+      console.log(response?.data?.response?.data);
+      const bookTest = response?.data?.response?.data;
+      setLabReports(bookTest);
+    } catch (error) {}
   };
 
-  const handleFormSubmit = (e) => {
+  useEffect(() => {
+    getBookTestDataFunction();
+  }, []);
+  
+  const getVendorsInfoFunction = async () => {
+    try {
+      const response = await getAllVendorsAPI();
+      // console.log(response?.data?.response?.data);
+      const vendors = response?.data?.response?.data;
+      const uniqueVenues = await [
+        ...new Set(vendors.map((vendor) => vendor.venue)),
+      ];
+      const uniqueTestTypes = await [
+        ...new Set(vendors.map((vendor) => vendor.type)),
+      ];
+      const uniqueLabs = await [
+        ...new Set(vendors.map((vendor) => vendor.name)),
+      ];
+      setTestType(uniqueTestTypes);
+      setLab(uniqueLabs);
+      setVenues(uniqueVenues);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    getVendorsInfoFunction();
+  }, []);
+
+  const handleBookTest = async (e) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formState);
-    toast.success("Successfully booked!");
-    setHighlightFirstTest(true);
-    setFormState({
-      lab: "lab1",
-      testType: "bloodTest",
-      venue: "venue1",
-      date: "01/01/2024",
-      timeSlot: "morning",
-    });
-    setShowBookTest(false); // Close booking section after submission
-    setShowLabReports(true); // Show Lab Reports again
+    console.log(formState);
+    // Validate form state to ensure all fields are populated
+    if (
+      !formState.lab ||
+      !formState.test_type ||
+      !formState.venue ||
+      !formState.date ||
+      !formState.timeSlot
+    ) {
+      toast.error("Please fill all the fields before submitting.");
+      return;
+    }
+
+    // Create payload
+    const payload = {
+      labname: formState.lab,
+      test_type: formState.test_type,
+      venue: formState.venue,
+      date: formState.date,
+      timeslot: formState.timeSlot,
+    };
+
+    try {
+      // Log payload to ensure it’s correctly structured
+      console.log("Payload being sent:", payload);
+
+      // Send request
+      const response = await addBookTestAPI(payload);
+      if (response.data.response === true) {
+        showLabReportsSection();
+        toast.success("Successfully booked!");
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error booking test:", error);
+      toast.error(
+        "An error occurred while booking the test. Please try again."
+      );
+    }
   };
 
   const showBookTestSection = () => {
@@ -152,10 +189,10 @@ const LabreportsComponant = () => {
                     className="lab"
                     value={formState.lab}
                     onChange={handleInputChange}
-                    requied
+                    required
                   >
                     {labs.map((lab, index) => (
-                      <option value={`lab${index + 1}`} key={index}>
+                      <option value={lab} key={index}>
                         {lab}
                       </option>
                     ))}
@@ -163,10 +200,10 @@ const LabreportsComponant = () => {
                 </div>
                 <div className="col-md-4 col-12 column">
                   <select
-                    name="testType"
+                    name="test_type"
                     id="testType"
                     className="lab"
-                    value={formState.testType}
+                    value={formState.test_type}
                     onChange={handleInputChange}
                   >
                     {testTypes.map((testType, index) => (
@@ -188,7 +225,7 @@ const LabreportsComponant = () => {
                     onChange={handleInputChange}
                   >
                     {venues.map((venue, index) => (
-                      <option value={`venue${index + 1}`} key={index}>
+                      <option value={venue} key={index}>
                         {venue}
                       </option>
                     ))}
@@ -223,45 +260,9 @@ const LabreportsComponant = () => {
                   </select>
                 </div>
               </div>
-              {/* <h3>Payment</h3>
-            <div className="row mt-3">
-              <div className="col-md-4 col-12 column">
-                <input className="lab" placeholder="Card Holder Name*" name="cardHolderName" value={formState.cardHolderName} onChange={handleInputChange} />
-              </div>
-              <div className="col-md-4 col-12 column">
-                <input className="lab" placeholder="Card Number*" name="cardNumber" value={formState.cardNumber} onChange={handleInputChange} />
-              </div>
-              <div className="col-md-4 col-12 column">
-                <input type="password" className="lab" placeholder="CVV*" name="cvv" value={formState.cvv} onChange={handleInputChange} />
-              </div>
-            </div>
-            <div className="row mt-4 colmar">
-              <div className="col-md-4 col-12 column col12">
-                <select name="expiryMonth" id="expiryMonth" className="lab" value={formState.expiryMonth} onChange={handleInputChange}>
-                  {months.map((month, index) => (
-                    <option value={month.value} key={index}>{month.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-md-4 col-12 column col12">
-                <select name="expiryYear" id="expiryYear" className="lab" value={formState.expiryYear} onChange={handleInputChange}>
-                  {years.map((year, index) => (
-                    <option value={year} key={index}>{year}</option>
-                  ))}
-                </select>
-              </div>
-            </div> */}
-
-              {/* <div className="mt-3 d-flex justify-content-center">
-              <button className="lab-btn" onClick={handleFormSubmit}>Submit</button>
-            </div> */}
               <div className="row mt-5">
                 <div className="col-12 col-md-12 d-flex justify-content-center">
-                  <button
-                    className="lab-btn"
-                    type="submit"
-                    // onClick={handleBookTest}
-                  >
+                  <button className="lab-btn" type="submit">
                     Book Now
                   </button>
                   <button
