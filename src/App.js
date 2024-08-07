@@ -69,26 +69,172 @@ function App() {
           {isOffline && <InternetChecker />}
 
           <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/labreports" element={<LabreportsComponant />} />
+            {/* Redirect logged-in users from these routes */}
+            {loggedIn && (
+              <>
+                <Route path="/" element={<Navigate to="/home" />} />
+                <Route path="/verification" element={<Navigate to="/home" />} />
+                <Route
+                  path="/signup_verification"
+                  element={<Navigate to="/signup_verification" />}
+                />
+              </>
+            )}
+
+            {/* Regular routes */}
+            <Route
+              path="/cart"
+              element={
+                loggedIn ? (
+                  <Cart onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                loggedIn ? (
+                  <Home onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/labreports"
+              element={
+                loggedIn ? (
+                  <LabreportsComponant onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/interest"
+              element={
+                loggedIn ? (
+                  <Interest onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/ruler"
+              element={
+                loggedIn ? (
+                  <Ruler onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/about"
+              element={
+                loggedIn ? (
+                  <AboutCustomer onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/loading"
+              element={
+                loggedIn ? (
+                  <Loading onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/add_diseases"
+              element={
+                loggedIn ? (
+                  <AddData onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                loggedIn ? (
+                  <Profile onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/signup"
+              element={
+                loggedIn ? (
+                  <SignUp onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/forgot_password"
+              element={
+                loggedIn ? (
+                  <ForgotPassword onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/orders"
+              element={
+                loggedIn ? (
+                  <Orders onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/success"
+              element={
+                loggedIn ? (
+                  <Success onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/cancel"
+              element={
+                loggedIn ? (
+                  <Cancel onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+
+            <Route
+              path="/"
+              element={<Login onLogin={handleLogin} onLogout={handleLogout} />}
+            />
             <Route path="/verification" element={<Verification />} />
             <Route
               path="/signup_verification"
               element={<SignupOTPVerification />}
             />
-            <Route path="/interest" element={<Interest />} />
-            <Route path="/ruler" element={<Ruler />} />
-            <Route path="/about" element={<AboutCustomer />} />
-            <Route path="/loading" element={<Loading />} />
-            <Route path="/add_diseases" element={<AddData />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/forgot_password" element={<ForgotPassword />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/success" element={<Success />} />
-            <Route path="/cancel" element={<Cancel />} />
+
+            {/* Catch-all route */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </BrowserRouter>
       </div>

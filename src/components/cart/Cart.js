@@ -34,7 +34,7 @@ const Cart = () => {
       console.log(response?.data?.data?.url);
       window.open(response?.data?.data?.url, "_blank");
       // navigate(response?.data.url);
-      toast.success(response.success_msg);
+     
     } catch (error) {
       console.error(error);
     }

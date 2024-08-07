@@ -38,10 +38,10 @@ const MainPage = () => {
     // Update height on window resize
     window.addEventListener("resize", updateHeight);
 
-    // 
+    //
 
     const username__ = localStorage.getItem("__username");
-    console.log(username__);
+    // console.log(username__);
     setName(username__);
 
     // Cleanup on unmount
@@ -70,7 +70,10 @@ const MainPage = () => {
   };
   const handleNavigatePreferances = () => {
     navigate("/interest");
-  }
+  };
+  const handleNavigateBMI = () => {
+    navigate("/ruler");
+  };
   return (
     <>
       <div className="nav-position">
@@ -125,11 +128,12 @@ const MainPage = () => {
                         <Dropdown.Item onClick={handleNavigateProfile}>
                           Profile
                         </Dropdown.Item>
-                        
+                        <Dropdown.Item onClick={handleNavigateBMI}>
+                          BMI
+                        </Dropdown.Item>
                         <Dropdown.Item onClick={handleNavigatePreferances}>
                           Preferances
-                        </Dropdown.Item>
-                        {" "}
+                        </Dropdown.Item>{" "}
                         {/* Add a Profile link here */}
                         <Dropdown.Item href="#" onClick={handleLogoutClick}>
                           Logout

@@ -24,7 +24,7 @@ const formatDate = (timestamp) => {
 
 const LabreportsComponant = () => {
   const timeSlots = ["Morning", "Afternoon", "Evening"];
-
+  const [load, setLoad] = useState(false);
   const [labReports, setLabReports] = useState([]);
   const [formState, setFormState] = useState({
     lab: "",
@@ -50,16 +50,19 @@ const LabreportsComponant = () => {
       // console.log(response?.data?.data?.result);
       const bookTest = response?.data?.data?.result;
       setLabReports(bookTest);
-    } catch (error) {}
+      setLoad(false)
+    } catch (error) {
+      console.error("Error fetching book test data:", error)
+    }
   };
 
   useEffect(() => {
-    console.log("hiii");
+    // console.log("hiii");
     getBookTestDataFunction();
   }, []);
   useEffect(() => {
     getBookTestDataFunction();
-  }, []);
+  }, [load]);
 
   const getVendorsInfoFunction = async () => {
     try {
@@ -99,7 +102,7 @@ const LabreportsComponant = () => {
       !formState.date ||
       !formState.timeSlot
     ) {
-      toast.error("Please fill all the fields before submitting.");
+      // toast.error("Please fill all the fields before submitting.");
       return;
     }
 
@@ -118,16 +121,18 @@ const LabreportsComponant = () => {
 
       // Send request
       const response = await addBookTestAPI(payload);
+      getBookTestDataAPI();
+      setLoad(true)
       if (response.data.response === true) {
         showLabReportsSection();
-        toast.success("Successfully booked!");
+        // toast.success("Successfully booked!");
       }
     } catch (error) {
       // Handle error
       console.error("Error booking test:", error);
-      toast.error(
-        "An error occurred while booking the test. Please try again."
-      );
+      // toast.error(
+      //   "An error occurred while booking the test. Please try again."
+      // );
     }
   };
 
@@ -173,21 +178,17 @@ const LabreportsComponant = () => {
                 </div>
                 <div className="col-6 col-md-3 p-row" id="reports">
                   <h5>Reports</h5>
-                  { report?.file_path ? (
+                  {report?.file_path ? (
                     <a
-                    href={report?.file_path}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img src={pdf} alt="PDF" className="pdf-img" />
-                  </a>
-
+                      href={report?.file_path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img src={pdf} alt="PDF" className="pdf-img" />
+                    </a>
                   ) : (
-                    <span>Pending</span>  
-                    
-                  )
-                } 
-                  
+                    <span>Pending</span>
+                  )}
                 </div>
               </div>
             ))}

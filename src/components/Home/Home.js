@@ -99,7 +99,7 @@ const Home = () => {
       setDiseasePercentages(response.data.data.diseasePercentages);
     } catch (error) {
       console.error(error);
-      toast.error("Cannot fetch percentages");
+      // toast.error("Cannot fetch percentages");
     }
   };
 
@@ -399,9 +399,7 @@ const Home = () => {
                     <input
                       type="button"
                       defaultValue="Buy"
-                      onClick={() => {
-                        navigate("/cart");
-                      }}
+                      onClick={()=>{navigate("/cart")}}
                       className="buy-btn"
                     />
                   </div>

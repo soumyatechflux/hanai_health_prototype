@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import "./data-form.css";
 import { addSugarLevelAPI } from "../../api";
 import Graph from "../Home/Graph";
+import { useNavigate } from "react-router-dom";
 
 const DataForm = ({ setShowGraph }) => {
+  const navigate = useNavigate();
+  const [renders, setRenders] = useState(false);
   const [formData, setFormData] = useState({
     date: "",
     time: "",
@@ -30,9 +33,11 @@ const DataForm = ({ setShowGraph }) => {
       },
     ],
   });
-
+  
+  
   const storeSugarLevel = async () => {
     try {
+      setRenders(false);
       const response = await addSugarLevelAPI({
         disease_id: 1,
         date: formData.date,
@@ -42,6 +47,9 @@ const DataForm = ({ setShowGraph }) => {
         medication: formData.medication,
       });
       console.log(response);
+      if (response?.data?.response == true) {
+        setRenders(true);
+      }
     } catch (err) {
       console.error("Error storing sugar level:", err);
     }
@@ -96,16 +104,24 @@ const DataForm = ({ setShowGraph }) => {
         },
       ],
     };
-
     setGraphData(newGraphData);
-    setFormData({ date: "", time: "", before_meal: "", after_meal: "" });
+
+    navigate("/add_diseases");
+    setFormData({
+      date: "",
+      time: "",
+      before_meal: "",
+      after_meal: "",
+      medication: "",
+    });
   };
 
   return (
     <div className="row row-graph">
       <div className="col-md-7 col-12 graph">
         <div className="cell">
-          <Graph id="chart1" type="bar" data={graphData} />
+          {!renders && <Graph id="chart1" type="bar" data={graphData} />}
+          {renders && <Graph id="chart1" type="bar" data={graphData} />}
         </div>
       </div>
       <div className="col-md-5 col-12 data-form-container">
@@ -139,6 +155,7 @@ const DataForm = ({ setShowGraph }) => {
             <input
               type="number"
               min={40}
+              step={0.2}
               max={400}
               name="before_meal"
               value={formData.before_meal}
@@ -150,6 +167,7 @@ const DataForm = ({ setShowGraph }) => {
             </label>
             <input
               type="number"
+              step={0.2}
               min={40}
               max={400}
               name="after_meal"

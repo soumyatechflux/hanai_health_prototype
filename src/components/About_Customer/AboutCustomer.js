@@ -13,7 +13,10 @@ const AboutCustomer = () => {
 
   const location = useLocation();
   const email = location.state?.email;
-const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
+  const firstNamef = location.state?.firstName;
+  const lastNamef = location.state?.lastName;
+  console.log(firstNamef, lastNamef);
+  const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth");
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -37,7 +40,9 @@ const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
       const response = await getCustomerDataAPI();
       if (response?.data?.response === true) {
         const data = response?.data?.data?.results[0];
-        const dateOfBirth = data?.date_of_birth ? new Date(data.date_of_birth).toISOString().split("T")[0] : "";
+        const dateOfBirth = data?.date_of_birth
+          ? new Date(data.date_of_birth).toISOString().split("T")[0]
+          : "";
         // console.log(data)
         setForm({
           firstName: data?.firstname || "",
@@ -46,7 +51,7 @@ const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
           dob: dateOfBirth || "",
           phone: data?.phone_no || "",
           address: data?.address || "",
-          city :data?.city || "", 
+          city: data?.city || "",
           // cityCode: data?.cityCode || "",
           zipCode: data?.zipcode || "",
           bloodGroup: data?.blood_group || "",
@@ -56,7 +61,7 @@ const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
       }
     } catch (error) {
       console.error("Error fetching customer data:", error);
-      toast.error("Failed to fetch customer data.");
+      // toast.error("Failed to fetch customer data.");
     } finally {
       setIsLoading(false);
     }
@@ -72,10 +77,8 @@ const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
   }, [token]);
 
   useEffect(() => {
-      fetchCustomerData();
+    fetchCustomerData();
   }, [token]);
-
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -144,8 +147,6 @@ const token = localStorage.getItem("encryptedTokenForUserOfHanaiHealth")
       console.log("Form is invalid, not navigating");
     }
   };
-
-
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];

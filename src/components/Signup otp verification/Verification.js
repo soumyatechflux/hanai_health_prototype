@@ -17,6 +17,8 @@ const SignupOTPVerification = () => {
 
   const location = useLocation();
   const email = location.state?.email;
+  const firstName = location.state?.firstName;
+  const lastName = location.state?.lastName;
 
   const handleVerification = async (e) => {
     e.preventDefault();
@@ -49,10 +51,9 @@ const SignupOTPVerification = () => {
           toast.success("OTP verified successfully.");
 
           setError("");
-          navigate("/about", { state: { email: email } });
-
-
-
+          navigate("/about", {
+            state: { email: email, firstName: firstName, lastName: lastName },
+          });
         } else {
           toast.error(
             response?.data?.error_msg ||

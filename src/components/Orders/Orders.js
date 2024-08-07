@@ -11,7 +11,7 @@ const Orders = () => {
     try {
       const response = await getProductDataAPI();
       console.log(response?.data?.data?.result);
-      setOrderInfo(response?.data?.data?.result);
+      setOrderInfo(response?.data?.data?.result ?? []);
     } catch (error) {
       console.error(error);
     }

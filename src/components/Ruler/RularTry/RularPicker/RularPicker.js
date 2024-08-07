@@ -10,18 +10,25 @@ import { useNavigate } from "react-router-dom";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { getBMI_RulerDataAPI, postBMI_RulerDataAPI, postCustomerDataAPI } from "../../../../api";
+import {
+  getBMI_RulerDataAPI,
+  postBMI_RulerDataAPI,
+  postCustomerDataAPI,
+} from "../../../../api";
 
 const RulerPicker = () => {
   const navigate = useNavigate();
 
-  const [age, setAge] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
+  const [age, setAge] = useState("75");
+  const [height, setHeight] = useState("150");
+  const [weight, setWeight] = useState("100");
 
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setAge("75");
+    setHeight("150");
+    setWeight("100");
     const fetchBmiRulerData = async () => {
       setIsLoading(true);
       try {
@@ -32,13 +39,13 @@ const RulerPicker = () => {
           setHeight(data.height || "150");
           setWeight(data.weight || "100");
         } else {
-          toast.error(
-            "Failed to fetch customer data. Status: " + response.status
-          );
+          // toast.error(
+          //   "Failed to fetch customer data. Status: " + response.status
+          // );
         }
       } catch (error) {
         console.error("Error fetching customer data:", error);
-        toast.error("Failed to fetch customer data.");
+        // toast.error("Failed to fetch customer data.");
       } finally {
         setIsLoading(false);
       }
@@ -48,7 +55,6 @@ const RulerPicker = () => {
   }, []);
 
   const handleNext = async () => {
-    
     navigate("/interest");
 
     setIsLoading(true);
@@ -70,13 +76,13 @@ const RulerPicker = () => {
         toast.success("BMI data submitted successfully.");
         navigate("/interest");
       } else {
-        toast.error(`Failed to submit BMI data. Status: ${response.status}`);
+        // toast.error(`Failed to submit BMI data. Status: ${response.status}`);
       }
     } catch (error) {
       console.error("Error submitting BMI data:", error);
-      toast.error(
-        "An error occurred while submitting BMI data. Please try again."
-      );
+      // toast.error(
+      //   "An error occurred while submitting BMI data. Please try again."
+      // );
     } finally {
       setIsLoading(false);
     }
@@ -187,8 +193,12 @@ const RulerPicker = () => {
             </div>
           </div>
           <div className="" style={{ float: "right", marginTop: "30px" }}>
-            <button className="btn-start mt-2" onClick={handleNext}disabled={isLoading}>
-            {isLoading ? "Calculating..." : "Calculate"}
+            <button
+              className="btn-start mt-2"
+              onClick={handleNext}
+              disabled={isLoading}
+            >
+              {isLoading ? "Calculating..." : "Calculate"}
             </button>
           </div>
         </div>
