@@ -76,7 +76,7 @@ function App() {
                 <Route path="/verification" element={<Navigate to="/home" />} />
                 <Route
                   path="/signup_verification"
-                  element={<Navigate to="/signup_verification" />}
+                  element={<Navigate to="/about" />}
                 />
               </>
             )}
