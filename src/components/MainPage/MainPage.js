@@ -38,6 +38,12 @@ const MainPage = () => {
     // Update height on window resize
     window.addEventListener("resize", updateHeight);
 
+    // 
+
+    const username__ = localStorage.getItem("__username");
+    console.log(username__);
+    setName(username__);
+
     // Cleanup on unmount
     return () => window.removeEventListener("resize", updateHeight);
   }, []);
@@ -45,9 +51,10 @@ const MainPage = () => {
   // const logo = './Capture.PNG';
   const profileImage =
     "https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg";
-  const name = "Hanai Health";
+
   // const status = "Logout";
 
+  const [name, setName] = useState("Hanai Health"); // Default status
   const [status, setStatus] = useState("Loged In"); // Default status
 
   const handleLoginClick = () => {
@@ -61,6 +68,9 @@ const MainPage = () => {
   const handleNavigateProfile = () => {
     navigate("/profile");
   };
+  const handleNavigatePreferances = () => {
+    navigate("/interest");
+  }
   return (
     <>
       <div className="nav-position">
@@ -114,7 +124,12 @@ const MainPage = () => {
                       <>
                         <Dropdown.Item onClick={handleNavigateProfile}>
                           Profile
-                        </Dropdown.Item>{" "}
+                        </Dropdown.Item>
+                        
+                        <Dropdown.Item onClick={handleNavigatePreferances}>
+                          Preferances
+                        </Dropdown.Item>
+                        {" "}
                         {/* Add a Profile link here */}
                         <Dropdown.Item href="#" onClick={handleLogoutClick}>
                           Logout

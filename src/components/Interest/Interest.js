@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./interest.css";
-import { getAllDiseasesAPI, updateSelectedInterestsAPI } from "../../api";
+import { getAllDiseasesAPI, selectDiseaseAPI, updateSelectedInterestsAPI } from "../../api";
 import { Spinner } from "react-bootstrap";
-
 
 const Interest = () => {
   const navigate = useNavigate();
@@ -16,7 +15,7 @@ const Interest = () => {
     setLoading(true);
     try {
       const response = await getAllDiseasesAPI();
-      console.log(response.data.data.new_array); // Log the whole response to inspect its structure
+      // console.log(response.data.data.new_array); // Log the whole response to inspect its structure
       const diseases = response.data.data.new_array;
       setDiseases(diseases);
 
@@ -24,6 +23,7 @@ const Interest = () => {
       const initialSelectedInterests = diseases.filter(
         (disease) => disease.is_selected
       );
+      console.log(initialSelectedInterests)
       setSelectedInterests(initialSelectedInterests);
     } catch (err) {
       setError(err.message);
@@ -46,14 +46,27 @@ const Interest = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // console.log();
     try {
-      // await updateSelectedInterestsAPI(selectedInterests);
+      const newvalue = {
+        "selectedInterests": makeProperSendFormat(selectedInterests),
+      }
+
+      await selectDiseaseAPI(newvalue);
       navigate("/loading");
     } catch (error) {
       console.error(error);
     }
   };
-console.log(selectedInterests)
+
+  const makeProperSendFormat = (datas) => {
+    const newArr = [];
+    for (let data of datas) {
+      newArr.push(data.id);
+    }
+    return newArr;
+  }
+  // console.log(selectedInterests);
   return (
     <div>
       <section className="content">
@@ -61,16 +74,13 @@ console.log(selectedInterests)
           Choose your Interest
         </header>
 
-
         {loading && (
-        <div className="d-flex justify-content-center mt-3">
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </div>
-      )}
-
-
+          <div className="d-flex justify-content-center mt-3">
+            <Spinner animation="border" role="status">
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
+        )}
 
         <div className="col-12 grid-margin mx-auto">
           <form className="interest-form-sample" onSubmit={handleSubmit}>

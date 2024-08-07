@@ -28,9 +28,9 @@ const RulerPicker = () => {
         const response = await getBMI_RulerDataAPI();
         if (response?.data?.response === true && response?.data?.data?.data) {
           const data = response.data.data.data[0]; // Access the first object in the array
-          setAge(data.age || "50");
-          setHeight(data.height || "125");
-          setWeight(data.weight || "75");
+          setAge(data.age || "75");
+          setHeight(data.height || "150");
+          setWeight(data.weight || "100");
         } else {
           toast.error(
             "Failed to fetch customer data. Status: " + response.status

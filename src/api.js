@@ -170,7 +170,7 @@ export async function getAllDiseasesAPI() {
 
 export async function selectDiseaseAPI(data) {
   try {
-    const response = await axiosInstance.post(`disease/updatedisease`, data);
+    const response = await axiosInstance.post(`/disease/updatedisease`, data);
     return response;
   } catch (error) {
     throw error;
@@ -270,3 +270,5 @@ export const getAllVendorsAPI = () => {
     throw error;
   }
 };
+
+

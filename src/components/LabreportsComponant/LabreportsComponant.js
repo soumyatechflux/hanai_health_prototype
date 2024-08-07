@@ -12,6 +12,15 @@ import {
   getAllVendorsAPI,
   getBookTestDataAPI,
 } from "../../api";
+import { Colors } from "chart.js";
+
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-indexed
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const LabreportsComponant = () => {
   const timeSlots = ["Morning", "Afternoon", "Evening"];
@@ -30,7 +39,7 @@ const LabreportsComponant = () => {
   const [venues, setVenues] = useState([]);
   const [testTypes, setTestType] = useState([]);
   const [labs, setLab] = useState([]);
-
+  const [vendors, setVendors] = useState([]);
   const handleInputChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -38,21 +47,26 @@ const LabreportsComponant = () => {
   const getBookTestDataFunction = async () => {
     try {
       const response = await getBookTestDataAPI();
-      console.log(response?.data?.response?.data);
-      const bookTest = response?.data?.response?.data;
+      // console.log(response?.data?.data?.result);
+      const bookTest = response?.data?.data?.result;
       setLabReports(bookTest);
     } catch (error) {}
   };
 
   useEffect(() => {
+    console.log("hiii");
     getBookTestDataFunction();
   }, []);
-  
+  useEffect(() => {
+    getBookTestDataFunction();
+  }, []);
+
   const getVendorsInfoFunction = async () => {
     try {
       const response = await getAllVendorsAPI();
       // console.log(response?.data?.response?.data);
       const vendors = response?.data?.response?.data;
+      setVendors(vendors);
       const uniqueVenues = await [
         ...new Set(vendors.map((vendor) => vendor.venue)),
       ];
@@ -65,7 +79,9 @@ const LabreportsComponant = () => {
       setTestType(uniqueTestTypes);
       setLab(uniqueLabs);
       setVenues(uniqueVenues);
-    } catch (error) {}
+    } catch (error) {
+      console.error("Error fetching vendors info:", error);
+    }
   };
 
   useEffect(() => {
@@ -74,7 +90,7 @@ const LabreportsComponant = () => {
 
   const handleBookTest = async (e) => {
     e.preventDefault();
-    console.log(formState);
+    // console.log(formState);
     // Validate form state to ensure all fields are populated
     if (
       !formState.lab ||
@@ -98,7 +114,7 @@ const LabreportsComponant = () => {
 
     try {
       // Log payload to ensure it’s correctly structured
-      console.log("Payload being sent:", payload);
+      // console.log("Payload being sent:", payload);
 
       // Send request
       const response = await addBookTestAPI(payload);
@@ -145,25 +161,33 @@ const LabreportsComponant = () => {
               >
                 <div className="col-6 col-md-3 p-row">
                   <h5>Test</h5>
-                  <h6>{report.test}</h6>
+                  <h6>{report.type}</h6>
                 </div>
                 <div className="col-6 col-md-3 p-row">
                   <h5>Date</h5>
-                  <h6>{report.date}</h6>
+                  <h6>{formatDate(report.date)}</h6>
                 </div>
                 <div className="col-6 col-md-3 p-row">
                   <h5>Time</h5>
-                  <h6>{report.time}</h6>
+                  <h6>{report.time_slot}</h6>
                 </div>
                 <div className="col-6 col-md-3 p-row" id="reports">
                   <h5>Reports</h5>
-                  <a
-                    href={report_pdf}
+                  { report?.file_path ? (
+                    <a
+                    href={report?.file_path}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img src={pdf} alt="PDF" className="pdf-img" />
                   </a>
+
+                  ) : (
+                    <span>Pending</span>  
+                    
+                  )
+                } 
+                  
                 </div>
               </div>
             ))}
@@ -191,9 +215,10 @@ const LabreportsComponant = () => {
                     onChange={handleInputChange}
                     required
                   >
-                    {labs.map((lab, index) => (
-                      <option value={lab} key={index}>
-                        {lab}
+                    <option value="">Select</option>
+                    {vendors.map((vendor, index) => (
+                      <option value={vendor.id} key={index}>
+                        {vendor.name}
                       </option>
                     ))}
                   </select>
@@ -206,6 +231,7 @@ const LabreportsComponant = () => {
                     value={formState.test_type}
                     onChange={handleInputChange}
                   >
+                    <option value="">Select</option>
                     {testTypes.map((testType, index) => (
                       <option
                         value={testType.toLowerCase().replace(" ", "")}
@@ -224,6 +250,7 @@ const LabreportsComponant = () => {
                     value={formState.venue}
                     onChange={handleInputChange}
                   >
+                    <option value="">Select</option>
                     {venues.map((venue, index) => (
                       <option value={venue} key={index}>
                         {venue}
@@ -245,11 +272,11 @@ const LabreportsComponant = () => {
                   />
                 </div>
                 <div className="col-md-4 col-12 column col12">
-                  <select
+                  {/* <select
                     name="timeSlot"
                     id="timeSlot"
                     className="lab"
-                    value={formState.timeSlot}
+                    
                     onChange={handleInputChange}
                   >
                     {timeSlots.map((slot, index) => (
@@ -257,7 +284,14 @@ const LabreportsComponant = () => {
                         {slot}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
+                  <input
+                    type="time"
+                    name="timeSlot"
+                    className="lab"
+                    value={formState.timeSlot}
+                    onChange={handleInputChange}
+                  />
                 </div>
               </div>
               <div className="row mt-5">

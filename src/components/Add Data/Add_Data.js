@@ -21,28 +21,28 @@ const Add_Data = () => {
     );
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate("/loading");
-    setShowGraph(true); // Show graph after navigation
-  };
-
   const getAllDisease = async () => {
     try {
       setLoading(true);
       const response = await getAllDiseasesAPI();
       setDisease(response?.data?.data?.new_array);
-      console.log(response?.data?.data?.new_array);
     } catch (err) {
       console.error("Error fetching disease:", err);
     } finally {
       setLoading(false);
+      setShowGraph(true); // Show graph immediately after fetching diseases
     }
   };
 
   useEffect(() => {
     getAllDisease();
   }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate("/loading");
+    setShowGraph(true); // Show graph after navigation
+  };
 
   return (
     <>
@@ -62,9 +62,7 @@ const Add_Data = () => {
                           <button
                             type="button"
                             className={`btn-select-mul ${
-                              interest.is_selected
-                                ? "selected"
-                                : ""
+                              interest.is_selected ? "selected" : ""
                             }`}
                             onClick={() => toggleInterest(interest.name)}
                           >
@@ -79,7 +77,7 @@ const Add_Data = () => {
             </div>
           </div>
         )}
-        {selectedInterests.length > 0 && showGraph && (
+        {showGraph && (
           <DataForm setShowGraph={setShowGraph} />
         )}
       </section>

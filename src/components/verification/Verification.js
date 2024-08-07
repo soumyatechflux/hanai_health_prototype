@@ -38,10 +38,13 @@ const Verification = () => {
 
         if (response?.data && response?.data?.response === true) {
           const token = response?.data?.data?.token;
+          const name = response?.data?.data?.name;
+          const route_page = response?.data?.data?.route_page;
           const encryptedToken = encryptData(token);
 
           localStorage.clear();
           localStorage.setItem("isUserLoggedIn", true);
+          localStorage.setItem("__username", name);
           localStorage.setItem(
             "encryptedTokenForUserOfHanaiHealth",
             encryptedToken
@@ -51,7 +54,7 @@ const Verification = () => {
 
           setError("");
      
-          navigate("/about", { state: { email: email } });
+          navigate("/"+route_page, { state: { email: email } });
 
         } else {
           toast.error(

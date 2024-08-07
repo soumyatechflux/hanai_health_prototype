@@ -54,11 +54,14 @@ const Cart = () => {
     // for (let [key, value] of formData.entries()) {
     //   console.log(key, value);
     // }
-
-    addToOrderFunction(formData);
-
-    setQuantity(0);
-    setTotal(0);
+    if (quantity > 0) {
+      addToOrderFunction(formData);
+      setQuantity(0);
+      setTotal(0);
+    } else {
+      console.log("shiosi")
+      toast.error("Please increase Quantity");
+    }
   };
 
   return (
@@ -99,6 +102,7 @@ const Cart = () => {
                   +
                 </button>
               </div>
+
               <br />
               <p>Total : {total}</p>
             </div>

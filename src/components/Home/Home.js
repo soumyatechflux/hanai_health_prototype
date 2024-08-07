@@ -17,13 +17,18 @@ import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
 import CircularProgress from "@mui/joy/CircularProgress";
 import { useCountUp } from "use-count-up";
-import { getBMI_RulerDataAPI, getDiseasePercentage } from "../../api";
+import {
+  getAllDiseasesAPI,
+  getBMI_RulerDataAPI,
+  getDiseasePercentage,
+} from "../../api";
 import { toast } from "react-toastify";
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bmi, setBMI] = useState(0);
+  const [selectedDiseaseData, setselectedDiseaseData] = useState([]);
   const BMI_INFO = {
     // bmi: "23.4",
     status: "Normal",
@@ -50,10 +55,45 @@ const Home = () => {
     handleBMI(); // Fetch vendors on component mount
   }, []);
   const [diseasePercentages, setDiseasePercentages] = useState([]);
-  
-  const diseaseIds = [1, 3, 5]; // Example with multiple IDs
 
-  const fetchAllDiseaseData = async () => {
+  const diseaseIds = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 171, 18, 19, 20, 21,
+    22, 23, 24,
+  ]; // Example with multiple IDs
+
+  const handleGetDiseases = async () => {
+    setLoading(true);
+    try {
+      const response = await getAllDiseasesAPI();
+      // console.log(response.data.data.new_array); // Log the whole response to inspect its structure
+      const diseases = response.data.data.new_array;
+      //  console.log(diseases," ddd")
+      // Set the selected interests based on is_selected: true
+      const initialSelectedInterests = diseases.filter(
+        (disease) => disease.is_selected
+      );
+      console.log(initialSelectedInterests);
+      setselectedDiseaseData(initialSelectedInterests);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    handleGetDiseases();
+  }, []);
+
+  const makeProperSendFormat = (datas) => {
+    const newArr = [];
+    for (let data of datas) {
+      newArr.push(data.id);
+    }
+    return newArr;
+  };
+
+  const fetchAllDiseasePercentageData = async () => {
     try {
       const response = await getDiseasePercentage({ diseaseIds });
       setDiseasePercentages(response.data.data.diseasePercentages);
@@ -64,21 +104,46 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchAllDiseaseData();
+    fetchAllDiseasePercentageData();
   }, []);
 
   const DISEASES = [
     { id: 1, name: "High Cholesterol", imgSrc: heart },
+    { id: 2, name: "High Cholesterol", imgSrc: heart },
     { id: 3, name: "Hepatitis", imgSrc: liver },
-    { id: 5, name: "Asthma", imgSrc: lung },
+    { id: 4, name: "Asthma", imgSrc: lung },
+    { id: 5, name: "High Cholesterol", imgSrc: heart },
+    { id: 6, name: "High Cholesterol", imgSrc: heart },
+    { id: 7, name: "Hepatitis", imgSrc: liver },
+    { id: 8, name: "Asthma", imgSrc: lung },
+    { id: 9, name: "High Cholesterol", imgSrc: heart },
+    { id: 10, name: "High Cholesterol", imgSrc: heart },
+    { id: 11, name: "Hepatitis", imgSrc: liver },
+    { id: 12, name: "Asthma", imgSrc: lung },
+    { id: 13, name: "High Cholesterol", imgSrc: heart },
+    { id: 14, name: "High Cholesterol", imgSrc: heart },
+    { id: 15, name: "Hepatitis", imgSrc: liver },
+    { id: 16, name: "Asthma", imgSrc: lung },
+    { id: 17, name: "High Cholesterol", imgSrc: heart },
+    { id: 18, name: "High Cholesterol", imgSrc: heart },
+    { id: 19, name: "Hepatitis", imgSrc: liver },
+    { id: 20, name: "Asthma", imgSrc: lung },
+    { id: 21, name: "Asthma", imgSrc: lung },
+    { id: 22, name: "Asthma", imgSrc: lung },
+    { id: 23, name: "Asthma", imgSrc: lung },
+    { id: 24, name: "Asthma", imgSrc: lung },
     // Other diseases can be added here with their ids
   ];
 
-  const updatedDiseases = DISEASES.map(disease => {
-    const matchingPercentage = diseasePercentages.find(dp => dp.id === disease.id);
+  const updatedDiseases = selectedDiseaseData.map((disease) => {
+    const matchingPercentage = diseasePercentages.find(
+      (dp) => dp.id === disease.id
+    );
     return {
       ...disease,
-      percentage: matchingPercentage ? `${matchingPercentage.percentage}%` : '0%'
+      percentage: matchingPercentage
+        ? `${matchingPercentage.percentage}%`
+        : "0%",
     };
   });
 
@@ -148,7 +213,7 @@ const Home = () => {
             </form>
           </div>
 
-          <div className="diseases mt-3">
+          <div className="diseases mt-3 scrollable-container">
             {updatedDiseases.map((disease, index) => {
               const percentage = parseInt(disease.percentage, 10);
               return (
@@ -172,7 +237,7 @@ const Home = () => {
                           value={percentage}
                         >
                           <img
-                            src={disease.imgSrc}
+                            src={heart}
                             alt={disease.name}
                             className="disease-image"
                           />
@@ -193,7 +258,10 @@ const Home = () => {
                     <h4>Sugar Level</h4>
                   </div>
                   <div className="col-6 d-flex justify-content-end">
-                    <div onClick={handleAddDataClick} style={{cursor:"pointer"}} >
+                    <div
+                      onClick={handleAddDataClick}
+                      style={{ cursor: "pointer" }}
+                    >
                       <CgAdd className="add-data-btn" />
                       add data
                     </div>
@@ -331,6 +399,9 @@ const Home = () => {
                     <input
                       type="button"
                       defaultValue="Buy"
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
                       className="buy-btn"
                     />
                   </div>
