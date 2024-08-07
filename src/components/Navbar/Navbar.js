@@ -53,7 +53,8 @@ const MainPage = () => {
   };
   const handleLogoutClick = () => {
     localStorage.clear();
-    setStatus("Logged Out"); // Update the status as needed
+    navigate("/");
+    setStatus("Logged Out"); 
     navigate("/");
   };
 
@@ -110,7 +111,7 @@ const MainPage = () => {
                       <>
                         <Dropdown.Item href="/profile">Profile</Dropdown.Item>{" "}
                         {/* Add a Profile link here */}
-                        <Dropdown.Item href="#" onClick={handleLogoutClick}>
+                        <Dropdown.Item onClick={handleLogoutClick}>
                           Logout
                         </Dropdown.Item>
                       </>

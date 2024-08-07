@@ -5,8 +5,10 @@ import logo from "../images/Modern Initial Font Logo.png";
 import Dropdown from "react-bootstrap/Dropdown";
 import Profile from "../Profile/Profile";
 import { BiClipboard } from "react-icons/bi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const MainPage = () => {
+const MainPage = ({onLogout}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedPath, setSelectedPath] = useState("");
@@ -61,9 +63,19 @@ const MainPage = () => {
     setStatus("Logged In"); // Update the status as needed
   };
   const handleLogoutClick = () => {
+
+    setStatus("Logged Out"); 
+
     localStorage.clear();
-    setStatus("Logged Out"); // Update the status as needed
+    
+    onLogout();
+    if (onLogout) {
+      navigate("/");
+    }
     navigate("/");
+
+    toast.success("Logged out successfully!");
+
   };
   const handleNavigateProfile = () => {
     navigate("/profile");
@@ -135,7 +147,7 @@ const MainPage = () => {
                           Preferances
                         </Dropdown.Item>{" "}
                         {/* Add a Profile link here */}
-                        <Dropdown.Item href="#" onClick={handleLogoutClick}>
+                        <Dropdown.Item  onClick={handleLogoutClick}>
                           Logout
                         </Dropdown.Item>
                       </>

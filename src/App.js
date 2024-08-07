@@ -227,10 +227,10 @@ function App() {
               path="/"
               element={<Login onLogin={handleLogin} onLogout={handleLogout} />}
             />
-            <Route path="/verification" element={<Verification />} />
+            <Route path="/verification" element={<Verification onLogin={handleLogin}  />} />
             <Route
               path="/signup_verification"
-              element={<SignupOTPVerification />}
+              element={<SignupOTPVerification onLogin={handleLogin}  />}
             />
 
             {/* Catch-all route */}

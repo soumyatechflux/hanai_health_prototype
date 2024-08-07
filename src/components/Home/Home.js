@@ -24,7 +24,7 @@ import {
 } from "../../api";
 import { toast } from "react-toastify";
 
-const Home = () => {
+const Home = ({onLogout}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bmi, setBMI] = useState(0);
@@ -178,7 +178,7 @@ const Home = () => {
 
   return (
     <>
-      <MainPage />
+      <MainPage onLogout={onLogout}/>
       <div>
         <section className="content-section home-content-section py-3 pe-5">
           <div className="search-div">

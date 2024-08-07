@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { LoginOtpAPI } from "../../api";
 import { encryptData } from "../CRYPTO/crypto";
 
-const Verification = () => {
+const Verification = ({onLogin}) => {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +54,13 @@ const Verification = () => {
 
           setError("");
      
-          navigate("/"+route_page, { state: { email: email } });
+          // navigate("/"+route_page, { state: { email: email } });
+
+          onLogin && onLogin();
+          if (onLogin) {
+            navigate("/"+route_page, { state: { email: email } });
+          }
+
 
         } else {
           toast.error(
