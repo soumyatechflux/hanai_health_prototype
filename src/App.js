@@ -21,6 +21,7 @@ import ForgotPassword from "./components/login/ForgotPassword/ForgotPassword";
 import SignupOTPVerification from "./components/Signup otp verification/Verification";
 import Success from "./components/cart/Success";
 import Cancel from "./components/cart/Cancel";
+import SetUpAGoal from "./components/Set_Goal/Set_A_Goal";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -118,6 +119,24 @@ function App() {
                 )
               }
             />
+
+
+
+
+
+
+<Route
+              path="/set_a_goal"
+              element={
+                loggedIn ? (
+                  <SetUpAGoal onLogout={handleLogout} />
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+
+
             <Route
               path="/interest"
               element={

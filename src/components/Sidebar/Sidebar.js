@@ -64,9 +64,9 @@ const Sidebar = () => {
 
 
                             <li className={selectedPath === '/home' ? 'Selectedddddd' : ''}>
-                                <a onClick={() => handleNavigation('/home')} style={{ color: selectedPath === '/home' ? 'red' : '' }}>
-                                    <span className="fa-stack fa-lg pull-left side-icon" style={{ color: selectedPath === '/home' ? 'red' : '' }}>
-                                        <i className="fa fa-home fa-stack-1x icon" style={{ color: selectedPath === '/home' ? 'red' : '' }} aria-hidden="true" />
+                                <a onClick={() => handleNavigation('/home')} style={{ color: (selectedPath === '/home' || selectedPath === "/set_a_goal") ? 'red' : '' }}>
+                                    <span className="fa-stack fa-lg pull-left side-icon" style={{ color: (selectedPath === '/home' || selectedPath === "/set_a_goal") ? 'red' : '' }}>
+                                        <i className="fa fa-home fa-stack-1x icon" style={{ color: (selectedPath === '/home' || selectedPath === "/set_a_goal") ? 'red' : '' }} aria-hidden="true" />
                                     </span>
                                 </a>
                             </li>

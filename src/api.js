@@ -1,8 +1,10 @@
+
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { decryptData } from './components/CRYPTO/crypto';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 // Create Axios instances
 const axiosInstance = axios.create({
@@ -174,6 +176,17 @@ export async function addSugarLevelAPI(data) {
   }
 }
 
+
+export async function setAGoalAPI(data) {
+  try {
+    const response = await axiosInstance.post('/user/addfootsteps', data);
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 export async function addBookTestAPI(data) {
   try {
     const response = await axiosInstance.post('/user/addbooktest', data);
@@ -237,6 +250,18 @@ export async function getSugarLevel() {
   }
 }
 
+
+
+export async function getGoalDataAPI() {
+  try {
+    const response = await axiosInstance.get('/user/getfootstepsbyid');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 export const updateSelectedInterestsAPI = async (selectedInterests) => {
   try {
     const response = await axiosInstance.post('/update-interests', { selectedInterests });
@@ -255,6 +280,14 @@ export const getAllVendorsAPI = async () => {
   }
 };
 
+export const getSugarLevelPercentageAPI = async ()=>{
+  try {
+    const response = await axiosInstance.get('/user/getsugarlevelpercenatage');
+    return response;
+  } catch (error) {
+    throw error;
+  }
+} 
 const App = () => {
   useEffect(() => {
     authorizeMe();
@@ -268,4 +301,3 @@ const App = () => {
 
 export default App;
 export { axiosInstance , axiosInstanceNoAuth};
-

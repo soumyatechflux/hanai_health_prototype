@@ -1,0 +1,42 @@
+.cell{
+    border: transparent;
+    border-radius: 15px;
+    background-color: white;
+    padding: 20px;
+    /* margin-top: 20px; */
+    height: 471px;
+}
+.cell-graph{
+    margin-top: 20px;
+}
+.data{
+    display: flex;
+    flex-direction: column;
+}
+.data-form-container{
+    border: transparent;
+    border-radius: 15px;
+    background-color: white;
+    padding: 15px;
+    /* margin-top: 20px ; */
+}
+.data-submit-btn{
+    background-color: red;
+    color: white;
+    border: none;
+    margin: 15px;
+    /* display: flex; */
+    justify-content: center;
+    padding: 4px;
+    border-radius: 5px;
+}
+.input-field-data{
+    padding: 0px 5px;
+}
+
+@media(max-width:600px){
+    .data-form-container{
+        
+        margin: 20px 10px ;
+    }
+}

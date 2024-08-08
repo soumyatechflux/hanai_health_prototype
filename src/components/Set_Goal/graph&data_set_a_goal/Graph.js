@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Chart from "chart.js/auto";
-import { getSugarLevel,getGoalDataAPI } from "../../api";
+import { getGoalDataAPI } from "../../../api";
 
 const Graph = ({ id, type }) => {
-  const [beforeMealData, setBeforeMealData] = useState([]);
-  const [afterMealData, setAfterMealData] = useState([]);
-  const [day, setDay] = useState([]);
-  const [daySteps, setDaySteps] = useState([]);
 
+  const [day, setDay] = useState([]);
   const [steps, setSteps] = useState([]);
 
 
@@ -17,41 +14,14 @@ const Graph = ({ id, type }) => {
     return dayNames[date.getDay()];
   };
 
-  const getSugarLevelDataFunction = async () => {
-    try {
-      const response = await getSugarLevel();
-      const data = response.data.data.result;
-
-      const beforeMealArray = data.map((record) => record.before_meal);
-      const afterMealArray = data.map((record) => record.after_meal);
-      const dayNamesArray = data.map((record) => getDayName(record.date));
-
-      setDay(dayNamesArray);
-      setBeforeMealData(beforeMealArray);
-      setAfterMealData(afterMealArray);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      getSugarLevelDataFunction();
-    }, 10);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-
-
   const getGoalsDataFunction = async () => {
     try {
       const response = await getGoalDataAPI();
-      const data = response?.data?.data.result;
-      const dayNamesArray = data.map((record) => getDayNameSteps(record?.date));
-      const steps = data.map((record) => record?.no_of_steps);
+      const data = response.data.data.result;
+      const dayNamesArray = data.map((record) => getDayName(record.date));
+      const steps = data.map((record) => record.no_of_steps);
 
-      setDaySteps(dayNamesArray);
+      setDay(dayNamesArray);
       setSteps(steps)
     } catch (error) {
       console.log(error);
@@ -65,14 +35,6 @@ const Graph = ({ id, type }) => {
 
     return () => clearTimeout(timer);
   }, []);
-
-  const getDayNameSteps = (dateString) => {
-    const date = new Date(dateString);
-    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    return dayNames[date.getDay()];
-  };
-
-
 
   useEffect(() => {
     const initializeChart = () => {
@@ -89,7 +51,7 @@ const Graph = ({ id, type }) => {
       }
 
       const data = {
-        labels: type === "line" ? daySteps: day,
+        labels: day, // Use day names as labels
         datasets: type === "line"
           ? [
               {
@@ -101,22 +63,7 @@ const Graph = ({ id, type }) => {
                 fill: false, // No fill under the line
               },
             ]
-          : [
-              {
-                label: "Before Meal",
-                data: beforeMealData, // Use fetched before meal data
-                backgroundColor: "rgba(255, 99, 132, 0.2)", // All bars will be red
-                borderColor: "rgba(255, 99, 132, 1)", // All borders will be red
-                borderWidth: 1,
-              },
-              {
-                label: "After Meal",
-                data: afterMealData, // Use fetched after meal data
-                backgroundColor: "rgba(255, 0, 0, 1)", // All bars will be normal red
-                borderColor: "rgba(255, 0, 0, 1)", // All borders will be normal red
-                borderWidth: 1,
-              },
-            ],
+          : null
       };
 
       new Chart(ctx, {
@@ -146,7 +93,7 @@ const Graph = ({ id, type }) => {
         existingChart.destroy();
       }
     };
-  }, [id, type, steps,beforeMealData, afterMealData, day]); // Add dependencies
+  }, [id, type, steps,day]);
 
   return (
     <div style={{ position: "relative", width: "100%", height: "400px" }}>

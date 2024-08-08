@@ -1,0 +1,44 @@
+.header-add-data{
+    font-size: 25px;
+    /* text-align: center; */
+    margin-top: 65px;
+}
+
+
+.lab-btn{
+    background-color: #ffffff;
+    color:#ff0000;
+    border: none;
+    padding: 8px;
+    font-size: 22px;
+    font-weight:600;
+    width: 65%;
+    border-radius: 8px;
+}
+
+
+.card-body{
+    border: transparent;
+    border-radius: 25px;
+    background-color: white;
+    /* padding: 25px;
+    margin: 35px; */
+}
+.btn-select-mul{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 5px 0;
+    border: none;
+    background-color: rgb(227, 227, 227);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+@media(max-width:600px){
+    .add-content-section {
+        padding-left: 5rem;
+        padding-right: 1rem !important;
+    }
+}

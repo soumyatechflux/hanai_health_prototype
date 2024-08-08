@@ -23,7 +23,6 @@ const formatDate = (timestamp) => {
 };
 
 const LabreportsComponant = () => {
-  const timeSlots = ["Morning", "Afternoon", "Evening"];
   const [load, setLoad] = useState(false);
   const [labReports, setLabReports] = useState([]);
   const [formState, setFormState] = useState({
@@ -164,19 +163,25 @@ const LabreportsComponant = () => {
                 }`}
                 key={index}
               >
-                <div className="col-6 col-md-3 p-row">
+
+<div className="col-6 col-md-2 p-row">
+                  <h5>Vendor</h5>
+                  <h6>{report?.vendor_name}</h6>
+                </div>
+
+                <div className="col-6 col-md-2 p-row">
                   <h5>Test</h5>
                   <h6>{report.type}</h6>
                 </div>
-                <div className="col-6 col-md-3 p-row">
+                <div className="col-6 col-md-2 p-row">
                   <h5>Date</h5>
                   <h6>{formatDate(report.date)}</h6>
                 </div>
-                <div className="col-6 col-md-3 p-row">
+                <div className="col-6 col-md-2 p-row">
                   <h5>Time</h5>
                   <h6>{report.time_slot}</h6>
                 </div>
-                <div className="col-6 col-md-3 p-row" id="reports">
+                <div className="col-6 col-md-2 p-row" id="reports">
                   <h5>Reports</h5>
 
                   {report?.file_path ? (

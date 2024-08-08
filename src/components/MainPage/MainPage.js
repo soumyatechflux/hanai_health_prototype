@@ -164,16 +164,16 @@ const MainPage = ({onLogout}) => {
               <ul className="sidebar-nav nav-pills nav-stacked" id="menu">
                 <li className={selectedPath === "/home" ? "Selectedddddd" : ""}>
                   <a
-                    onClick={() => handleNavigation("/home")}
-                    style={{ color: selectedPath === "/home" ? "red" : "" }}
+                    onClick={() => handleNavigation("/home"|| selectedPath === "/set_a_goal")}
+                    style={{ color: (selectedPath === "/home" || selectedPath === "/set_a_goal") ? "red" : "" }}
                   >
                     <span
                       className="fa-stack fa-lg pull-left side-icon"
-                      style={{ color: selectedPath === "/home" ? "red" : "" }}
+                      style={{ color: (selectedPath === "/home" || selectedPath === "/set_a_goal" )? "red" : "" }}
                     >
                       <i
                         className="fa fa-home fa-stack-1x icon"
-                        style={{ color: selectedPath === "/home" ? "red" : "" }}
+                        style={{ color:  (selectedPath === "/home" || selectedPath === "/set_a_goal" ) ? "red" : "" }}
                         aria-hidden="true"
                       />
                     </span>

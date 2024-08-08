@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import "./report.css";
 import heart from "./heart.PNG";
@@ -21,16 +22,18 @@ import {
   getAllDiseasesAPI,
   getBMI_RulerDataAPI,
   getDiseasePercentage,
+  getSugarLevelPercentageAPI,
 } from "../../api";
 import { toast } from "react-toastify";
 
-const Home = ({onLogout}) => {
+const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [bmi, setBMI] = useState(0);
+  const [bmi, setBMI] = useState("");
   const [selectedDiseaseData, setselectedDiseaseData] = useState([]);
+  const [lowLevelPercentage, setLowLevelPercentage] = useState(0);
+  const [highLevelPercentage, setHighLevelPercentage] = useState(0);
   const BMI_INFO = {
-    // bmi: "23.4",
     status: "Normal",
     healthyRange: "18.5 kg/m2 - 25 kg/m2",
     healthyWeight: "47.4 kg - 64 kg",
@@ -42,8 +45,6 @@ const Home = ({onLogout}) => {
     try {
       const response = await getBMI_RulerDataAPI();
       setBMI(response?.data?.data?.data[0]?.bmi);
-      // console.log(response?.data?.data?.data[0]?.bmi); // Log the whole response to inspect its structure
-      // se(response.data.response.data);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -52,10 +53,32 @@ const Home = ({onLogout}) => {
   };
 
   useEffect(() => {
-    handleBMI(); // Fetch vendors on component mount
+    handleBMI(); 
   }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleBMI();
+    }, 10);
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+
   const [diseasePercentages, setDiseasePercentages] = useState([]);
 
+  const getSugarLevelPercentageFunction = async () => {
+    try {
+      const response = await getSugarLevelPercentageAPI();
+      setLowLevelPercentage(response?.data?.data?.lowlevelPercentage)
+      setHighLevelPercentage(response?.data?.data?.highlevelPercentage)
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    getSugarLevelPercentageFunction();
+  }, []);
   const diseaseIds = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 171, 18, 19, 20, 21,
     22, 23, 24,
@@ -85,13 +108,15 @@ const Home = ({onLogout}) => {
     handleGetDiseases();
   }, []);
 
-  const makeProperSendFormat = (datas) => {
-    const newArr = [];
-    for (let data of datas) {
-      newArr.push(data.id);
-    }
-    return newArr;
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleGetDiseases();
+    }, 10);
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+
 
   const fetchAllDiseasePercentageData = async () => {
     try {
@@ -99,13 +124,25 @@ const Home = ({onLogout}) => {
       setDiseasePercentages(response.data.data.diseasePercentages);
     } catch (error) {
       console.error(error);
-      // //toast.error("Cannot fetch percentages");
+      // toast.error("Cannot fetch percentages");
     }
   };
 
   useEffect(() => {
     fetchAllDiseasePercentageData();
   }, []);
+
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      fetchAllDiseasePercentageData();
+    }, 10);
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+
+
 
   const DISEASES = [
     { id: 1, name: "High Cholesterol", imgSrc: heart },
@@ -169,6 +206,10 @@ const Home = ({onLogout}) => {
     navigate("/labreports");
   };
 
+  const handleSetAGoalClick = () => {
+    navigate("/set_a_goal");
+  };
+
   const { value: value2, reset } = useCountUp({
     isCounting: true,
     duration: 1,
@@ -178,7 +219,7 @@ const Home = ({onLogout}) => {
 
   return (
     <>
-      <MainPage onLogout={onLogout}/>
+      <MainPage />
       <div>
         <section className="content-section home-content-section py-3 pe-5">
           <div className="search-div">
@@ -263,7 +304,7 @@ const Home = ({onLogout}) => {
                       style={{ cursor: "pointer" }}
                     >
                       <CgAdd className="add-data-btn" />
-                      Add Data
+                      ADD DATA
                     </div>
                   </div>
                 </div>
@@ -274,7 +315,6 @@ const Home = ({onLogout}) => {
 
                 <div className="col-12 ">
                   <div onClick={handleTakeLabTestClick}>
-                    {/* <CgAdd className='add-data-btn' />add data */}
                     <button className="take-lab-test-btn">
                       Take a Lab Test
                     </button>
@@ -286,8 +326,7 @@ const Home = ({onLogout}) => {
                 <div className="cell">
                   <Graph id="chart2" type="line" />
                 </div>
-                <div>
-                  {/* <CgAdd className='add-data-btn' />add data */}
+                <div onClick={handleSetAGoalClick}>
                   <button className="take-lab-test-btn">Set a Goal</button>
                 </div>
               </div>
@@ -320,8 +359,8 @@ const Home = ({onLogout}) => {
                     <hr />
                   </div>
                   {[
-                    { name: "High Blood Glucose", match: "96%" },
-                    { name: "Low Blood Glucose", match: "84%" },
+                    { name: "High Blood Glucose", match: highLevelPercentage.toFixed(0) + '%'},
+                    { name: "Low Blood Glucose", match: lowLevelPercentage.toFixed(0) + '%' },
                     { name: "Arterial stiffness", match: "82%" },
                     { name: "Hypertension", match: "81%" },
                   ].map((complication, index) => (
@@ -358,7 +397,7 @@ const Home = ({onLogout}) => {
                   ].map((medication, index) => (
                     <div key={index}>
                       <div className="d-flex">
-                        <p className="para-report info_p">{medication.name}</p>
+                        <p className="para-report info_p">{medication?.name}</p>
                         <input
                           type="button"
                           value="Buy"
@@ -370,7 +409,7 @@ const Home = ({onLogout}) => {
                         <div
                           className="progress-bar"
                           role="progressbar"
-                          style={{ width: medication.match }}
+                          style={{ width: medication?.match }}
                           aria-valuenow={25}
                           aria-valuemin={0}
                           aria-valuemax={100}
@@ -399,7 +438,9 @@ const Home = ({onLogout}) => {
                     <input
                       type="button"
                       defaultValue="Buy"
-                      onClick={()=>{navigate("/cart")}}
+                      onClick={() => {
+                        navigate("/cart");
+                      }}
                       className="buy-btn"
                     />
                   </div>
@@ -407,7 +448,7 @@ const Home = ({onLogout}) => {
               </div>
             </div>
           </div>
-          <h1 />
+      
         </section>
       </div>
     </>
