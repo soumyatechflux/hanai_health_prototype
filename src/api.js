@@ -3,7 +3,6 @@ import axios from 'axios';
 import { decryptData } from './components/CRYPTO/crypto';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
 
 // Create Axios instances
 const axiosInstance = axios.create({
