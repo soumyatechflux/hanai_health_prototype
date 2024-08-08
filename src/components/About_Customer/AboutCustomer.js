@@ -61,7 +61,7 @@ const AboutCustomer = () => {
       }
     } catch (error) {
       console.error("Error fetching customer data:", error);
-      // toast.error("Failed to fetch customer data.");
+      // //toast.error("Failed to fetch customer data.");
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +139,7 @@ const AboutCustomer = () => {
         }
       } catch (error) {
         console.error("Error submitting user data:", error);
-        toast.error("Failed to submit user data.");
+        //toast.error("Failed to submit user data.");
       } finally {
         setIsLoading(false);
       }

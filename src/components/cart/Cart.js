@@ -60,7 +60,7 @@ const Cart = () => {
       setTotal(0);
     } else {
       console.log("shiosi")
-      toast.error("Please increase Quantity");
+      //toast.error("Please increase Quantity");
     }
   };
 

@@ -45,7 +45,7 @@ const RulerPicker = () => {
         }
       } catch (error) {
         console.error("Error fetching customer data:", error);
-        // toast.error("Failed to fetch customer data.");
+        // //toast.error("Failed to fetch customer data.");
       } finally {
         setIsLoading(false);
       }

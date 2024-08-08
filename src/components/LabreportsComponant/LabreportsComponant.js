@@ -102,7 +102,7 @@ const LabreportsComponant = () => {
       !formState.date ||
       !formState.timeSlot
     ) {
-      // toast.error("Please fill all the fields before submitting.");
+      // //toast.error("Please fill all the fields before submitting.");
       return;
     }
 

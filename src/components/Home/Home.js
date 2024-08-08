@@ -99,7 +99,7 @@ const Home = ({onLogout}) => {
       setDiseasePercentages(response.data.data.diseasePercentages);
     } catch (error) {
       console.error(error);
-      // toast.error("Cannot fetch percentages");
+      // //toast.error("Cannot fetch percentages");
     }
   };
 
@@ -263,7 +263,7 @@ const Home = ({onLogout}) => {
                       style={{ cursor: "pointer" }}
                     >
                       <CgAdd className="add-data-btn" />
-                      add data
+                      Add Data
                     </div>
                   </div>
                 </div>
