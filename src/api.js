@@ -267,4 +267,5 @@ const App = () => {
 };
 
 export default App;
-export { axiosInstance };
+export { axiosInstance , axiosInstanceNoAuth};
+
