@@ -1,7 +1,9 @@
-import axios from "axios";
-import { decryptData } from "./components/CRYPTO/crypto";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import { decryptData } from './components/CRYPTO/crypto';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 // Create Axios instances
 const axiosInstance = axios.create({
@@ -16,15 +18,13 @@ const axiosInstanceNoAuth = axios.create({
 
 // Function to set Authorization header
 async function authorizeMe() {
-  const encryptedToken = localStorage.getItem(
-    "encryptedTokenForUserOfHanaiHealth"
-  );
+  const encryptedToken = localStorage.getItem('encryptedTokenForUserOfHanaiHealth');
   const token = decryptData(encryptedToken);
 
   if (token) {
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   } else {
-    delete axiosInstance.defaults.headers.common["Authorization"];
+    delete axiosInstance.defaults.headers.common['Authorization'];
   }
 }
 
@@ -36,15 +36,12 @@ axiosInstance.interceptors.request.use(async (config) => {
 
 // Interceptor to handle responses
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    const { navigate } = require("react-router-dom");
-    if (error?.response?.data?.message === "Expired token") {
-      toast.error("Time elapsed, Please log in again!");
+    if (error?.response?.data?.message === 'Expired token') {
+      toast.error('Time elapsed, Please log in again!');
       localStorage.clear();
-      navigate("/");
+      window.location.href = '/';
     }
     return Promise.reject(error);
   }
@@ -53,7 +50,7 @@ axiosInstance.interceptors.response.use(
 // API functions
 export async function LoginAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(`/auth/login`, data);
+    const response = await axiosInstanceNoAuth.post('/auth/login', data);
     return response;
   } catch (error) {
     throw error;
@@ -62,7 +59,7 @@ export async function LoginAPI(data) {
 
 export async function LoginOtpAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(`/auth/verify-otp`, data);
+    const response = await axiosInstanceNoAuth.post('/auth/verify-otp', data);
     return response;
   } catch (error) {
     throw error;
@@ -71,7 +68,7 @@ export async function LoginOtpAPI(data) {
 
 export async function ForgotPasswordEnterEmailAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(`/auth/forgotpass`, data);
+    const response = await axiosInstanceNoAuth.post('/auth/forgotpass', data);
     return response;
   } catch (error) {
     throw error;
@@ -80,10 +77,7 @@ export async function ForgotPasswordEnterEmailAPI(data) {
 
 export async function ForgotPasswordEnterOtpAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(
-      `/auth/forgototpverify`,
-      data
-    );
+    const response = await axiosInstanceNoAuth.post('/auth/forgototpverify', data);
     return response;
   } catch (error) {
     throw error;
@@ -92,10 +86,7 @@ export async function ForgotPasswordEnterOtpAPI(data) {
 
 export async function ForgotPasswordEnterNewPasswordAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(
-      `/auth/changepassword`,
-      data
-    );
+    const response = await axiosInstanceNoAuth.post('/auth/changepassword', data);
     return response;
   } catch (error) {
     throw error;
@@ -104,7 +95,7 @@ export async function ForgotPasswordEnterNewPasswordAPI(data) {
 
 export async function SignupAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(`/auth/signup`, data);
+    const response = await axiosInstanceNoAuth.post('/auth/signup', data);
     return response;
   } catch (error) {
     throw error;
@@ -113,10 +104,7 @@ export async function SignupAPI(data) {
 
 export async function SignUpOtpAPI(data) {
   try {
-    const response = await axiosInstanceNoAuth.post(
-      `/auth/verifysignupotp`,
-      data
-    );
+    const response = await axiosInstanceNoAuth.post('/auth/verifysignupotp', data);
     return response;
   } catch (error) {
     throw error;
@@ -125,7 +113,7 @@ export async function SignUpOtpAPI(data) {
 
 export async function getCustomerDataAPI() {
   try {
-    const response = await axiosInstance.get(`/user/getformdata`);
+    const response = await axiosInstance.get('/user/getformdata');
     return response;
   } catch (error) {
     throw error;
@@ -134,7 +122,7 @@ export async function getCustomerDataAPI() {
 
 export async function postCustomerDataAPI(data) {
   try {
-    const response = await axiosInstance.post(`/user/formdata`, data);
+    const response = await axiosInstance.post('/user/formdata', data);
     return response;
   } catch (error) {
     throw error;
@@ -143,7 +131,7 @@ export async function postCustomerDataAPI(data) {
 
 export async function getBMI_RulerDataAPI() {
   try {
-    const response = await axiosInstance.get(`/health/bmi_info`);
+    const response = await axiosInstance.get('/health/bmi_info');
     return response;
   } catch (error) {
     throw error;
@@ -152,7 +140,7 @@ export async function getBMI_RulerDataAPI() {
 
 export async function postBMI_RulerDataAPI(data) {
   try {
-    const response = await axiosInstance.post(`/health/bmi_info`, data);
+    const response = await axiosInstance.post('/health/bmi_info', data);
     return response;
   } catch (error) {
     throw error;
@@ -161,7 +149,7 @@ export async function postBMI_RulerDataAPI(data) {
 
 export async function getAllDiseasesAPI() {
   try {
-    const response = await axiosInstance.get(`disease/getdisease`);
+    const response = await axiosInstance.get('/disease/getdisease');
     return response;
   } catch (error) {
     throw error;
@@ -170,7 +158,7 @@ export async function getAllDiseasesAPI() {
 
 export async function selectDiseaseAPI(data) {
   try {
-    const response = await axiosInstance.post(`/disease/updatedisease`, data);
+    const response = await axiosInstance.post('/disease/updatedisease', data);
     return response;
   } catch (error) {
     throw error;
@@ -179,7 +167,7 @@ export async function selectDiseaseAPI(data) {
 
 export async function addSugarLevelAPI(data) {
   try {
-    const response = await axiosInstance.post(`user/sugarlevel`, data);
+    const response = await axiosInstance.post('/user/sugarlevel', data);
     return response;
   } catch (error) {
     throw error;
@@ -188,7 +176,7 @@ export async function addSugarLevelAPI(data) {
 
 export async function addBookTestAPI(data) {
   try {
-    const response = await axiosInstance.post(`/user/addbooktest`, data);
+    const response = await axiosInstance.post('/user/addbooktest', data);
     return response;
   } catch (error) {
     throw error;
@@ -197,7 +185,7 @@ export async function addBookTestAPI(data) {
 
 export async function getBookTestDataAPI() {
   try {
-    const response = await axiosInstance.get(`/user/getbooktest`);
+    const response = await axiosInstance.get('/user/getbooktest');
     return response;
   } catch (error) {
     throw error;
@@ -206,9 +194,7 @@ export async function getBookTestDataAPI() {
 
 export async function getDiseasePercentage({ diseaseIds }) {
   try {
-    const response = await axiosInstance.post(`/disease/deseasecount`, {
-      diseaseIds,
-    });
+    const response = await axiosInstance.post('/disease/deseasecount', { diseaseIds });
     return response;
   } catch (error) {
     throw error;
@@ -217,7 +203,7 @@ export async function getDiseasePercentage({ diseaseIds }) {
 
 export async function getSelectDiseaseAPI(data) {
   try {
-    const response = await axiosInstance.post(`/disease/updatedisease`, data);
+    const response = await axiosInstance.post('/disease/updatedisease', data);
     return response;
   } catch (error) {
     throw error;
@@ -226,7 +212,7 @@ export async function getSelectDiseaseAPI(data) {
 
 export async function getProductDataAPI() {
   try {
-    const response = await axiosInstance.get(`/user/getcart`);
+    const response = await axiosInstance.get('/user/getcart');
     return response;
   } catch (error) {
     throw error;
@@ -235,7 +221,7 @@ export async function getProductDataAPI() {
 
 export async function addToOrder(data) {
   try {
-    const response = await axiosInstance.post(`/user/addToOrder`, data);
+    const response = await axiosInstance.post('/user/addToOrder', data);
     return response;
   } catch (error) {
     throw error;
@@ -244,31 +230,41 @@ export async function addToOrder(data) {
 
 export async function getSugarLevel() {
   try {
-    const response = await axiosInstance.get(`/disease/sugarleveldata`);
+    const response = await axiosInstance.get('/disease/sugarleveldata');
     return response;
   } catch (error) {
     throw error;
   }
 }
 
-export const updateSelectedInterestsAPI = (selectedInterests) => {
+export const updateSelectedInterestsAPI = async (selectedInterests) => {
   try {
-    const response = axiosInstance.post("/update-interests", {
-      selectedInterests,
-    });
+    const response = await axiosInstance.post('/update-interests', { selectedInterests });
     return response;
   } catch (error) {
     throw error;
   }
 };
 
-export const getAllVendorsAPI = () => {
+export const getAllVendorsAPI = async () => {
   try {
-    const response = axiosInstance.get("/user/getallvendors");
+    const response = await axiosInstance.get('/user/getallvendors');
     return response;
   } catch (error) {
     throw error;
   }
 };
 
+const App = () => {
+  useEffect(() => {
+    authorizeMe();
+  }, []);
 
+  return (
+   <>
+   </>
+  );
+};
+
+export default App;
+export { axiosInstance };
