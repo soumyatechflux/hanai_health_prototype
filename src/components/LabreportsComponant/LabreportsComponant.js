@@ -50,9 +50,9 @@ const LabreportsComponant = () => {
       // console.log(response?.data?.data?.result);
       const bookTest = response?.data?.data?.result;
       setLabReports(bookTest);
-      setLoad(false)
+      setLoad(false);
     } catch (error) {
-      console.error("Error fetching book test data:", error)
+      console.error("Error fetching book test data:", error);
     }
   };
 
@@ -122,7 +122,7 @@ const LabreportsComponant = () => {
       // Send request
       const response = await addBookTestAPI(payload);
       getBookTestDataAPI();
-      setLoad(true)
+      setLoad(true);
       if (response.data.response === true) {
         showLabReportsSection();
         // toast.success("Successfully booked!");
@@ -178,6 +178,7 @@ const LabreportsComponant = () => {
                 </div>
                 <div className="col-6 col-md-3 p-row" id="reports">
                   <h5>Reports</h5>
+
                   {report?.file_path ? (
                     <a
                       href={report?.file_path}
