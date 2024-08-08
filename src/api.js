@@ -38,10 +38,11 @@ axiosInstance.interceptors.request.use(async (config) => {
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
+    const { navigate } = require("react-router-dom");
     if (error?.response?.data?.message === 'Expired token') {
       toast.error('Time elapsed, Please log in again!');
       localStorage.clear();
-      window.location.href = '/';
+      navigate("/");
     }
     return Promise.reject(error);
   }
