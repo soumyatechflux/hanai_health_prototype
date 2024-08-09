@@ -4,7 +4,7 @@ import Product from "./product.PNG"; // Update this path to the actual path of y
 import MainPage from "../MainPage/MainPage";
 import { getProductDataAPI } from "../../api";
 
-const Orders = () => {
+const Orders = ({onLogout}) => {
   const [OrderInfo, setOrderInfo] = useState([]);
 
   const getProductDatafunction = async () => {
@@ -23,7 +23,7 @@ const Orders = () => {
 
   return (
     <>
-      <MainPage />
+      <MainPage onLogout={onLogout}/>
       <section className="content-section cart-content-section py-3 pe-5">
         <div className="cart" style={{ marginTop: "65px" }}>
           <h3>Orders</h3>

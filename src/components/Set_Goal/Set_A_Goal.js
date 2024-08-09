@@ -4,7 +4,7 @@ import "./Set_A_Goal.css";
 import DataForm from "./graph&data_set_a_goal/DataForm";
 import MainPage from "../MainPage/MainPage";
 
-const SetUpAGoal = () => {
+const SetUpAGoal = ({onLogout}) => {
   const navigate = useNavigate();
   const [showGraph, setShowGraph] = useState(true);
 
@@ -15,7 +15,7 @@ const SetUpAGoal = () => {
 
   return (
     <>
-      <MainPage />
+      <MainPage onLogout={onLogout}/>
       <section className="content-section add-content-section py-3 pe-5">
         <header className="header-add-data mb-2">Set A Goal</header>
 

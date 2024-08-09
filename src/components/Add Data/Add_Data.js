@@ -5,7 +5,7 @@ import DataForm from "../graph&data/DataForm";
 import MainPage from "../MainPage/MainPage";
 import { getAllDiseasesAPI } from "../../api";
 
-const Add_Data = () => {
+const Add_Data = ({onLogout}) => {
   const navigate = useNavigate();
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [showGraph, setShowGraph] = useState(false);
@@ -46,7 +46,7 @@ const Add_Data = () => {
 
   return (
     <>
-      <MainPage />
+       <MainPage onLogout={onLogout}/>
       <section className="content-section add-content-section py-3 pe-5">
         <header className="header-add-data">Add Data</header>
 

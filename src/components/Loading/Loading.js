@@ -4,7 +4,7 @@ import './loading.css';
 import loadingimg from './Loading.svg';
 import MainPage from './../MainPage/MainPage';
 
-const Loading = () => {
+const Loading = ({onLogout}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Loading = () => {
 
   return (
     <>
-      <MainPage />
+      <MainPage onLogout={onLogout}/>
       <div className="loading">
         <div> 
           <img src={loadingimg} alt="loading" />

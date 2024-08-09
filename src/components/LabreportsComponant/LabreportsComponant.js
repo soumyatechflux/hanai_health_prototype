@@ -22,7 +22,7 @@ const formatDate = (timestamp) => {
   return `${year}-${month}-${day}`;
 };
 
-const LabreportsComponant = () => {
+const LabreportsComponant = ({onLogout}) => {
   const [load, setLoad] = useState(false);
   const [labReports, setLabReports] = useState([]);
   const [formState, setFormState] = useState({
@@ -149,7 +149,7 @@ const LabreportsComponant = () => {
 
   return (
     <>
-      <MainPage />
+       <MainPage onLogout={onLogout}/>
       <ToastContainer />
 
       {showLabReports && (

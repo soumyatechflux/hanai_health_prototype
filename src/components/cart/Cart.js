@@ -13,7 +13,7 @@ const BUY_NOW_BUTTON_ID = "btn";
 const PRODUCT_NAME = "365 Supplement Supports";
 const PRODUCT_PRICE = 250;
 
-const Cart = () => {
+const Cart = ({onLogout}) => {
   const [quantity, setQuantity] = useState(0);
   const [total, setTotal] = useState(0);
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Cart = () => {
 
   return (
     <>
-      <MainPage />
+    <MainPage onLogout={onLogout}/>
       <section className="content-section cart-content-section py-3 pe-5">
         <div className="cart" style={{ marginTop: "65px" }}>
           <h3>Cart</h3>
