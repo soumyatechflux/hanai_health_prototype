@@ -26,7 +26,7 @@ import {
 } from "../../api";
 import { toast } from "react-toastify";
 
-const Home = () => {
+const Home = ({onLogout}) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [bmi, setBMI] = useState("");
@@ -70,15 +70,33 @@ const Home = () => {
   const getSugarLevelPercentageFunction = async () => {
     try {
       const response = await getSugarLevelPercentageAPI();
-      setLowLevelPercentage(response?.data?.data?.lowlevelPercentage)
-      setHighLevelPercentage(response?.data?.data?.highlevelPercentage)
+      const lowPercentage = response?.data?.data?.lowlevelPercentage;
+      const highPercentage = response?.data?.data?.highlevelPercentage;
+
+      if (lowPercentage !== undefined && highPercentage !== undefined) {
+        setLowLevelPercentage(lowPercentage);
+        setHighLevelPercentage(highPercentage);
+        return true; // Indicate success
+      } else {
+        return false; // Indicate that the response wasn't valid
+      }
     } catch (error) {
       console.error(error);
+      return false; // Indicate failure
     }
   };
+
   useEffect(() => {
-    getSugarLevelPercentageFunction();
+    const intervalId = setInterval(async () => {
+      const success = await getSugarLevelPercentageFunction();
+      if (success) {
+        clearInterval(intervalId); // Stop polling once successful
+      }
+    }, 1000); 
+
+    return () => clearInterval(intervalId); // Cleanup interval on component unmount
   }, []);
+
   const diseaseIds = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 171, 18, 19, 20, 21,
     22, 23, 24,
@@ -121,17 +139,27 @@ const Home = () => {
   const fetchAllDiseasePercentageData = async () => {
     try {
       const response = await getDiseasePercentage({ diseaseIds });
-      setDiseasePercentages(response.data.data.diseasePercentages);
+      if (response && response?.data && response?.data?.data?.diseasePercentages) {
+        setDiseasePercentages(response?.data?.data?.diseasePercentages);
+        return true; // Indicating a successful response
+      }
     } catch (error) {
       console.error(error);
       // toast.error("Cannot fetch percentages");
+      return false; // Indicating a failed response
     }
   };
 
   useEffect(() => {
-    fetchAllDiseasePercentageData();
-  }, []);
+    const intervalId = setInterval(async () => {
+      const success = await fetchAllDiseasePercentageData();
+      if (success) {
+        clearInterval(intervalId); // Stop calling once successful
+      }
+    }, 1000); 
 
+    return () => clearInterval(intervalId); // Cleanup on component unmount
+  }, []);
   
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -219,7 +247,7 @@ const Home = () => {
 
   return (
     <>
-      <MainPage />
+      <MainPage onLogout={onLogout} />
       <div>
         <section className="content-section home-content-section py-3 pe-5">
           <div className="search-div">

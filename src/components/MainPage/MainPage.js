@@ -40,10 +40,8 @@ const MainPage = ({onLogout}) => {
     // Update height on window resize
     window.addEventListener("resize", updateHeight);
 
-    //
 
     const username__ = localStorage.getItem("__username");
-    // console.log(username__);
     setName(username__);
 
     // Cleanup on unmount
@@ -62,18 +60,20 @@ const MainPage = ({onLogout}) => {
   const handleLoginClick = () => {
     setStatus("Logged In"); // Update the status as needed
   };
-  const handleLogoutClick = () => {
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    setStatus("Logged Out"); // Assuming `setStatus` updates some status text or state
 
-    setStatus("Logged Out"); 
-
-    localStorage.clear();
+    localStorage.removeItem("isUserLoggedIn");
+    localStorage.removeItem("encryptedTokenForUserOfHanaiHealth");
     
     onLogout();
-    if (onLogout) {
-      navigate("/");
-    }
+    if(onLogout){
+    navigate("/");
+    };
     navigate("/");
 
+    // Show a success toast message
     toast.success("Logged out successfully!");
 
   };
@@ -96,7 +96,6 @@ const MainPage = ({onLogout}) => {
               <li className="nav-item dropdown d-flex align-items-center">
                 <a
                   className="nav-link dropdown-toggle myinfo"
-                  href="#"
                   id="navbarDropdownMenuLink"
                   role="button"
                   data-toggle="dropdown"
@@ -147,9 +146,9 @@ const MainPage = ({onLogout}) => {
                           Preferances
                         </Dropdown.Item>{" "}
                         {/* Add a Profile link here */}
-                        <Dropdown.Item  onClick={handleLogoutClick}>
-                          Logout
-                        </Dropdown.Item>
+                        <Dropdown.Item onClick={handleLogoutClick}>
+  Logout
+</Dropdown.Item>
                       </>
                     )}
                   </Dropdown.Menu>

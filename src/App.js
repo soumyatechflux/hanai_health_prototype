@@ -43,6 +43,8 @@ function App() {
 
   const handleLogout = () => {
     setLoggedIn(false);
+    localStorage.removeItem("isUserLoggedIn");
+    localStorage.removeItem("encryptedTokenForUserOfHanaiHealth");
   };
 
   const [isOffline, setIsOffline] = useState(false);

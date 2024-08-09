@@ -42,7 +42,7 @@ const Verification = ({onLogin}) => {
           const route_page = response?.data?.data?.route_page;
           const encryptedToken = encryptData(token);
 
-          localStorage.clear();
+          // localStorage.clear();
           localStorage.setItem("isUserLoggedIn", true);
           localStorage.setItem("__username", name);
           localStorage.setItem(

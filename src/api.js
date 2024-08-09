@@ -42,7 +42,10 @@ axiosInstance.interceptors.response.use(
     const { navigate } = require("react-router-dom");
     if (error?.response?.data?.message === 'Expired token') {
       toast.error('Time elapsed, Please log in again!');
-      localStorage.clear();
+      // localStorage.clear();
+
+      localStorage.removeItem("isUserLoggedIn");
+      localStorage.removeItem("encryptedTokenForUserOfHanaiHealth");
       navigate("/");
     }
     return Promise.reject(error);

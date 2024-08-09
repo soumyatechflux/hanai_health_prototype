@@ -12,7 +12,6 @@ import { CgProfile } from "react-icons/cg";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-import Navbar from "./../Navbar/Navbar";
 
 import { getCustomerDataAPI, postCustomerDataAPI } from "../../api";
 
@@ -229,7 +228,6 @@ const Profile = ({ updateProfileImage }) => {
 
   return (
     <>
-      <Navbar />
 
       <div className="container-fluid profile-container">
         <div className="row justify-content-center">
