@@ -12,7 +12,6 @@ import { CgProfile } from "react-icons/cg";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 import { getCustomerDataAPI, postCustomerDataAPI } from "../../api";
 
 import { toast } from "react-toastify";
@@ -114,7 +113,7 @@ const Profile = ({ updateProfileImage }) => {
 
           zipCode: data?.zipcode || "",
 
-          bloodGroup: data?.blood_group || "",
+          bloodGroup: data?.bloodgroup || "",
 
           uploadPhoto: null, // Initialize as null
         });
@@ -228,7 +227,6 @@ const Profile = ({ updateProfileImage }) => {
 
   return (
     <>
-
       <div className="container-fluid profile-container">
         <div className="row justify-content-center">
           <div className="col-md-10 col-lg-10 profile-target">
@@ -236,7 +234,7 @@ const Profile = ({ updateProfileImage }) => {
               <div className="icon-form mb-4 position-relative">
                 {profileImage ? (
                   <img
-                    src={profileImage}
+                    src={process.env.REACT_APP_AQATO_AGENT_APPLICANT_PORTAL_BASE_API_URL+profileImage}
                     alt="Profile"
                     className="profile-icon"
                   />

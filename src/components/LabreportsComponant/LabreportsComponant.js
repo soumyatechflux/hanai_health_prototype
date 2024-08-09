@@ -186,7 +186,7 @@ const LabreportsComponant = ({onLogout}) => {
 
                   {report?.file_path ? (
                     <a
-                      href={report?.file_path}
+                      href={process.env.REACT_APP_AQATO_AGENT_APPLICANT_PORTAL_BASE_API_URL+report?.file_path}
                       target="_blank"
                       rel="noopener noreferrer"
                     >

@@ -263,6 +263,7 @@ const AboutCustomer = () => {
                           type="file"
                           className="form-control"
                           name="uploadPhoto"
+                          accept="image/*"
                           onChange={handleFileChange}
                         />
                         {profileImage ? (
